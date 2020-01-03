@@ -9,6 +9,7 @@
 </template>
 
 <script>
+/** Button that is shown as a link */
 export default {
   props: {
     /** hyperlink that is followed when clicked */

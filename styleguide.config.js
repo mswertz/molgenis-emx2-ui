@@ -1,6 +1,6 @@
 module.exports = {
 	// set your styleguidist configuration here
-	title: 'Default Style Guide',
+	title: 'MOLGENIS EMX2 Style Guide',
 	// components: 'src/components/**/[A-Z]*.vue',
 	// defaultExample: true,
 	// sections: [
@@ -27,6 +27,10 @@ module.exports = {
 		}
 	},
 	sections: [
+		{
+			name: 'Introduction',
+			content: 'src/styleguide/introduction.md'
+		},
 		{
 			name: 'Elements',
 			components: 'src/components/elements/[A-Z]*.vue'

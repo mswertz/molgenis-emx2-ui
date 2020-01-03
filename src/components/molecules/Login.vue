@@ -3,18 +3,22 @@
   <div>
     <span v-if="username">
       Hi {{username}}
-      <button-primary @click="logout">Sign out</button-primary>
+      <ButtonPrimary @click="logout">Sign out</ButtonPrimary>
     </span>
-    <button-primary v-else @click="modal=true">Sign in</button-primary>
-    <login-modal v-if="modal" @login="login" @close="modal=false" />
+    <ButtonPrimary v-else @click="modal=true">Sign in</ButtonPrimary>
+    <Modal v-if="modal" title="Sign in" @close="close" display="true">
+      <LoginForm @login="login" @close="modal=false" />
+    </Modal>
   </div>
 </template>
 
 <!-- on mount will check login status and show login button accordingly -->
 <script>
 import ButtonPrimary from "../elements/ButtonPrimary.vue";
-import LoginModal from "./LoginModal.vue";
+import LoginForm from "./LoginForm.vue";
+import Modal from "../containers/Modal.vue";
 
+/** Login widget small enough to fit on the screen */
 export default {
   data: function() {
     return {
@@ -37,7 +41,8 @@ export default {
   },
   components: {
     ButtonPrimary,
-    LoginModal
+    LoginForm,
+    Modal
   },
   methods: {
     login(username, password) {

@@ -12,23 +12,18 @@
 </template>
 
 <script>
-import FormGroup from "./_formGroup.vue";
+import AbstractInput from "./_formGroup.vue";
 
+/** Input for passwords */
 export default {
+  extends: AbstractInput,
   data: function() {
     return {
       value: null
     };
   },
-  props: {
-    id: String,
-    placeholder: String,
-    default: String,
-    label: String,
-    help: String
-  },
   components: {
-    "form-group": FormGroup
+    "form-group": AbstractInput
   },
   watch: {
     value() {
@@ -37,3 +32,31 @@ export default {
   }
 };
 </script>
+
+<docs>
+### Examples
+
+```
+<template>
+  <div>
+    <InputPassword
+      v-model="value"
+      label="My password label"
+      placholder="type here your password"
+      help="Some help needed?"
+    />
+    <br />
+    You typed: {{value}}
+  </div>
+</template>
+<script>
+export default {
+  data: function() {
+    return {
+      value: null
+    };
+  }
+};
+</script>
+```
+</docs>

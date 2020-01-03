@@ -11,11 +11,15 @@
 <script>
 export default {
   props: {
+    /** id of the form input */
     id: String,
+    /** value to be shown as input */
     placeholder: String,
+    /** initial value */
     value: String,
-    default: String,
+    /** label to be shown next to the input */
     label: String,
+    /** optional help string shown below */
     help: String
   }
 };

@@ -13,7 +13,7 @@
 <script>
 export default {
   props: {
-    /** Title that is shown on the card */
+    /** Title that is shown on the card (optional) */
     title: String
   }
 };
