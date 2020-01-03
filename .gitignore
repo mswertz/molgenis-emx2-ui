@@ -2,6 +2,9 @@
 node_modules
 /dist
 
+#styleguide build
+/styleguide
+
 #storybook build
 /storybook-static
 
