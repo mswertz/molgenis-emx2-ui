@@ -7,18 +7,22 @@ This is a preview version of how a MOLGENIS EMX2 design system could look like, 
 npm install
 ```
 
-### Start styleguidist to view docs and test components
+### Start styleguide to view docs and test components
 ```
 npm run styleguide
 ```
 
-### Compiles styleguide into folder storybook-static (deprecated)
+### Compiles styleguide into folder 'styleguide'
 ```
-npm run storybook:build
+npm run styleguide:build
 ```
 
 
-# Below not needed, really, for now.
+# Below not needed, really.
+Storybook will be removed but now stays for demo purposes.
+Todo:
+*  create a proper distribution of the library part for reuse.
+*  deploy styleguide somewhere for demo (github pages maybe?)
 
 
 ### Compiles and hot-reloads for development
@@ -31,14 +35,14 @@ npm run serve
 npm run storybook:serve
 ```
 
+### Compiles styleguide into folder storybook-static (deprecated)
+```
+npm run storybook:build
+```
+
 ### Compiles and minifies for production
 ```
 npm run build
-```
-
-### Compiles storybook into folder storybook-static (deprecated)
-```
-npm run storybook:build
 ```
 
 ### Lints and fixes files
