@@ -23,6 +23,7 @@
           </button>
         </div>
         <div class="modal-body">
+          <!-- @slot contents to be shown on the modal -->
           <slot />
         </div>
       </div>
@@ -33,11 +34,17 @@
 <script>
 export default {
   props: {
+    /** Shown as the title of the model */
     title: String,
-    display: Boolean
+    /** When true the modal will be shown */
+    display: {
+      type: Boolean,
+      default: true
+    }
   },
   methods: {
     close() {
+      /** when the close x button is clicked */
       this.$emit("close");
     },
     closeUnlessInDialog() {
@@ -48,3 +55,36 @@ export default {
   }
 };
 </script>
+
+<docs>
+
+### Examples
+
+```
+<template>
+  <div>
+    <ButtonPrimary @click="toggle">Toggle modal</ButtonPrimary>
+    <Modal title="My first modal" @close="toggle" :display="display">
+      Here is the contents
+      <p />
+      <ButtonPrimary @click="toggle">My own additional close</ButtonPrimary>
+    </Modal>
+  </div>
+</template>
+<script>
+export default {
+  data: function() {
+    return {
+      display: false
+    };
+  },
+  methods: {
+    toggle() {
+      this.display = !this.display;
+    }
+  }
+};
+</script>
+```
+
+</docs>

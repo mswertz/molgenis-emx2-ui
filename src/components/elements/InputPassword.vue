@@ -2,6 +2,7 @@
   <form-group v-bind="$props">
     <input
       class="form-control"
+      type="password"
       :id="id"
       :aria-describedby="id + 'Help'"
       :placeholder="placeholder"
@@ -11,9 +12,10 @@
 </template>
 
 <script>
-import FormGroup from "./FormGroup.vue";
+import FormGroup from "./_formGroup.vue";
+
 export default {
-  data() {
+  data: function() {
     return {
       value: null
     };

@@ -1,6 +1,6 @@
 <template>
   <modal title="Sign in" @close="close" display="true">
-    <form-vertical>
+    <Form>
       <input-string
         label="Username"
         placeholder="Enter name"
@@ -13,17 +13,19 @@
         help="Please enter the provided password"
         v-model="password"
       />
-      <button-primary title="Sign in" @click="login" />
-    </form-vertical>
+      <ButtonLink @click="close">Cancel</ButtonLink>
+      <ButtonPrimary @click="login">Sign in</ButtonPrimary>
+    </Form>
   </modal>
 </template>
 
 <script>
-import ButtonPrimary from "./ButtonPrimary.vue";
-import InputString from "./InputString.vue";
-import InputPassword from "./InputPassword.vue";
-import FormVertical from "./FormVertical.vue";
-import Modal from "./Modal.vue";
+import ButtonPrimary from "../elements/ButtonPrimary.vue";
+import ButtonLink from "../elements/ButtonLink.vue";
+import InputString from "../elements/InputString.vue";
+import InputPassword from "../elements/InputPassword.vue";
+import Form from "../containers/Form.vue";
+import Modal from "../containers/Modal.vue";
 
 export default {
   data: function() {
@@ -34,9 +36,10 @@ export default {
   },
   components: {
     ButtonPrimary,
+    ButtonLink,
     InputPassword,
     InputString,
-    FormVertical,
+    Form,
     Modal
   },
   methods: {

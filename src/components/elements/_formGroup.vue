@@ -1,3 +1,5 @@
+/** internal component that will not be shown in style guide */
+
 <template>
   <div class="form-group">
     <label v-if="label" :for="id">{{label}}</label>

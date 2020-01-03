@@ -10,7 +10,12 @@ npm install
 npm run serve
 ```
 
-### Start storybook
+### Start styleguidist to view docs and test components
+```
+npm run styleguide
+```
+
+### Start storybook (deprecated, will be removed)
 ```
 npm run storybook:serve
 ```
@@ -19,11 +24,16 @@ npm run storybook:serve
 ```
 npm run build
 ```
-### Compiles storybook into folder storybook-static
+
+### Compiles styleguide into folder storybook-static (deprecated)
 ```
 npm run storybook:build
 ```
 
+### Compiles storybook into folder storybook-static (deprecated)
+```
+npm run storybook:build
+```
 
 ### Lints and fixes files
 ```
