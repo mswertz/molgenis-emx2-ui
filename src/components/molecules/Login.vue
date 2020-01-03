@@ -7,7 +7,7 @@
     </span>
     <ButtonPrimary v-else @click="modal=true">Sign in</ButtonPrimary>
     <Modal v-if="modal" title="Sign in" @close="close" display="true">
-      <LoginForm @login="login" @close="modal=false" />
+      <LoginForm @login="login" @cancel="cancel" :error="error" />
     </Modal>
   </div>
 </template>
@@ -28,7 +28,9 @@ export default {
   },
   props: {
     /** when user name is provided, user is assumed to be logged in */
-    username: String
+    username: String,
+    /** Error string to be shown in the login dialogue */
+    error: String
   },
   watch: {
     username: {
@@ -55,15 +57,17 @@ export default {
     logout() {
       /** when logout button is pushed */
       this.$emit("logout");
+    },
+    cancel() {
+      this.modal = false;
+      this.$emit("cancel");
     }
   }
 };
 </script>
 
 <docs>
-
-### Examples
-
+Example
 ```
 <template>
   <div>

@@ -33,12 +33,13 @@ export default {
 </script>
 
 <docs>
-### Examples
-
+Example
 ```
 <template>
   <div>
-    <InputString v-model="value" label="My string input label" help="Some help needed?" />
+    <Form>
+      <InputString v-model="value" label="My string input label" help="Some help needed?" />
+    </Form>
     <br />
     You typed: {{value}}
   </div>

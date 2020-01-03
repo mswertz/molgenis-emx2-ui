@@ -15,8 +15,6 @@ export default {
     id: String,
     /** value to be shown as input */
     placeholder: String,
-    /** initial value */
-    value: String,
     /** label to be shown next to the input */
     label: String,
     /** optional help string shown below */

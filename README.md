@@ -1,5 +1,7 @@
 # molgenis-emx2-design-system
 
+This is a preview version of how a MOLGENIS EMX2 design system could look like.
+
 ## Project setup
 ```
 npm install
@@ -44,7 +46,7 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Notes
-Installed storybook and styleguidist
+Installed storybook and styleguidist.
 ```
 vue add storybook
 vue add styleguidist

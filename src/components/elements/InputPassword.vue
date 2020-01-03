@@ -34,17 +34,18 @@ export default {
 </script>
 
 <docs>
-### Examples
-
+Examlple
 ```
 <template>
   <div>
-    <InputPassword
-      v-model="value"
-      label="My password label"
-      placholder="type here your password"
-      help="Some help needed?"
-    />
+    <Form>
+      <InputPassword
+        v-model="value"
+        label="My password label"
+        placholder="type here your password"
+        help="Some help needed?"
+      />
+    </Form>
     <br />
     You typed: {{value}}
   </div>

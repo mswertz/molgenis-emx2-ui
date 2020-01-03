@@ -1,5 +1,6 @@
 <template>
   <Form>
+    <Error v-if="error">{{error}}</Error>
     <input-string
       label="Username"
       placeholder="Enter name"
@@ -12,7 +13,7 @@
       help="Please enter the provided password"
       v-model="password"
     />
-    <ButtonLink @click="close">Cancel</ButtonLink>
+    <ButtonLink @click="cancel">Cancel</ButtonLink>
     <ButtonPrimary @click="login">Sign in</ButtonPrimary>
   </Form>
 </template>
@@ -31,6 +32,9 @@ export default {
       password: null
     };
   },
+  props: {
+    error: String
+  },
   components: {
     ButtonPrimary,
     ButtonLink,
@@ -40,24 +44,29 @@ export default {
   },
   methods: {
     login() {
+      /** when login is pushed
+       * @arg username {string}
+       * @arg password {string}
+       */
       this.$emit("login", this.username, this.password);
     },
-    close() {
-      this.$emit("close");
+    cancel() {
+      /**
+       * when cancel is pushed
+       */
+      this.$emit("cancel");
     }
   }
 };
 </script>
 
 <docs>
-
-### Example
-
+Example
 ```
 <template>
   <div>
     <ButtonPrimary v-if="display == false" @click="display=true">Show</ButtonPrimary>
-    <LoginForm v-else @login="loginTest" @logout="logoutTest" @close="display = false" />
+    <LoginForm v-else @login="loginTest" @cancel="display = false" />
   </div>
 </template>
 <script>
@@ -72,10 +81,6 @@ export default {
     loginTest(username, password) {
       alert("login with username " + username + " and password " + password);
       this.username = username;
-    },
-    logoutTest() {
-      alert("logout");
-      this.username = null;
     }
   }
 };

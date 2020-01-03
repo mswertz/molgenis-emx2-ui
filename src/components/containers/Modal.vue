@@ -58,7 +58,7 @@ export default {
 
 <docs>
 
-### Examples
+Example
 
 ```
 <template>

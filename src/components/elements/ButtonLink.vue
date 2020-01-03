@@ -25,15 +25,12 @@ export default {
 </script>
 
 <docs>
-### Examples
-
-With hyperlink
-
+Example with hyperlink
 ```jsx
 <ButtonLink href="http://google.com">Hello hyperlink</ButtonLink>
 ```
 
-With action
+Example with action
 
 ```jsx
 <ButtonLink v-on:click="action('hello')">Hello action</ButtonLink>

@@ -21,7 +21,7 @@ export default {
 
 <docs>
 
-### Examples
+Example 
 
 ```jsx
 <Card title="My first card">

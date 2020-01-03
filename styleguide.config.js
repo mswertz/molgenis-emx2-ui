@@ -1,18 +1,18 @@
 module.exports = {
 	// set your styleguidist configuration here
 	title: 'MOLGENIS EMX2 Style Guide',
-	// components: 'src/components/**/[A-Z]*.vue',
-	// defaultExample: true,
-	// sections: [
-	//   {
-	//     name: 'First Section',
-	//     components: 'src/components/**/[A-Z]*.vue'
-	//   }
-	// ],
-	// webpackConfig: {
-	//   // custom config goes here
-	// },
-	exampleMode: 'expand',
+	//here proxy
+	webpackConfig: {
+		devServer: {
+			proxy: {
+				'/api': 'http://localhost:8080'
+			},
+			headers: {
+				'Access-Control-Allow-Origin': '*'
+			}
+		}
+	},
+	exampleMode: 'collapse',
 	template: {
 		head: {
 			links: [
@@ -42,6 +42,10 @@ module.exports = {
 		{
 			name: 'Molecules',
 			components: 'src/components/molecules/[A-Z]*.vue'
+		},
+		{
+			name: 'Molgenis',
+			components: 'src/components/molgenis/[A-Z]*.vue'
 		}
 	]
 }
