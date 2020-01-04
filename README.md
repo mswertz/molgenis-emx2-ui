@@ -2,7 +2,7 @@
 
 This is a preview version of how a MOLGENIS EMX2 design system could look like, uses styleguidist. It rocks.
 
-See result at http://mswertz.github.io/molgenis-emx2-gui
+See result at https://mswertz.github.io/molgenis-emx2-ui/ (include trailing '/')
 
 ## Project setup
 ```
