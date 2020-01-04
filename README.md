@@ -2,6 +2,8 @@
 
 This is a preview version of how a MOLGENIS EMX2 design system could look like, uses styleguidist. It rocks.
 
+See result at http://mswertz.github.io/molgenis-emx2-gui
+
 ## Project setup
 ```
 npm install
@@ -12,7 +14,7 @@ npm install
 npm run styleguide
 ```
 
-### Compiles styleguide into folder 'styleguide'
+### Compiles styleguide into folder 'docs' which is automatically moved into http://mswertz.github.io/molgenis-emx2-gui
 ```
 npm run styleguide:build
 ```
@@ -22,7 +24,7 @@ npm run styleguide:build
 Storybook will be removed but now stays for demo purposes.
 Todo:
 *  create a proper distribution of the library part for reuse.
-*  deploy styleguide somewhere for demo (github pages maybe?)
+*  deploy styleguide somewhere for demo (github pages maybe?    )
 
 
 ### Compiles and hot-reloads for development

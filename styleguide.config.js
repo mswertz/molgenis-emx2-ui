@@ -26,6 +26,7 @@ module.exports = {
 			]
 		}
 	},
+	styleguideDir: "docs",
 	sections: [
 		{
 			name: 'Introduction',
