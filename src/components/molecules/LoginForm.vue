@@ -1,6 +1,6 @@
 <template>
   <Form>
-    <Error v-if="error">{{error}}</Error>
+    <ErrorMessage v-if="error">{{error}}</ErrorMessage>
     <input-string
       label="Username"
       placeholder="Enter name"
@@ -13,16 +13,17 @@
       help="Please enter the provided password"
       v-model="password"
     />
-    <ButtonLink @click="cancel">Cancel</ButtonLink>
+    <ButtonCancel @click="cancel">Cancel</ButtonCancel>
     <ButtonPrimary @click="login">Sign in</ButtonPrimary>
   </Form>
 </template>
 
 <script>
 import ButtonPrimary from "../elements/ButtonPrimary.vue";
-import ButtonLink from "../elements/ButtonLink.vue";
+import ButtonCancel from "../elements/ButtonCancel.vue";
 import InputString from "../elements/InputString.vue";
 import InputPassword from "../elements/InputPassword.vue";
+import ErrorMessage from "../elements/ErrorMessage.vue";
 import Form from "../containers/Form.vue";
 
 export default {
@@ -37,9 +38,10 @@ export default {
   },
   components: {
     ButtonPrimary,
-    ButtonLink,
+    ButtonCancel,
     InputPassword,
     InputString,
+    ErrorMessage,
     Form
   },
   methods: {
@@ -48,12 +50,18 @@ export default {
        * @arg username {string}
        * @arg password {string}
        */
-      this.$emit("login", this.username, this.password);
+      if (this.username == null || this.password == null) {
+        this.error = "Username and password should be filled in";
+      } else {
+        this.error = null;
+        this.$emit("login", this.username, this.password);
+      }
     },
     cancel() {
       /**
        * when cancel is pushed
        */
+      this.error = null;
       this.$emit("cancel");
     }
   }

@@ -6,6 +6,6 @@
 
 <docs>
 ```
-<Error>Something bad</Error>
+<ErrorMessage>Something bad</ErrorMessage>
 ```
 </docs>

@@ -1,9 +1,5 @@
 <template>
-  <a v-if="href" type="button" class="btn btn-primary" :href="href">
-    <!-- @slot label that is shown on the button -->
-    <slot />
-  </a>
-  <button v-else type="button" class="btn btn-primary" @click="onClick">
+  <button type="button" class="btn btn-primary" @click="onClick">
     <slot />
   </button>
 </template>
@@ -11,10 +7,6 @@
 <script>
 /** Button that is shown as a primary action */
 export default {
-  props: {
-    /** hyperlink that is followed when clicked */
-    href: String
-  },
   methods: {
     onClick() {
       /** emitted on click */
@@ -25,15 +17,10 @@ export default {
 </script>
 
 <docs>
-Example with hyperlink
-```jsx
-<ButtonPrimary href="http://google.com">Hello hyperlink</ButtonPrimary>
-```
-
-Example with action
+Example
 
 ```jsx
-<ButtonPrimary v-on:click="action('hello')">Hello action</ButtonPrimary>
+<ButtonPrimary v-on:click="alert('hello');">Action</ButtonPrimary>
 ```
 
 </docs>

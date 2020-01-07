@@ -6,7 +6,7 @@
       <ButtonPrimary @click="logout">Sign out</ButtonPrimary>
     </span>
     <ButtonPrimary v-else @click="modal=true">Sign in</ButtonPrimary>
-    <Modal v-if="modal" title="Sign in" @close="close" display="true">
+    <Modal v-if="modal" title="Sign in" @close="cancel" display="true">
       <LoginForm @login="login" @cancel="cancel" :error="error" />
     </Modal>
   </div>
