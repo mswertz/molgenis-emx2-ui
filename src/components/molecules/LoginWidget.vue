@@ -3,9 +3,9 @@
   <div>
     <span v-if="username">
       Hi {{username}}
-      <ButtonPrimary @click="logout">Sign out</ButtonPrimary>
+      <ButtonAction @click="logout">Sign out</ButtonAction>
     </span>
-    <ButtonPrimary v-else @click="modal=true">Sign in</ButtonPrimary>
+    <ButtonAction v-else @click="modal=true">Sign in</ButtonAction>
     <Modal v-if="modal" title="Sign in" @close="cancel" display="true">
       <LoginForm @login="login" @cancel="cancel" :error="error" />
     </Modal>
@@ -14,7 +14,7 @@
 
 <!-- on mount will check login status and show login button accordingly -->
 <script>
-import ButtonPrimary from "../elements/ButtonPrimary.vue";
+import ButtonAction from "../elements/ButtonAction.vue";
 import LoginForm from "./LoginForm.vue";
 import Modal from "../containers/Modal.vue";
 
@@ -42,7 +42,7 @@ export default {
     }
   },
   components: {
-    ButtonPrimary,
+    ButtonAction,
     LoginForm,
     Modal
   },
@@ -71,7 +71,7 @@ Example
 ```
 <template>
   <div>
-    <Login :username="username" @login="loginTest" @logout="logoutTest" />
+    <LoginWidget :username="username" @login="loginTest" @logout="logoutTest" />
   </div>
 </template>
 <script>

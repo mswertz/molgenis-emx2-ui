@@ -44,9 +44,9 @@ module.exports = {
 			name: 'Molecules',
 			components: 'src/components/molecules/[A-Z]*.vue'
 		},
-		{
-			name: 'Molgenis',
-			components: 'src/components/molgenis/[A-Z]*.vue'
+		{	
+			name: 'Organisms',
+			components: 'src/components/organisms/[A-Z]*.vue'
 		}
 	]
 }

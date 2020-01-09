@@ -1,11 +1,17 @@
 <template>
   <div>
-    <Login :username="username" @login="login" @logout="logout" @cancel="cancel" :error="error" />
+    <LoginWidget
+      :username="username"
+      @login="login"
+      @logout="logout"
+      @cancel="cancel"
+      :error="error"
+    />
   </div>
 </template>
 
 <script>
-import Login from "../molecules/Login.vue";
+import LoginWidget from "../molecules/LoginWidget.vue";
 import { request } from "graphql-request";
 
 const endpoint = "/api/graphql";
@@ -19,7 +25,7 @@ export default {
     };
   },
   components: {
-    Login
+    LoginWidget
   },
   methods: {
     cancel() {
@@ -67,6 +73,6 @@ export default {
 <docs>
 Example
 ```
-<MLogin/>
+<Login/>
 ```
 </docs>

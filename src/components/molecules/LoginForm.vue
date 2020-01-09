@@ -1,6 +1,6 @@
 <template>
   <Form>
-    <ErrorMessage v-if="error">{{error}}</ErrorMessage>
+    <MessageError v-if="error">{{error}}</MessageError>
     <input-string
       label="Username"
       placeholder="Enter name"
@@ -14,16 +14,16 @@
       v-model="password"
     />
     <ButtonCancel @click="cancel">Cancel</ButtonCancel>
-    <ButtonPrimary @click="login">Sign in</ButtonPrimary>
+    <ButtonAction @click="login">Sign in</ButtonAction>
   </Form>
 </template>
 
 <script>
-import ButtonPrimary from "../elements/ButtonPrimary.vue";
+import ButtonAction from "../elements/ButtonAction.vue";
 import ButtonCancel from "../elements/ButtonCancel.vue";
 import InputString from "../elements/InputString.vue";
 import InputPassword from "../elements/InputPassword.vue";
-import ErrorMessage from "../elements/ErrorMessage.vue";
+import MessageError from "../elements/MessageError.vue";
 import Form from "../containers/Form.vue";
 
 export default {
@@ -37,11 +37,11 @@ export default {
     error: String
   },
   components: {
-    ButtonPrimary,
+    ButtonAction,
     ButtonCancel,
     InputPassword,
     InputString,
-    ErrorMessage,
+    MessageError,
     Form
   },
   methods: {
@@ -73,7 +73,7 @@ Example
 ```
 <template>
   <div>
-    <ButtonPrimary v-if="display == false" @click="display=true">Show</ButtonPrimary>
+    <ButtonAction v-if="display == false" @click="display=true">Show</ButtonAction>
     <LoginForm v-else @login="loginTest" @cancel="display = false" />
   </div>
 </template>

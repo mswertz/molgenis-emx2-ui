@@ -20,7 +20,7 @@ export default {
 Example
 
 ```jsx
-<ButtonPrimary v-on:click="alert('hello');">Action</ButtonPrimary>
+<ButtonAction v-on:click="alert('hello');">Action</ButtonAction>
 ```
 
 </docs>

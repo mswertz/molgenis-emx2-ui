@@ -63,11 +63,11 @@ Example
 ```
 <template>
   <div>
-    <ButtonPrimary @click="toggle">Toggle modal</ButtonPrimary>
+    <ButtonAction @click="toggle">Toggle modal</ButtonAction>
     <Modal title="My first modal" @close="toggle" :display="display">
       Here is the contents
       <p />
-      <ButtonPrimary @click="toggle">My own additional close</ButtonPrimary>
+      <ButtonAction @click="toggle">My own additional close</ButtonAction>
     </Modal>
   </div>
 </template>

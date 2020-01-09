@@ -26,7 +26,7 @@ Example
 ```jsx
 <Card title="My first card">
   Hello world
-  <ButtonPrimary>Hello</ButtonPrimary>
+  <ButtonAction>Hello</ButtonAction>
 </Card>
 ```
 

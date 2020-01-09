@@ -12,18 +12,18 @@
 </template>
 
 <script>
-import AbstractInput from "./_formGroup.vue";
+import _formGroup from "./_formGroup.vue";
 
 /** Input for passwords */
 export default {
-  extends: AbstractInput,
+  extends: _formGroup,
   data: function() {
     return {
       value: null
     };
   },
   components: {
-    "form-group": AbstractInput
+    "form-group": _formGroup
   },
   watch: {
     value() {

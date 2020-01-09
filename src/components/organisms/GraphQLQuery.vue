@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ButtonPrimary @click="load">Load</ButtonPrimary>
+    <ButtonAction @click="load">Load</ButtonAction>
     <br />
     path: {{path}}
     <br />
@@ -14,7 +14,7 @@
 
 <script>
 import { request } from "graphql-request";
-import ButtonPrimary from "../elements/ButtonPrimary.vue";
+import ButtonAction from "../elements/ButtonAction.vue";
 
 export default {
   data: function() {
@@ -28,7 +28,7 @@ export default {
     query: String
   },
   components: {
-    ButtonPrimary
+    ButtonAction
   },
   methods: {
     load() {
