@@ -6,6 +6,6 @@
 
 <docs>
 ```
-<MessageSuccess>Something good</MessageSuccess>
+<MessageSuccess>Something <strong>good</strong></MessageSuccess>
 ```
 </docs>
