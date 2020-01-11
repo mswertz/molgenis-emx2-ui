@@ -18,7 +18,7 @@
             <span v-else-if="'REF' === column.columnType">{{row[column.name][column.refColumnName]}}</span>
             <span v-else-if="column.columnType.includes('_ARRAY')"></span>
             <span v-else>{{row[column.name]}}</span>
-          </td>
+          </td> 
         </tr>
       </tbody>
     </table>
