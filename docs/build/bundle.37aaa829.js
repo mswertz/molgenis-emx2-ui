@@ -876,6 +876,17 @@ eval("\nif (false) {}\nvar requireMap = {};\nvar requireInRuntimeBase = __webpac
 
 /***/ }),
 
+/***/ "./node_modules/vue-styleguidist/lib/loaders/examples-loader.js?customLangs=vue|js|jsx!./src/styleguide/organisms.md":
+/*!***************************************************************************************************************************!*\
+  !*** ./node_modules/vue-styleguidist/lib/loaders/examples-loader.js?customLangs=vue|js|jsx!./src/styleguide/organisms.md ***!
+  \***************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("\nif (false) {}\nvar requireMap = {};\nvar requireInRuntimeBase = __webpack_require__(/*! ./node_modules/vue-styleguidist/lib/loaders/utils/client/requireInRuntime */ \"./node_modules/vue-styleguidist/lib/loaders/utils/client/requireInRuntime.js\");\nvar requireInRuntime = requireInRuntimeBase.bind(null, requireMap);\nvar evalInContextBase = __webpack_require__(/*! ./node_modules/vue-styleguidist/lib/loaders/utils/client/evalInContext */ \"./node_modules/vue-styleguidist/lib/loaders/utils/client/evalInContext.js\");\nvar evalInContext = evalInContextBase.bind(null, \n\t\"\", \n\tnull, null)\nmodule.exports = [{\n        'type': 'markdown',\n        'content': 'Organisms require a working emx2 server backend. Not available in the github pages.'\n    }]\n\n//# sourceURL=webpack:///./src/styleguide/organisms.md?./node_modules/vue-styleguidist/lib/loaders/examples-loader.js?customLangs=vue%7Cjs%7Cjsx");
+
+/***/ }),
+
 /***/ "./node_modules/vue-styleguidist/lib/loaders/vuedoc-loader.js!./src/components/containers/Card.vue":
 /*!*********************************************************************************************************!*\
   !*** ./node_modules/vue-styleguidist/lib/loaders/vuedoc-loader.js!./src/components/containers/Card.vue ***!
