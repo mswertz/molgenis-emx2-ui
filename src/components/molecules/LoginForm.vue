@@ -1,5 +1,5 @@
 <template>
-  <Form>
+  <LayoutForm>
     <MessageError v-if="error">{{error}}</MessageError>
     <input-string
       label="Username"
@@ -15,7 +15,7 @@
     />
     <ButtonCancel @click="cancel">Cancel</ButtonCancel>
     <ButtonAction @click="login">Sign in</ButtonAction>
-  </Form>
+  </LayoutForm>
 </template>
 
 <script>
@@ -24,7 +24,7 @@ import ButtonCancel from "../elements/ButtonCancel.vue";
 import InputString from "../elements/InputString.vue";
 import InputPassword from "../elements/InputPassword.vue";
 import MessageError from "../elements/MessageError.vue";
-import Form from "../containers/Form.vue";
+import LayoutForm from "../elements/LayoutForm.vue";
 
 export default {
   data: function() {
@@ -42,7 +42,7 @@ export default {
     InputPassword,
     InputString,
     MessageError,
-    Form
+    LayoutForm
   },
   methods: {
     login() {

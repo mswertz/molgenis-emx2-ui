@@ -6,9 +6,9 @@
       <ButtonAction @click="logout">Sign out</ButtonAction>
     </span>
     <ButtonAction v-else @click="modal=true">Sign in</ButtonAction>
-    <Modal v-if="modal" title="Sign in" @close="cancel" display="true">
+    <LayoutModal v-if="modal" title="Sign in" @close="cancel" display="true">
       <LoginForm @login="login" @cancel="cancel" :error="error" />
-    </Modal>
+    </LayoutModal>
   </div>
 </template>
 
@@ -16,7 +16,7 @@
 <script>
 import ButtonAction from "../elements/ButtonAction.vue";
 import LoginForm from "./LoginForm.vue";
-import Modal from "../containers/Modal.vue";
+import LayoutModal from "../elements/LayoutModal.vue";
 
 /** Login widget small enough to fit on the screen */
 export default {
@@ -44,7 +44,7 @@ export default {
   components: {
     ButtonAction,
     LoginForm,
-    Modal
+    LayoutModal
   },
   methods: {
     login(username, password) {

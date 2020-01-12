@@ -64,11 +64,11 @@ Example
 <template>
   <div>
     <ButtonAction @click="toggle">Toggle modal</ButtonAction>
-    <Modal title="My first modal" @close="toggle" :display="display">
+    <LayoutModal title="My first modal" @close="toggle" :display="display">
       Here is the contents
       <p />
       <ButtonAction @click="toggle">My own additional close</ButtonAction>
-    </Modal>
+    </LayoutModal>
   </div>
 </template>
 <script>

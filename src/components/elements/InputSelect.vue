@@ -1,5 +1,5 @@
 <template>
-  <form-group v-bind="$props">
+  <form-group :id="id" :label="label" :placeholder="placeholder" :help="help">
     <select class="custom-select" :id="id" v-model="value">
       <option selected hidden>blaat</option>
       <option v-for="(item,index) in items" :key="index" :value="item">{{item}}</option>
@@ -8,26 +8,15 @@
 </template>
 
 <script>
-import _formGroup from "./_formGroup.vue";
+import _baseInput from "./_baseInput.vue";
 
 export default {
-  extends: _formGroup,
-  data: function() {
-    return {
-      value: null
-    };
-  },
+  extends: _baseInput,
   props: {
     selected: String,
     items: Array
   },
-  components: {
-    "form-group": _formGroup
-  },
   watch: {
-    value() {
-      this.$emit("input", this.value);
-    },
     selected(newValue) {
       this.value = newValue;
     }
@@ -45,7 +34,6 @@ Example
       v-model="check"
       :selected="check"
       :items="['lion', 'ape', 'monkey']"
-      id="someid"
     />
     Selected: {{check}}
     <ButtonAction @click="clear">Clear</ButtonAction>

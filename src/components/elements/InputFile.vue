@@ -1,5 +1,5 @@
 <template>
-  <form-group v-bind="$props">
+  <form-group :id="id" :label="label" :placeholder="placeholder" :help="help">
     <div class="custom-file">
       <input type="file" class="custom-file-input" ref="file" :id="id" @change="handleFileUpload" />
       <label class="custom-file-label" :for="id">
@@ -12,13 +12,12 @@
 </template>
 
 <script>
-import _formGroup from "./_formGroup.vue";
+import _baseInput from "./_baseInput.vue";
 
 export default {
-  extends: _formGroup,
+  extends: _baseInput,
   data: function() {
     return {
-      value: null,
       filename: null
     };
   },
@@ -31,13 +30,7 @@ export default {
       this.filename = this.$refs.file.files[0].name;
     }
   },
-  components: {
-    "form-group": _formGroup
-  },
   watch: {
-    value() {
-      this.$emit("input", this.value);
-    },
     file(newValue) {
       this.value = newValue;
     }
@@ -50,7 +43,7 @@ Example
 ```
 <template>
   <div>
-    <InputFile label="My file input" id="test" v-model="check" :file="check" />
+    <InputFile label="My file input" v-model="check" :file="check" />
     Selected: {{check}}
     <ButtonAction @click="clear">Clear</ButtonAction>
   </div>

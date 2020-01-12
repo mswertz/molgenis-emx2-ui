@@ -24,10 +24,10 @@ export default {
 Example 
 
 ```jsx
-<Card title="My first card">
+<LayoutCard title="My first card">
   Hello world
   <ButtonAction>Hello</ButtonAction>
-</Card>
+</LayoutCard>
 ```
 
 </docs>

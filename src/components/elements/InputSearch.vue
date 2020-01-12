@@ -6,14 +6,12 @@
 </template>
 
 <script>
+import _baseInput from "./_baseInput.vue";
+
 export default {
+  extends: _baseInput,
   data: () => {
     return { value: null };
-  },
-  watch: {
-    value() {
-      this.$emit("input", this.value);
-    }
   }
 };
 </script>

@@ -11,7 +11,7 @@
 <script>
 export default {
   props: {
-    /** id of the form input */
+    /** id for which this is the group */
     id: String,
     /** value to be shown as input */
     placeholder: String,

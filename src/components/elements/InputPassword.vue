@@ -1,5 +1,5 @@
 <template>
-  <form-group v-bind="$props">
+  <form-group :id="id" :label="label" :placeholder="placeholder" :help="help">
     <input
       class="form-control"
       type="password"
@@ -12,24 +12,11 @@
 </template>
 
 <script>
-import _formGroup from "./_formGroup.vue";
+import _baseInput from "./_baseInput.vue";
 
 /** Input for passwords */
 export default {
-  extends: _formGroup,
-  data: function() {
-    return {
-      value: null
-    };
-  },
-  components: {
-    "form-group": _formGroup
-  },
-  watch: {
-    value() {
-      this.$emit("input", this.value);
-    }
-  }
+  extends: _baseInput
 };
 </script>
 
@@ -38,14 +25,14 @@ Examlple
 ```
 <template>
   <div>
-    <Form>
+    <LayoutForm>
       <InputPassword
         v-model="value"
         label="My password label"
         placholder="type here your password"
         help="Some help needed?"
       />
-    </Form>
+    </LayoutForm>
     <br />
     You typed: {{value}}
   </div>
