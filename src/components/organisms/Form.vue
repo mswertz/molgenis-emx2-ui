@@ -1,23 +1,39 @@
 <template>
   <div>
-    <LayoutCard v-if="metadata" :title="metadata.name">
+    <LayoutCard v-if="metadata" :title="title">
       <LayoutForm>
         <span v-for="column in metadata.columns" :key="column.name">
-          <StringInput :id="column.name" />
+          <InputString
+            v-model="value[column.name]"
+            :label="column.name"
+            :required="!column.nullable"
+            :error="error[column.name]"
+          />
         </span>
+        <ButtonCancel />
+        <ButtonAction>Save</ButtonAction>
       </LayoutForm>
-    </LayoutCard>
+    </LayoutCard>State:
+    <br />
+    {{JSON.stringify(value,null,2)}}
+    <br />Error:
+    <br />
+    {{JSON.stringify(error,null,2)}}
   </div>
 </template>
 
 <script>
 import LayoutForm from "../elements/LayoutForm.vue";
 import LayoutCard from "../elements/LayoutCard.vue";
+import InputString from "../elements/InputString.vue";
+import ButtonAction from "../elements/ButtonAction.vue";
+import ButtonCancel from "../elements/ButtonCancel.vue";
 
 export default {
   data: function() {
     return {
-      data: null
+      value: {},
+      error: {}
     };
   },
   props: {
@@ -25,7 +41,45 @@ export default {
   },
   components: {
     LayoutForm,
-    LayoutCard
+    LayoutCard,
+    InputString,
+    ButtonAction,
+    ButtonCancel
+  },
+  watch: {
+    value: {
+      handler() {
+        this.metadata.columns.forEach(column => {
+          //when empty and required
+
+          if (
+            this.value[column.name] == null ||
+            /^\s*$/.test(this.value[column.name])
+          ) {
+            if (column.nullable != true) {
+              this.error[column.name] = column.name + " is required ";
+            }
+          } else {
+            if (
+              typeof this.value[column.name] !== "undefined" &&
+              typeof column.validation !== "undefined"
+            ) {
+              let value = this.value[column.name];
+              this.error[column.name] = value;
+              this.error[column.name] = eval(column.validation);
+            } else {
+              delete this.error[column.name];
+            }
+          }
+        });
+      },
+      deep: true
+    }
+  },
+  computed: {
+    title() {
+      return "Edit '" + this.metadata.name + "'";
+    }
   }
 };
 </script>
@@ -54,34 +108,41 @@ export default {
           },
           {
             name: "firstName",
-            columnType: "STRING"
+            columnType: "STRING",
+            nullable: true
           },
           {
             name: "lastName",
-            columnType: "STRING"
+            columnType: "STRING",
+            nullable: true
           },
           {
             name: "email",
             columnType: "STRING",
             validation:
-              "if(!/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/.test(value)) 'Should be valid email address'"
+              "if(!/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/.test(value)) value+'Should be valid email address'",
+            nullable: true
           },
           {
             name: "password",
-            columnType: "STRING"
+            columnType: "STRING",
+            nullable: true
           },
           {
             name: "phone",
-            columnType: "STRING"
+            columnType: "STRING",
+            nullable: true
           },
           {
             name: "userStatus",
-            columnType: "INT"
+            columnType: "INT",
+            nullable: true
           },
           {
             name: "pets",
             columnType: "REF_ARRAY",
-            refColumnName: "name"
+            refColumnName: "name",
+            nullable: true
           }
         ]
       }

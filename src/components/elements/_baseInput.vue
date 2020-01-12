@@ -19,7 +19,11 @@ export default {
     /** label to be shown next to the input */
     label: String,
     /** optional help string shown below */
-    help: String
+    help: String,
+    /** whether required */
+    required: Boolean,
+    /** message when in error state */
+    error: String
   },
   watch: {
     value() {

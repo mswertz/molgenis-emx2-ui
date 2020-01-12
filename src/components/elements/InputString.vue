@@ -1,7 +1,14 @@
 <template>
-  <form-group :id="id" :label="label" :placeholder="placeholder" :help="help">
+  <form-group
+    :id="id"
+    :label="label"
+    :placeholder="placeholder"
+    :help="help"
+    :required="required"
+    :error="error"
+  >
     <input
-      class="form-control"
+      :class="{'form-control':true, 'is-invalid':error}"
       :id="id"
       :aria-describedby="id + 'Help'"
       :placeholder="placeholder"
