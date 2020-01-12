@@ -32,7 +32,7 @@ module.exports = {
 				{
 					rel: 'stylesheet',
 					href:
-						'css/bootstrap-molgenis-blue.min.css'
+						'css/bootstrap-molgenis-blue.css'
 				}, {
 					rel: 'stylesheet',
 					href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'
