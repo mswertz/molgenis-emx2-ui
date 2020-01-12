@@ -68,7 +68,7 @@ export default {
           }
         })
         .catch(error => {
-          alert("error: " + error);
+          this.error = error;
         });
     },
     cancel() {

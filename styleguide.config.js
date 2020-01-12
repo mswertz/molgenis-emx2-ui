@@ -60,6 +60,7 @@ module.exports = {
 		},
 		{
 			name: 'Organisms',
+			content: 'src/styleguide/organisms.md',
 			components: 'src/components/organisms/[A-Z]*.vue'
 		}
 	]
