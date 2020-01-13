@@ -1,12 +1,5 @@
 <template>
-  <form-group
-    :id="id"
-    :label="label"
-    :placeholder="placeholder"
-    :help="help"
-    :required="required"
-    :error="error"
-  >
+  <form-group v-bind="$props">
     <input
       :class="{'form-control':true, 'is-invalid':error}"
       :id="id"

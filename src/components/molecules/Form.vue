@@ -50,25 +50,28 @@ export default {
     value: {
       handler() {
         this.metadata.columns.forEach(column => {
-          //when empty and required
-
+          delete this.error[column.name];
           if (
+            //when empty
             this.value[column.name] == null ||
             /^\s*$/.test(this.value[column.name])
           ) {
-            if (column.nullable != true) {
+            if (
+              //when required
+              column.nullable != true
+            ) {
               this.error[column.name] = column.name + " is required ";
             }
           } else {
+            //when not empty
             if (
+              //when validation
               typeof this.value[column.name] !== "undefined" &&
               typeof column.validation !== "undefined"
             ) {
               let value = this.value[column.name];
               this.error[column.name] = value;
               this.error[column.name] = eval(column.validation);
-            } else {
-              delete this.error[column.name];
             }
           }
         });
@@ -120,7 +123,7 @@ export default {
             name: "email",
             columnType: "STRING",
             validation:
-              "if(!/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/.test(value)) value+'Should be valid email address'",
+              "if(!/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/.test(value)) 'Should be valid email address'",
             nullable: true
           },
           {
