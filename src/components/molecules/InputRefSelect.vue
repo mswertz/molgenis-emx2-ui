@@ -23,11 +23,11 @@
 
 <script>
 import _baseInput from "../elements/_baseInput";
-import _graphqlTable from "./_graphqlTable";
+import _graphqlTableMixin from "./_graphqlTableMixin";
 
 export default {
   extends: _baseInput,
-  mixins: [_graphqlTable],
+  mixins: [_graphqlTableMixin],
   data: function() {
     return {
       showSelect: false
