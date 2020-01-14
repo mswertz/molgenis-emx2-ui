@@ -20,7 +20,7 @@
 import _graphqlTableMixin from "./_graphqlTableMixin";
 
 export default {
-  extends: _graphqlTable,
+  extends: _graphqlTableMixin,
   props: {
     selectable: {
       String,
