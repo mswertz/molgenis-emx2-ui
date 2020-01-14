@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import _graphqlTable from "./_graphqlTable";
+import _graphqlTableMixin from "./_graphqlTableMixin";
 
 export default {
   extends: _graphqlTable,
