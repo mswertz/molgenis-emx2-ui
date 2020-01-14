@@ -1,9 +1,9 @@
 <template>
   <div
-    v-if="display"
+    v-if="show"
     class="modal fade show"
     role="dialog"
-    style="display:block"
+    style="display:block "
     tabindex="-1"
     aria-modal="true"
     @click="closeUnlessInDialog"
@@ -22,7 +22,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="overflow: scroll">
           <!-- @slot contents to be shown on the modal -->
           <slot />
         </div>
@@ -37,9 +37,9 @@ export default {
     /** Shown as the title of the model */
     title: String,
     /** When true the modal will be shown */
-    display: {
+    show: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   methods: {

@@ -51,10 +51,6 @@ module.exports = {
 			components: 'src/components/elements/[A-Z]*.vue'
 		},
 		{
-			name: 'Containers',
-			components: 'src/components/containers/[A-Z]*.vue'
-		},
-		{
 			name: 'Molecules',
 			components: 'src/components/molecules/[A-Z]*.vue'
 		},

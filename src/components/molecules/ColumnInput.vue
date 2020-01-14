@@ -1,7 +1,7 @@
 <template >
   <InputString v-if="columnType ==='STRING'" v-bind="$props" v-model="value" />
   <InputString v-else-if="columnType ==='INT'" v-bind="$props" v-model="value" />
-  <div v-else>UNSUPPORTED TYPE {{label}} {{isString}}</div>
+  <div v-else>UNSUPPORTED TYPE {{label}}</div>
 </template>
 
 <script>

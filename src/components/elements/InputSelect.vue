@@ -1,5 +1,5 @@
 <template>
-  <form-group :id="id" :label="label" :placeholder="placeholder" :help="help">
+  <form-group v-bind="$props">
     <select class="custom-select" :id="id" v-model="value">
       <option selected hidden>blaat</option>
       <option v-for="(item,index) in items" :key="index" :value="item">{{item}}</option>

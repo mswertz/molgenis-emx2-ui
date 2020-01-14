@@ -90,6 +90,8 @@ export default {
 </script>
 
 <docs>
+WORK IN PROGRESS
+
 Example
 ```
 <Import/>

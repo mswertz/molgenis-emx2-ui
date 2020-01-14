@@ -6,7 +6,7 @@
       <ButtonAction @click="logout">Sign out</ButtonAction>
     </span>
     <ButtonAction v-else @click="modal=true">Sign in</ButtonAction>
-    <LayoutModal v-if="modal" title="Sign in" @close="cancel" display="true">
+    <LayoutModal v-if="modal" title="Sign in" @close="cancel" show="true">
       <LoginForm @login="login" @cancel="cancel" :error="error" />
     </LayoutModal>
   </div>
