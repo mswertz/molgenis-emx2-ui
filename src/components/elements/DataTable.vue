@@ -7,15 +7,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(row,index) in data" :key="index">
+      <tr v-for="(row,index) in data" :key="index" @click="onRowClick(row)">
         <td v-if="selectable">
-          <input type="checkbox" :checked="isSelected(row)" @click="onRowClick(row)" />
+          <input type="checkbox" :checked="isSelected(row)" />
         </td>
-        <td
-          v-for="column in metadata.columns"
-          :key="column.name+'_'+index"
-          @click="onRowClick(row)"
-        >
+        <td v-for="column in metadata.columns" :key="column.name+'_'+index">
           <ul class="list-unstyled" v-if="['REF_ARRAY', 'REFBACK'].includes(column.columnType)">
             <li v-for="item in row[column.name]" :key="item">{{item[column.refColumnName]}}</li>
           </ul>
@@ -82,13 +78,11 @@ Example
 <script>
 export default {
   methods: {
-    select(row) {
-      this.selectedItems.push(row[this.metadata.pkey]);
+    select(value) {
+      this.selectedItems.push(value);
     },
-    deselect(row) {
-      this.selectedItems = this.selectedItems.filter(
-        item => item !== row[this.metadata.pkey]
-      );
+    deselect(value) {
+      this.selectedItems = this.selectedItems.filter(item => item !== value);
     }
   },
   data: function() {

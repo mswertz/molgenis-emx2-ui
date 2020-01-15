@@ -1,30 +1,32 @@
 <template>
-  <div
-    v-if="show"
-    class="modal fade show"
-    role="dialog"
-    style="display:block "
-    tabindex="-1"
-    aria-modal="true"
-    @click="closeUnlessInDialog"
-  >
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div v-if="title" class="modal-header">
-          <h5 class="modal-title">{{title}}</h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-            @click="close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" style="overflow: scroll">
-          <!-- @slot contents to be shown on the modal -->
-          <slot />
+  <div>
+    <div
+      v-if="show"
+      class="modal fade show"
+      role="dialog"
+      style="display:block"
+      tabindex="-1"
+      aria-modal="true"
+      @click="closeUnlessInDialog"
+    >
+      <div v-if="show" class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+        <div class="modal-content">
+          <div v-if="title" class="modal-header">
+            <h5 class="modal-title">{{title}}</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              @click="close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="overflow: scroll">
+            <!-- @slot contents to be shown on the modal -->
+            <slot />
+          </div>
         </div>
       </div>
     </div>
@@ -56,6 +58,12 @@ export default {
 };
 </script>
 
+<style scoped>
+.modal {
+  background: white;
+}
+</style>
+
 <docs>
 
 Example
@@ -64,7 +72,7 @@ Example
 <template>
   <div>
     <ButtonAction @click="toggle">Toggle modal</ButtonAction>
-    <LayoutModal title="My first modal" @close="toggle" :display="display">
+    <LayoutModal title="My first modal" @close="toggle" :show="show">
       Here is the contents
       <p />
       <ButtonAction @click="toggle">My own additional close</ButtonAction>
@@ -75,12 +83,12 @@ Example
 export default {
   data: function() {
     return {
-      display: false
+      show: false
     };
   },
   methods: {
     toggle() {
-      this.display = !this.display;
+      this.show = !this.show;
     }
   }
 };

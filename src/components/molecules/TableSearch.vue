@@ -1,11 +1,12 @@
 <template>
-  <div v-if="loading" class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-  <div v-else>
+  <div>
     <MessageError v-if="error">{{error}}</MessageError>
     <InputSearch v-if="table" v-model="searchTerms" />
+    <div v-if="loading" class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
     <DataTable
+      v-else
       :metadata="metadata"
       :data="data"
       :selectable="selectable"
