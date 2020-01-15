@@ -2,20 +2,20 @@
   <table class="table table-bordered" :class="{ 'table-hover': selectable }">
     <thead>
       <tr>
-        <th v-if="selectable"></th>
+        <th v-if="selectColumn"></th>
         <th v-for="column in metadata.columns" :key="column.name" scope="col">{{column.name}}</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(row,index) in data" :key="index" @click="onRowClick(row)">
-        <td v-if="selectable">
+        <td v-if="selectColumn">
           <input type="checkbox" :checked="isSelected(row)" />
         </td>
         <td v-for="column in metadata.columns" :key="column.name+'_'+index">
           <ul class="list-unstyled" v-if="['REF_ARRAY', 'REFBACK'].includes(column.columnType)">
-            <li v-for="item in row[column.name]" :key="item">{{item[column.refColumnName]}}</li>
+            <li v-for="item in row[column.name]" :key="item">{{item[column.refColumn]}}</li>
           </ul>
-          <span v-else-if="'REF' === column.columnType">{{row[column.name][column.refColumnName]}}</span>
+          <span v-else-if="'REF' === column.columnType">{{row[column.name][column.refColumn]}}</span>
           <span v-else-if="column.columnType.includes('_ARRAY')"></span>
           <span v-else>{{row[column.name]}}</span>
         </td>
@@ -32,8 +32,8 @@ export default {
     metadata: Object,
     /** molgenis table data as retrieved from graphql complying with metadata */
     data: Array,
-    /** set to 'true' to add a column with checkboxes. This will result in @select(row) and @deselect(row) events when used*/
-    selectable: String,
+    /** set to create select boxes that will yield this columns value when selected. */
+    selectColumn: String,
     /** any selected items (or one item, in case of single selection) */
     selectedItems: Array
   },
@@ -41,17 +41,17 @@ export default {
     isSelected(row) {
       return (
         this.selectedItems != null &&
-        this.selectedItems.includes(row[this.metadata.pkey])
+        this.selectedItems.includes(row[this.selectColumn])
       );
     },
     onRowClick(row) {
-      if (this.selectable === true || this.selectable == "true") {
+      if (this.selectColumn !== undefined) {
         if (this.isSelected(row)) {
           /** when a row is deselected, with pkey as parameter */
-          this.$emit("deselect", row[this.metadata.pkey]);
+          this.$emit("deselect", row[this.selectColumn]);
         } else {
           /** when a row is selected, row[this.metadata.pkey]*/
-          this.$emit("select", row[this.metadata.pkey]);
+          this.$emit("select", row[this.selectColumn]);
         }
       }
     }
@@ -67,7 +67,7 @@ Example
     <DataTable
       :data="data"
       :metadata="metadata"
-      selectable="true"
+      selectColumn="name"
       :selectedItems="selectedItems"
       @select="select"
       @deselect="deselect"
@@ -135,7 +135,8 @@ export default {
           {
             name: "category",
             columnType: "REF",
-            refColumnName: "name"
+            refTable: "Category",
+            refColumn: "name"
           },
           {
             name: "photoUrls",
@@ -148,7 +149,8 @@ export default {
           {
             name: "tags",
             columnType: "REF_ARRAY",
-            refColumnName: "name"
+            refTable: "Tag",
+            refColumn: "name"
           },
           {
             name: "weight",
@@ -157,7 +159,9 @@ export default {
           {
             name: "orders",
             columnType: "REFBACK",
-            refColumnName: "orderId"
+            refTable: "Order",
+            refColumn: "orderId",
+            mappedBy: "pet"
           }
         ]
       }

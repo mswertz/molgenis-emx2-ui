@@ -3,10 +3,12 @@
     <LayoutCard v-if="metadata" :title="title">
       <LayoutForm>
         <span v-for="column in metadata.columns" :key="column.name">
-          <InputString
+          <InputColumn
+            :columnType="column.columnType"
+            :refTable="column.refTable"
+            :refColumn="column.refColumn"
+            :schema="schema"
             v-model="value[column.name]"
-            :label="column.name"
-            :required="!column.nullable"
             :error="error[column.name]"
           />
         </span>
@@ -25,7 +27,7 @@
 <script>
 import LayoutForm from "../elements/LayoutForm.vue";
 import LayoutCard from "../elements/LayoutCard.vue";
-import InputString from "../elements/InputString.vue";
+import InputColumn from "../molecules/InputColumn.vue";
 import ButtonAction from "../elements/ButtonAction.vue";
 import ButtonCancel from "../elements/ButtonCancel.vue";
 
@@ -42,7 +44,7 @@ export default {
   components: {
     LayoutForm,
     LayoutCard,
-    InputString,
+    InputColumn,
     ButtonAction,
     ButtonCancel
   },
@@ -103,49 +105,43 @@ export default {
     return {
       data: {},
       metadata: {
-        name: "User",
+        name: "Pet",
+        pkey: "name",
         columns: [
           {
-            name: "username",
+            name: "name",
             columnType: "STRING"
           },
           {
-            name: "firstName",
-            columnType: "STRING",
-            nullable: true
+            name: "category",
+            columnType: "REF",
+            refTable: "Category",
+            refColumn: "name"
           },
           {
-            name: "lastName",
-            columnType: "STRING",
-            nullable: true
+            name: "photoUrls",
+            columnType: "STRING_ARRAY"
           },
           {
-            name: "email",
-            columnType: "STRING",
-            validation:
-              "if(!/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/.test(value)) 'Should be valid email address'",
-            nullable: true
+            name: "status",
+            columnType: "STRING"
           },
           {
-            name: "password",
-            columnType: "STRING",
-            nullable: true
-          },
-          {
-            name: "phone",
-            columnType: "STRING",
-            nullable: true
-          },
-          {
-            name: "userStatus",
-            columnType: "INT",
-            nullable: true
-          },
-          {
-            name: "pets",
+            name: "tags",
             columnType: "REF_ARRAY",
-            refColumnName: "name",
-            nullable: true
+            refTable: "Tag",
+            refColumn: "name"
+          },
+          {
+            name: "weight",
+            columnType: "DECIMAL"
+          },
+          {
+            name: "orders",
+            columnType: "REFBACK",
+            refTable: "Order",
+            refColumn: "orderId",
+            mappedBy: "pet"
           }
         ]
       }

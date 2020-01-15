@@ -9,7 +9,7 @@
       v-else
       :metadata="metadata"
       :data="data"
-      :selectable="selectable"
+      :selectColumn="selectColumn"
       :selectedItems="selectedItems"
       @select="select"
       @deselect="deselect"
@@ -23,18 +23,15 @@ import _graphqlTableMixin from "./_graphqlTableMixin";
 export default {
   extends: _graphqlTableMixin,
   props: {
-    selectable: {
-      String,
-      default: false
-    },
+    selectColumn: String,
     selectedItems: Array
   },
   methods: {
-    select(pkey) {
-      this.$emit("select", pkey);
+    select(value) {
+      this.$emit("select", value);
     },
-    deselect(pkey) {
-      this.$emit("deselect", pkey);
+    deselect(value) {
+      this.$emit("deselect", value);
     }
   }
 };

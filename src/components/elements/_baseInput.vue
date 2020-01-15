@@ -23,7 +23,9 @@ export default {
     /** whether required */
     required: Boolean,
     /** message when in error state */
-    error: String
+    error: String,
+    /** default value */
+    default: String
   },
   watch: {
     value() {

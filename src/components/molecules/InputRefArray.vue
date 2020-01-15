@@ -13,7 +13,7 @@
         <DataTable
           :metadata="metadata"
           :data="data"
-          :selectable="true"
+          :selectColumn="refColumn"
           :selectedItems="value"
           @select="select"
           @deselect="deselect"
@@ -35,7 +35,14 @@ export default {
       showSelect: false
     };
   },
+  props: {
+    refTable: String,
+    refColumn: String
+  },
   computed: {
+    table() {
+      return this.refTable; //to serve the mixin
+    },
     title() {
       return "Select " + this.table;
     }
@@ -61,6 +68,6 @@ export default {
 <docs>
 Example
 ```
-<InputRefArraySelect schema="pet store" table="Pet"  />
+<InputRefArray schema="pet store" refTable="Pet" refColumn="name"  />
 ```
 </docs>

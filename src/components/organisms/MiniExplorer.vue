@@ -1,17 +1,19 @@
 <template>
   <div class="table-responsive">
     <MessageError v-if="error">{{error}}</MessageError>
-    <InputSelect v-model="table" :items="tableNames" placeholder="Select table..." />
-    <TableSearch :schema="schema" :table="table" />
+    <NavTabs v-model="table" :items="tableNames" :value="table" label="Choose table: " />
+    <LayoutCard v-if="table" :title="title">
+      <TableSearch :schema="schema" :table="table" />
+    </LayoutCard>
     <br />
-    table selected: {{table}}
   </div>
 </template>
 
 <script>
 import MessageError from "../elements/MessageError.vue";
-import InputSelect from "../elements/InputSelect.vue";
+import NavTabs from "../elements/NavTabs.vue";
 import TableSearch from "../molecules/TableSearch.vue";
+import LayoutCard from "../elements/LayoutCard.vue";
 
 import { request } from "graphql-request";
 
@@ -19,7 +21,7 @@ export default {
   data: function() {
     return {
       table: null,
-      tables: {},
+      tableNames: [],
       error: null
     };
   },
@@ -28,18 +30,17 @@ export default {
   },
   components: {
     MessageError,
-    InputSelect,
-    TableSearch
+    NavTabs,
+    TableSearch,
+    LayoutCard
   },
   created() {
-    request(
-      this.endpoint,
-      "{_meta{tables{name,pkey,columns{name,columnType,refColumnName}}}}"
-    )
+    request(this.endpoint, "{_meta{tables{name}}}")
       .then(data => {
-        this.tables = {};
+        this.tableNames = [];
         data._meta.tables.forEach(element => {
-          this.tables[element.name] = element;
+          this.tableNames.push(element.name);
+          this.table = this.tableNames[0]; //default
         });
       })
       .catch(error => (this.error = "internal server error" + error));
@@ -48,8 +49,8 @@ export default {
     endpoint() {
       return "/api/graphql/" + this.schema;
     },
-    tableNames() {
-      return Object.keys(this.tables);
+    title() {
+      return "Table: " + this.table;
     }
   }
 };
@@ -58,6 +59,6 @@ export default {
 <docs>
 Example
 ```
-<Table schema="pet%20store" table="Pet"/>
+<MiniExplorer schema="pet%20store"/>
 ```
 </docs>
