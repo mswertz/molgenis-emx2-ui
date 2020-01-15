@@ -1,5 +1,5 @@
 <template>
-  <table class="table table-bordered" :class="{ 'table-hover': selectable }">
+  <table class="table table-bordered" :class="{ 'table-hover': selectColumn }">
     <thead>
       <tr>
         <th v-if="selectColumn"></th>
@@ -11,9 +11,9 @@
         <td v-if="selectColumn">
           <input type="checkbox" :checked="isSelected(row)" />
         </td>
-        <td v-for="column in metadata.columns" :key="column.name+'_'+index">
+        <td v-for="(column,index2) in metadata.columns" :key="index2">
           <ul class="list-unstyled" v-if="['REF_ARRAY', 'REFBACK'].includes(column.columnType)">
-            <li v-for="item in row[column.name]" :key="item">{{item[column.refColumn]}}</li>
+            <li v-for="(item,index3) in row[column.name]" :key="index3">{{item[column.refColumn]}}</li>
           </ul>
           <span v-else-if="'REF' === column.columnType">{{row[column.name][column.refColumn]}}</span>
           <span v-else-if="column.columnType.includes('_ARRAY')"></span>

@@ -7,7 +7,9 @@ export default {
   data: function() {
     return {
       id: null,
-      value: null
+      value: null,
+      /** message when in error state */
+      error: null
     };
   },
   components: {
@@ -20,12 +22,10 @@ export default {
     label: String,
     /** optional help string shown below */
     help: String,
-    /** whether required */
-    required: Boolean,
-    /** message when in error state */
-    error: String,
+    /** whether nullable */
+    nullable: Boolean,
     /** default value */
-    default: String
+    default: [String, Array]
   },
   watch: {
     value() {
@@ -36,6 +36,11 @@ export default {
     this.id = Math.random()
       .toString(36)
       .substring(7);
+  },
+  created() {
+    if (this.default) {
+      this.value = this.default;
+    }
   }
 };
 </script>

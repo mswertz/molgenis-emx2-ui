@@ -6,6 +6,7 @@
       :aria-describedby="id + 'Help'"
       :placeholder="placeholder"
       v-model="value"
+      @keypress="keyhandler"
     />
   </form-group>
 </template>
@@ -13,9 +14,13 @@
 <script>
 import _baseInput from "./_baseInput.vue";
 
-/** Input for passwords */
 export default {
-  extends: _baseInput
+  extends: _baseInput,
+  methods: {
+    keyhandler(event) {
+      return event;
+    }
+  }
 };
 </script>
 

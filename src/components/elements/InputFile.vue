@@ -48,7 +48,6 @@ Example
     <ButtonAction @click="clear">Clear</ButtonAction>
   </div>
 </template>
-
 <script>
 export default {
   data: function() {

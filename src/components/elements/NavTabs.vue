@@ -22,7 +22,7 @@ export default {
   methods: {
     select(item) {
       this.value = item;
-      this.$emit("value", this.value);
+      this.$emit("input", this.value);
     }
   },
   created() {

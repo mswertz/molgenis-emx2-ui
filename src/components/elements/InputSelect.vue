@@ -15,11 +15,6 @@ export default {
   props: {
     selected: String,
     items: Array
-  },
-  watch: {
-    selected(newValue) {
-      this.value = newValue;
-    }
   }
 };
 </script>
@@ -29,17 +24,11 @@ Example
 ```
 <template>
   <div>
-    <InputSelect
-      label="Animals"
-      v-model="check"
-      :selected="check"
-      :items="['lion', 'ape', 'monkey']"
-    />
+    <InputSelect label="Animals" v-model="check" default="ape" :items="['lion', 'ape', 'monkey']" />
     Selected: {{check}}
     <ButtonAction @click="clear">Clear</ButtonAction>
   </div>
 </template>
-
 <script>
 export default {
   data: function() {

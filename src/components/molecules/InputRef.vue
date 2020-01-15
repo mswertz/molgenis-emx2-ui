@@ -38,11 +38,11 @@ export default {
     refColumn: String
   },
   computed: {
-    table() {
-      return this.refTable; //to serve the mixin
-    },
     title() {
       return "Select " + this.table;
+    },
+    table() {
+      return this.refTable;
     }
   },
   methods: {
@@ -64,5 +64,27 @@ export default {
 Example
 ```
 <InputRef schema="pet store" refTable="Pet" refColumn="name"  />
+```
+Example with default value
+```
+<template>
+  <div>
+    <InputRef v-model="check" schema="pet store" refTable="Pet" refColumn="name" default="spike" />
+    {{check}}
+  </div>
+</template>
+<script>
+export default {
+  data: function() {
+    return {
+      check: null
+    };
+  },
+  methods: {
+    clear() {
+      this.check = null;
+    }
+  }
+};
 ```
 </docs>

@@ -4,20 +4,27 @@
       <LayoutForm>
         <span v-for="column in metadata.columns" :key="column.name">
           <InputColumn
+            :schema="schema"
+            :label="column.name"
             :columnType="column.columnType"
             :refTable="column.refTable"
             :refColumn="column.refColumn"
-            :schema="schema"
+            :nullable="column.nullable"
             v-model="value[column.name]"
+            :default="defaultValue[column.name]"
             :error="error[column.name]"
           />
         </span>
         <ButtonCancel />
         <ButtonAction>Save</ButtonAction>
       </LayoutForm>
-    </LayoutCard>State:
+    </LayoutCard>
+    <br />State:
     <br />
     {{JSON.stringify(value,null,2)}}
+    <br />br />Default:
+    <br />
+    {{JSON.stringify(defaultValue,null,2)}}
     <br />Error:
     <br />
     {{JSON.stringify(error,null,2)}}
@@ -39,7 +46,9 @@ export default {
     };
   },
   props: {
-    metadata: Object
+    metadata: Object,
+    schema: String,
+    defaultValue: Object
   },
   components: {
     LayoutForm,
@@ -94,7 +103,7 @@ export default {
 ```
 <template>
   <div>
-    <Form :metadata="metadata" v-model="data" />
+    <Form :metadata="metadata" v-model="value" :defaultValue="value" schema="pet store" />
     {{JSON.stringify(object,null,2)}}
   </div>
 </template>
@@ -103,7 +112,12 @@ export default {
 export default {
   data: function() {
     return {
-      data: {},
+      value: {
+        name: "spike",
+        tags: ["red", "green"],
+        status: "sold",
+        orders: ["2"]
+      },
       metadata: {
         name: "Pet",
         pkey: "name",

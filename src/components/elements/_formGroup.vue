@@ -4,7 +4,7 @@
   <div class="form-group">
     <label v-if="label" :for="id">
       {{label}}
-      <span v-if="required">*</span>
+      <span v-if="nullable">(optional)</span>
     </label>
     <slot />
     <div v-if="error" class="invalid-feedback">{{error}}</div>
@@ -23,8 +23,8 @@ export default {
     label: String,
     /** optional help string shown below */
     help: String,
-    /** required */
-    required: Boolean,
+    /** if optional */
+    nullable: Boolean,
     /** String with error state */
     error: String
   }

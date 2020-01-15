@@ -52,13 +52,12 @@ Example
 ```
 <template>
   <div>
-    <LayoutForm>
-      <InputDate v-model="value" label="My date input label" help="Some help needed?" />
-    </LayoutForm>
+    <InputDate v-model="value" label="My date input label" help="Some help needed?" />
     <br />
     You typed: {{value}}
   </div>
 </template>
+
 <script>
 export default {
   data: function() {

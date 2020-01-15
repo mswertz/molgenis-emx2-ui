@@ -21,9 +21,7 @@ Example
 ```
 <template>
   <div>
-    <LayoutForm>
-      <InputDateTime v-model="value" label="My date time input label" help="Some help needed?" />
-    </LayoutForm>
+    <InputDateTime v-model="value" label="My date time input label" help="Some help needed?" />
     <br />
     You typed: {{value}}
   </div>
