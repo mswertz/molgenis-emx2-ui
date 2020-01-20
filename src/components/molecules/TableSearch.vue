@@ -13,12 +13,19 @@
       :selectedItems="selectedItems"
       @select="select"
       @deselect="deselect"
-    />
+    >
+      <template v-slot:root="slotProps">
+        <slot name="root" />
+      </template>
+      <template v-slot:rowheader="slotProps">
+        <slot name="rowheader" :row="slotProps.row" :metadata="slotProps.metadata" />
+      </template>
+    </DataTable>
   </div>
 </template>
 
 <script>
-import _graphqlTableMixin from "./_graphqlTableMixin";
+import _graphqlTableMixin from "../elements/_graphqlTableMixin";
 
 export default {
   extends: _graphqlTableMixin,
@@ -40,6 +47,8 @@ export default {
 <docs>
 Example:
 ```
-<TableSearch schema="pet%20store" table="Pet"/>
+<TableSearch schema="pet%20store" table="Pet">
+<template v-slot:rowheader="props">my row action {{props.row.name}}</template>
+</TableSearch>
 ```
 </docs>

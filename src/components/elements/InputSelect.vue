@@ -13,18 +13,22 @@ import _baseInput from "./_baseInput.vue";
 export default {
   extends: _baseInput,
   props: {
-    selected: String,
     items: Array
   }
 };
 </script>
 
 <docs>
-Example
+Example with defaultValue
 ```
 <template>
   <div>
-    <InputSelect label="Animals" v-model="check" default="ape" :items="['lion', 'ape', 'monkey']" />
+    <InputSelect
+      label="Animals"
+      v-model="check"
+      defaultValue="ape"
+      :items="['lion', 'ape', 'monkey']"
+    />
     Selected: {{check}}
     <ButtonAction @click="clear">Clear</ButtonAction>
   </div>

@@ -24,13 +24,6 @@ export default {
       this.value = item;
       this.$emit("input", this.value);
     }
-  },
-  created() {
-    if (this.default) {
-      this.select(this.default);
-    } else {
-      this.select(this.items[0]);
-    }
   }
 };
 </script>
@@ -40,7 +33,7 @@ Example
 ```
 <template>
   <div>
-    <NavTabs label="Animals" v-model="selected" :items="['lion', 'ape', 'monkey']" />
+    <LayoutNavTabs label="Animals" v-model="selected" :items="['lion', 'ape', 'monkey']" />
     Selected: {{selected}}
   </div>
 </template>
@@ -59,7 +52,12 @@ With default
 ``````
 <template>
   <div>
-    <NavTabs label="Animals" v-model="selected" :items="['lion', 'ape', 'monkey']" default="ape" />
+    <LayoutNavTabs
+      label="Animals"
+      v-model="selected"
+      :items="['lion', 'ape', 'monkey']"
+      defaultValue="ape"
+    />
     Selected: {{selected}}
   </div>
 </template>

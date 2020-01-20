@@ -1,11 +1,11 @@
 <template>
-  <button type="button" class="btn btn-link" @click="onClick">
+  <button type="button" class="btn btn-danger" @click="onClick">
     <slot />
   </button>
 </template>
 
 <script>
-/** Cancel button */
+/** Button that is shown as a primary action */
 export default {
   methods: {
     onClick() {
@@ -19,8 +19,8 @@ export default {
 <docs>
 Example
 
-```
-<ButtonCancel v-on:click="action('cancel')">Cancel</ButtonCancel>
+```jsx
+<ButtonDanger v-on:click="alert('hello');">Dangerou actions</ButtonDanger>
 ```
 
 </docs>

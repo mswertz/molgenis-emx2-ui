@@ -4,6 +4,11 @@ import InputString from "./InputString";
 /** Input for decimal values */
 export default {
   extends: InputString,
+  props: {
+    placeholder: {
+      default: "Please enter non-decimal number (does not accept A-Za-z)"
+    }
+  },
   methods: {
     keyhandler(event) {
       if (!this.isInt(event)) event.preventDefault();

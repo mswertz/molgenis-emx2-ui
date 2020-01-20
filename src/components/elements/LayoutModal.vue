@@ -9,7 +9,7 @@
       aria-modal="true"
       @click="closeUnlessInDialog"
     >
-      <div v-if="show" class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+      <div v-if="show" class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div v-if="title" class="modal-header">
             <h5 class="modal-title">{{title}}</h5>
@@ -33,6 +33,13 @@
   </div>
 </template>
 
+<style scoped>
+.modal {
+  height: 100%;
+  overflow-y: auto;
+}
+</style>
+
 <script>
 export default {
   props: {
@@ -41,7 +48,7 @@ export default {
     /** When true the modal will be shown */
     show: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   methods: {

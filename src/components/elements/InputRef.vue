@@ -3,28 +3,27 @@
     <span class="sr-only">Loading...</span>
   </div>
   <form-group v-else v-bind="$props">
-    <select class="custom-select" :id="id" @click="openSelect" multiple>
-      <option v-for="item in value" :key="item" :value="item" selected>{{item}}</option>
+    <select class="custom-select" :id="id" @click="openSelect">
+      <option v-if="value && !showSelect" :value="value" selected>{{value}}</option>
     </select>
     <LayoutModal :title="title" @close="closeSelect" :show="showSelect">
-      <div v-if="showSelect">
-        <MessageError v-if="error">{{error}}</MessageError>
-        <InputSearch v-if="table" v-model="searchTerms" />
-        <DataTable
-          :metadata="metadata"
-          :data="data"
-          :selectColumn="refColumn"
-          :selectedItems="value"
-          @select="select"
-          @deselect="deselect"
-        />
-      </div>
+      <MessageError v-if="error">{{error}}</MessageError>
+      <InputSearch v-if="table" v-model="searchTerms" />
+      <DataTable
+        :metadata="metadata"
+        :data="data"
+        :selectColumn="refColumn"
+        :selectedItems="value"
+        @select="select"
+        @deselect="deselect"
+      />
     </LayoutModal>
+    {{selectedItems}}
   </form-group>
 </template>
 
 <script>
-import _baseInput from "../elements/_baseInput";
+import _baseInput from "./_baseInput";
 import _graphqlTableMixin from "./_graphqlTableMixin";
 
 export default {
@@ -49,22 +48,14 @@ export default {
   },
   methods: {
     select(value) {
-      if (this.value == null) this.value = [];
-      this.value.push(value);
-    },
-    deselect(value) {
-      this.value = this.value.filter(item => item !== value);
+      this.showSelect = false;
+      this.value = value;
     },
     closeSelect() {
       this.showSelect = false;
     },
     openSelect() {
       this.showSelect = true;
-    }
-  },
-  watch: {
-    refTable() {
-      this.table = this.refTable;
     }
   }
 };
@@ -73,20 +64,34 @@ export default {
 <docs>
 Example
 ```
+<InputRef schema="pet store" refTable="Pet" refColumn="name"  />
+```
+Example with default value
+```
 <template>
   <div>
-    <InputRefArray schema="pet store" refTable="Pet" refColumn="name" :default="initValue" />
+    <InputRef
+      v-model="check"
+      schema="pet store"
+      refTable="Pet"
+      refColumn="name"
+      defaultValue="spike"
+    />
+    {{check}}
   </div>
 </template>
-
 <script>
 export default {
   data: function() {
     return {
-      initValue: ["spike"]
+      check: null
     };
+  },
+  methods: {
+    clear() {
+      this.check = null;
+    }
   }
 };
-</script>
 ```
 </docs>

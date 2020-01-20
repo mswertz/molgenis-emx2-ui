@@ -1,38 +1,68 @@
 <template>
-  <form-group :id="id" :label="label" :placeholder="placeholder" :help="help">
-    <div class="custom-file">
-      <input type="file" class="custom-file-input" ref="file" :id="id" @change="handleFileUpload" />
-      <label class="custom-file-label" :for="id">
-        <span v-if="value">{{filename}}</span>
-        <span v-else-if="placeholder">{{placeholder}}</span>
-        <span v-else>Choose file</span>
-      </label>
+  <form-group v-bind="$props">
+    <!-- hidden input-->
+    <div class="input-group">
+      <input type="file" style="display:none" ref="file" :id="id" @change="handleFileUpload" />
+      <input
+        class="form-control active"
+        :class="{'is-invalid':error}"
+        @click="$refs.file.click()"
+        @keydown.prevent
+        :placeholder="filename"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn"
+          :class="{'btn-outline-primary':!error,'btn-outline-danger':error }"
+          type="button"
+          title="Toggle"
+          data-toggle
+          @click="clearInput"
+        >
+          <i class="fa fa-times">
+            <span aria-hidden="true" class="sr-only">Clear</span>
+          </i>
+        </button>
+      </div>
+      <div class="input-group-append">
+        <button
+          class="btn"
+          :class="{'btn-outline-primary':!error,'btn-outline-danger':error }"
+          type="button"
+          title="Toggle"
+          data-toggle
+          @click="$refs.file.click()"
+        >Browse</button>
+      </div>
     </div>
   </form-group>
 </template>
+
+<style scoped>
+.form-control.is-invalid {
+  background-image: none;
+}
+</style>
 
 <script>
 import _baseInput from "./_baseInput.vue";
 
 export default {
   extends: _baseInput,
-  data: function() {
-    return {
-      filename: null
-    };
-  },
-  props: {
-    file: String
+  computed: {
+    filename() {
+      if (this.value) return this.value.name;
+      return null;
+    }
   },
   methods: {
     handleFileUpload() {
       this.value = this.$refs.file.files[0];
-      this.filename = this.$refs.file.files[0].name;
-    }
-  },
-  watch: {
-    file(newValue) {
-      this.value = newValue;
+    },
+    clearInput() {
+      alert("clear");
+      this.$refs.file.value = "";
+      this.value = null;
     }
   }
 };
@@ -43,9 +73,8 @@ Example
 ```
 <template>
   <div>
-    <InputFile label="My file input" v-model="check" :file="check" />
+    <InputFile label="My file input" v-model="check" />
     Selected: {{check}}
-    <ButtonAction @click="clear">Clear</ButtonAction>
   </div>
 </template>
 <script>
@@ -62,6 +91,10 @@ export default {
   }
 };
 </script>
+```
 
+Example with error
+```
+<InputFile label="My file input" error="Some error" />
 ```
 </docs>

@@ -2,20 +2,30 @@
   <table class="table table-bordered" :class="{ 'table-hover': selectColumn }">
     <thead>
       <tr>
-        <th v-if="selectColumn"></th>
-        <th v-for="column in metadata.columns" :key="column.name" scope="col">{{column.name}}</th>
+        <th scope="col" style="width: 1px;">
+          <slot name="root" />
+        </th>
+        <th scope="col" v-for="column in metadata.columns" :key="column.name">
+          <b>{{column.name}}</b>
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(row,index) in data" :key="index" @click="onRowClick(row)">
-        <td v-if="selectColumn">
-          <input type="checkbox" :checked="isSelected(row)" />
+        <td>
+          <slot name="rowheader" :row="row" :metadata="metadata" />
+          <input v-if="selectColumn" type="checkbox" :checked="isSelected(row)" />
         </td>
         <td v-for="(column,index2) in metadata.columns" :key="index2">
-          <ul class="list-unstyled" v-if="['REF_ARRAY', 'REFBACK'].includes(column.columnType)">
+          <ul
+            class="list-unstyled"
+            v-if="row[column.name] && ['REF_ARRAY', 'REFBACK'].includes(column.columnType)"
+          >
             <li v-for="(item,index3) in row[column.name]" :key="index3">{{item[column.refColumn]}}</li>
           </ul>
-          <span v-else-if="'REF' === column.columnType">{{row[column.name][column.refColumn]}}</span>
+          <span
+            v-else-if="row[column.name] && 'REF' === column.columnType"
+          >{{row[column.name][column.refColumn]}}</span>
           <span v-else-if="column.columnType.includes('_ARRAY')"></span>
           <span v-else>{{row[column.name]}}</span>
         </td>
@@ -71,7 +81,9 @@ Example
       :selectedItems="selectedItems"
       @select="select"
       @deselect="deselect"
-    />
+    >
+      <template v-slot:rowheader="props">my row action {{props.row.name}}</template>
+    </DataTable>
     Selected: {{selectedItems}}
   </div>
 </template>

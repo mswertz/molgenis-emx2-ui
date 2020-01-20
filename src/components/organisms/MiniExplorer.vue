@@ -1,17 +1,47 @@
 <template>
-  <div class="table-responsive">
+  <div class="table-responsive" v-if="table">
     <MessageError v-if="error">{{error}}</MessageError>
-    <NavTabs v-model="table" :items="tableNames" :value="table" label="Choose table: " />
+    <LayoutNavTabs
+      v-if="tableNames"
+      v-model="table"
+      :items="tableNames"
+      :defaultValue="table"
+      label="Choose table: "
+    />
     <LayoutCard v-if="table" :title="title">
-      <TableSearch :schema="schema" :table="table" />
+      <TableSearch :schema="schema" :table="table" :key="key">
+        <template v-slot:root>
+          <RowButtonAdd :schema="schema" :table="table" @close="refresh" />
+        </template>
+        <template v-slot:rowheader="slotProps">
+          <div style="display: flex">
+            <RowButtonEdit
+              :schema="schema"
+              :table="table"
+              :pkey="slotProps.row[slotProps.metadata.pkey]"
+              @close="refresh"
+            />
+            <RowButtonDelete
+              :schema="schema"
+              :table="table"
+              :pkey="slotProps.row[slotProps.metadata.pkey]"
+              @close="refresh"
+            />
+          </div>
+        </template>
+      </TableSearch>
     </LayoutCard>
     <br />
+    {{table}}
+  </div>
+  <div v-else class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
   </div>
 </template>
 
 <script>
 import MessageError from "../elements/MessageError.vue";
-import NavTabs from "../elements/NavTabs.vue";
+import LayoutNavTabs from "../elements/LayoutNavTabs.vue";
 import TableSearch from "../molecules/TableSearch.vue";
 import LayoutCard from "../elements/LayoutCard.vue";
 
@@ -22,7 +52,8 @@ export default {
     return {
       table: null,
       tableNames: [],
-      error: null
+      error: null,
+      key: 0
     };
   },
   props: {
@@ -30,9 +61,14 @@ export default {
   },
   components: {
     MessageError,
-    NavTabs,
+    LayoutNavTabs,
     TableSearch,
     LayoutCard
+  },
+  methods: {
+    refresh() {
+      this.key = this.key + 1;
+    }
   },
   created() {
     request(this.endpoint, "{_meta{tables{name}}}")
@@ -51,6 +87,11 @@ export default {
     },
     title() {
       return "Table: " + this.table;
+    }
+  },
+  watch: {
+    tableNames() {
+      this.table = this.tableNames[0];
     }
   }
 };

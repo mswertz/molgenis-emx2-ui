@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!loading">
     <LoginWidget
       :username="username"
       @login="login"
@@ -7,6 +7,9 @@
       @cancel="cancel"
       :error="error"
     />
+  </div>
+  <div v-else class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
   </div>
 </template>
 
@@ -21,7 +24,8 @@ export default {
     return {
       username: null,
       error: null,
-      data: null
+      data: null,
+      loading: false
     };
   },
   components: {
@@ -32,6 +36,7 @@ export default {
       this.error = null;
     },
     login(username, password) {
+      this.loading = true;
       request(
         endpoint,
         `mutation{login(username: "${username}", password: "${password}"){status}}`
@@ -44,8 +49,10 @@ export default {
           } else this.error = "login failed";
         })
         .catch(error => (this.error = "internal server error" + error));
+      this.loading = false;
     },
     logout() {
+      this.loading = true;
       request(endpoint, `mutation{logout{status}}`)
         .then(data => {
           if (data.logout.status == "SUCCESS") {
@@ -54,6 +61,7 @@ export default {
           } else this.error = "logout failed";
         })
         .catch(error => (this.error = "internal server error" + error));
+      this.loading = false;
     }
   },
   created: function() {

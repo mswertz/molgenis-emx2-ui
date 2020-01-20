@@ -32,6 +32,7 @@ module.exports = {
 				{
 					rel: 'stylesheet',
 					href:
+						//		'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'
 						'css/bootstrap-molgenis-blue.css'
 				}, {
 					rel: 'stylesheet',
