@@ -1,6 +1,7 @@
 <template>
   <button type="button" class="btn btn-danger" @click="onClick">
     <slot />
+    {{testvalue}}
   </button>
 </template>
 

@@ -7,6 +7,7 @@
       :aria-describedby="id + 'Help'"
       :placeholder="placeholder"
       v-model="value"
+      v-on="$listeners"
     />
   </form-group>
 </template>

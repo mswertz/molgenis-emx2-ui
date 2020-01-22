@@ -1,41 +1,39 @@
 <template>
-  <div class="table-responsive" v-if="table">
-    <MessageError v-if="error">{{error}}</MessageError>
-    <LayoutNavTabs
-      v-if="tableNames"
-      v-model="table"
-      :items="tableNames"
-      :defaultValue="table"
-      label="Choose table: "
-    />
-    <LayoutCard v-if="table" :title="title">
-      <TableSearch :schema="schema" :table="table" :key="key">
-        <template v-slot:root>
-          <RowButtonAdd :schema="schema" :table="table" @close="refresh" />
-        </template>
-        <template v-slot:rowheader="slotProps">
-          <div style="display: flex">
-            <RowButtonEdit
-              :schema="schema"
-              :table="table"
-              :pkey="slotProps.row[slotProps.metadata.pkey]"
-              @close="refresh"
-            />
-            <RowButtonDelete
-              :schema="schema"
-              :table="table"
-              :pkey="slotProps.row[slotProps.metadata.pkey]"
-              @close="refresh"
-            />
-          </div>
-        </template>
-      </TableSearch>
-    </LayoutCard>
-    <br />
-    {{table}}
-  </div>
-  <div v-else class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
+  <div>
+    <MessageError v-if="error">{{ error }}</MessageError>
+    <div class="table-responsive" v-if="table">
+      <LayoutNavTabs
+        v-if="tableNames"
+        v-model="table"
+        :items="tableNames"
+        :defaultValue="table"
+        label="Choose table: "
+      />
+      <LayoutCard v-if="table && tableNames" :title="title">
+        <TableSearch :schema="schema" :table="table" :key="key">
+          <template v-slot:root>
+            <RowButtonAdd :schema="schema" :table="table" @close="refresh" />
+          </template>
+          <template v-slot:rowheader="slotProps">
+            <div style="display: flex">
+              <RowButtonEdit
+                :schema="schema"
+                :table="table"
+                :pkey="slotProps.row[slotProps.metadata.pkey]"
+                @close="refresh"
+              />
+              <RowButtonDelete
+                :schema="schema"
+                :table="table"
+                :pkey="slotProps.row[slotProps.metadata.pkey]"
+                @close="refresh"
+              />
+            </div>
+          </template>
+        </TableSearch>
+      </LayoutCard>
+      <br />
+    </div>
   </div>
 </template>
 
@@ -51,7 +49,7 @@ export default {
   data: function() {
     return {
       table: null,
-      tableNames: [],
+      tableNames: null,
       error: null,
       key: 0
     };
@@ -68,18 +66,32 @@ export default {
   methods: {
     refresh() {
       this.key = this.key + 1;
+    },
+    load() {
+      this.tableNames = null;
+      this.error = null;
+      request(this.endpoint, "{_meta{tables{name}}}")
+        .then(data => {
+          this.tableNames = [];
+          data._meta.tables.forEach(element => {
+            this.tableNames.push(element.name);
+            if (this.table === null) {
+              this.table = this.tableNames[0]; //default
+            }
+          });
+        })
+        .catch(error => {
+          if (error.response.status === 403) {
+            this.error =
+              "Schema doesn't exist or permission denied. Do you need to Sign In?";
+          } else {
+            this.error = error;
+          }
+        });
     }
   },
   created() {
-    request(this.endpoint, "{_meta{tables{name}}}")
-      .then(data => {
-        this.tableNames = [];
-        data._meta.tables.forEach(element => {
-          this.tableNames.push(element.name);
-          this.table = this.tableNames[0]; //default
-        });
-      })
-      .catch(error => (this.error = "internal server error" + error));
+    this.load();
   },
   computed: {
     endpoint() {
@@ -87,11 +99,14 @@ export default {
     },
     title() {
       return "Table: " + this.table;
+    },
+    username() {
+      return this.$store.state.login.username;
     }
   },
   watch: {
-    tableNames() {
-      this.table = this.tableNames[0];
+    username() {
+      this.load();
     }
   }
 };

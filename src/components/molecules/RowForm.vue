@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <LayoutForm v-if="metadata && (this.pkey ==  null || this.defaultValue)">
+  <div v-if="showLogin">
+    <MessageError v-if="error">{{ error }}</MessageError>
+    <LoginForm @login="loginSuccess" @cancel="cancel" />
+  </div>
+  <div v-else>
+    <LayoutForm v-if="metadata && (this.pkey == null || this.defaultValue)">
       <span v-for="column in metadata.columns" :key="column.name">
         <RowColumnInput
           v-model="value[column.name]"
@@ -16,10 +20,10 @@
         />
       </span>
     </LayoutForm>
-    <MessageSuccess v-if="success">{{success}}</MessageSuccess>
-    <MessageError v-if="error">{{error}}</MessageError>
+    <MessageSuccess v-if="success">{{ success }}</MessageSuccess>
+    <MessageError v-if="error">{{ error }}</MessageError>
     <ButtonCancel @click="$emit('close')">Close</ButtonCancel>
-    <ButtonAction @click="executeCommand">{{title}}</ButtonAction>
+    <ButtonAction @click="executeCommand">{{ title }}</ButtonAction>
     <!--<br />graphql
     <br />
     {{graphql}}
@@ -59,6 +63,7 @@ export default {
   mixins: [_graphqlTableMixin],
   data: function() {
     return {
+      showLogin: false,
       value: {},
       errorPerColumn: {},
       success: null,
@@ -76,6 +81,11 @@ export default {
     ButtonCancel
   },
   methods: {
+    loginSuccess() {
+      this.error = null;
+      this.success = null;
+      this.showLogin = false;
+    },
     executeCommand() {
       this.error = null;
       this.success = null;
@@ -98,7 +108,13 @@ export default {
           this.defaultValue = this.value;
         })
         .catch(error => {
-          this.error = error.response.errors[0].message;
+          if (error.response.status === 403) {
+            this.error =
+              "Schema doesn't exist or permission denied. Do you need to Sign In?";
+            this.showLogin = true;
+          } else {
+            this.error = error;
+          }
         });
     }
   },
@@ -106,9 +122,7 @@ export default {
     //override from tableMixin
     graphql() {
       //todo: must become a typed variable in the query?
-      return `{${this.table}(filter:{${this.metadata.pkey}:{equals:"${
-        this.pkey
-      }"}}){data{${this.columnNames}}}}`;
+      return `{${this.table}(filter:{${this.metadata.pkey}:{equals:"${this.pkey}"}}){data{${this.columnNames}}}}`;
     },
     title() {
       if (this.pkey) {

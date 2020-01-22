@@ -1,6 +1,10 @@
 <template>
-  <LayoutForm>
-    <MessageError v-if="error">{{error}}</MessageError>
+  <MessageSuccess v-if="success">{{ success }}</MessageSuccess>
+  <div v-else-if="loading" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <LayoutForm v-else>
+    <MessageError v-if="error">{{ error }}</MessageError>
     <input-string
       label="Username"
       placeholder="Enter name"
@@ -12,6 +16,7 @@
       placeholder="Enter password"
       help="Please enter the provided password"
       v-model="password"
+      @keyup.enter="login"
     />
     <ButtonCancel @click="cancel">Cancel</ButtonCancel>
     <ButtonAction @click="login">Sign in</ButtonAction>
@@ -24,17 +29,22 @@ import ButtonCancel from "../elements/ButtonCancel.vue";
 import InputString from "../elements/InputString.vue";
 import InputPassword from "../elements/InputPassword.vue";
 import MessageError from "../elements/MessageError.vue";
+import MessageSuccess from "../elements/MessageSuccess.vue";
 import LayoutForm from "../elements/LayoutForm.vue";
+
+import { request } from "graphql-request";
+
+const endpoint = "/api/graphql";
 
 export default {
   data: function() {
     return {
       username: null,
-      password: null
+      password: null,
+      loading: false,
+      error: null,
+      success: null
     };
-  },
-  props: {
-    error: String
   },
   components: {
     ButtonAction,
@@ -42,6 +52,7 @@ export default {
     InputPassword,
     InputString,
     MessageError,
+    MessageSuccess,
     LayoutForm
   },
   methods: {
@@ -54,7 +65,20 @@ export default {
         this.error = "Username and password should be filled in";
       } else {
         this.error = null;
-        this.$emit("login", this.username, this.password);
+        this.loading = true;
+        request(
+          endpoint,
+          `mutation{login(username: "${this.username}", password: "${this.password}"){status}}`
+        )
+          .then(data => {
+            if (data.login.status == "SUCCESS") {
+              this.$store.commit("login", this.username);
+              this.success = "Logged in as " + this.username;
+              this.$emit("login");
+            } else this.error = "login failed";
+          })
+          .catch(error => (this.error = "internal server error" + error));
+        this.loading = false;
       }
     },
     cancel() {

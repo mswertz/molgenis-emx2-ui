@@ -60,5 +60,7 @@ module.exports = {
 			content: 'src/styleguide/organisms.md',
 			components: 'src/components/organisms/[A-Z]*.vue'
 		}
-	]
+	],
+	//get vuex plugged in
+	renderRootJsx: path.join(__dirname, 'src/store/index.js'),
 }

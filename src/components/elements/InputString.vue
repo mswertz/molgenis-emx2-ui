@@ -1,12 +1,13 @@
 <template>
   <form-group v-bind="$props">
     <input
-      :class="{'form-control':true, 'is-invalid':error}"
+      :class="{ 'form-control': true, 'is-invalid': error }"
       :id="id"
       :aria-describedby="id + 'Help'"
       :placeholder="placeholder"
       :readonly="readonly"
       v-model="value"
+      v-on="$listeners"
       @keypress="keyhandler"
     />
   </form-group>
