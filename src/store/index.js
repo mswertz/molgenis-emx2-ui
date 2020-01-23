@@ -5,22 +5,16 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    login: {
-      username: null,
-      loading: null
+    account: {
+      email: null
     }
   },
   mutations: {
-    login(state, username) {
-      state.login.username = username;
-      state.login.loading = false;
+    signin(state, email) {
+      state.account.email = email;
     },
-    logout(state) {
-      state.login.username = null;
-      state.login.loading = false;
-    },
-    loginLoading(state) {
-      state.login.loading = true;
+    signout(state) {
+      state.account.email = null;
     }
   }
 });

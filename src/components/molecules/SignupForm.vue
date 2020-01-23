@@ -1,25 +1,29 @@
 <template>
-  <MessageSuccess v-if="success">{{ success }}</MessageSuccess>
-  <div v-else-if="loading" class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
+  <Spinner v-if="loading" />
+  <MessageSuccess v-else-if="success">{{ success }}</MessageSuccess>
   <LayoutForm v-else>
     <MessageError v-if="error">{{ error }}</MessageError>
-    <input-string
-      label="Username"
-      placeholder="Enter name"
-      help="Please enter the provided username"
-      v-model="username"
+    <InputString
+      label="Email adress"
+      placeholder="Enter valid email address"
+      help="Please enter your email address"
+      v-model="email"
     />
-    <input-password
+    <InputPassword
       label="Password"
       placeholder="Enter password"
-      help="Please enter the provided password"
+      help="Please enter the password"
       v-model="password"
-      @keyup.enter="login"
+    />
+    <InputPassword
+      label="Password Repeat"
+      placeholder="Enter password"
+      help="Please enter the password again"
+      v-model="password2"
+      @keyup.enter="signup"
     />
     <ButtonCancel @click="cancel">Cancel</ButtonCancel>
-    <ButtonAction @click="login">Sign in</ButtonAction>
+    <ButtonAction @click="signup">Sign up</ButtonAction>
   </LayoutForm>
 </template>
 
@@ -31,6 +35,7 @@ import InputPassword from "../elements/InputPassword.vue";
 import MessageError from "../elements/MessageError.vue";
 import MessageSuccess from "../elements/MessageSuccess.vue";
 import LayoutForm from "../elements/LayoutForm.vue";
+import Spinner from "../elements/Spinner.vue";
 
 import { request } from "graphql-request";
 
@@ -39,8 +44,9 @@ const endpoint = "/api/graphql";
 export default {
   data: function() {
     return {
-      username: null,
+      email: null,
       password: null,
+      password2: null,
       loading: false,
       error: null,
       success: null
@@ -53,29 +59,31 @@ export default {
     InputString,
     MessageError,
     MessageSuccess,
-    LayoutForm
+    LayoutForm,
+    Spinner
   },
   methods: {
-    login() {
-      /** when login is pushed
-       * @arg username {string}
-       * @arg password {string}
-       */
-      if (this.username == null || this.password == null) {
-        this.error = "Username and password should be filled in";
+    signup() {
+      if (
+        this.email == null ||
+        this.password == null ||
+        this.password2 == null
+      ) {
+        this.error =
+          "Error: valid email address and password should be filled in";
+      } else if (this.password !== this.password2) {
+        this.error = "Error: Passwords entered must be the same";
       } else {
         this.error = null;
         this.loading = true;
         request(
           endpoint,
-          `mutation{login(username: "${this.username}", password: "${this.password}"){status}}`
+          `mutation{signup(email: "${this.email}", password: "${this.password}"){status}}`
         )
           .then(data => {
-            if (data.login.status == "SUCCESS") {
-              this.$store.commit("login", this.username);
-              this.success = "Logged in as " + this.username;
-              this.$emit("login");
-            } else this.error = "login failed";
+            if (data.signup.status == "SUCCESS") {
+              this.success = "Success. Signed up with email: " + this.email;
+            } else this.error = "Signup failed: " + data.signup.message;
           })
           .catch(error => (this.error = "internal server error" + error));
         this.loading = false;
@@ -98,7 +106,7 @@ Example
 <template>
   <div>
     <ButtonAction v-if="display == false" @click="display=true">Show</ButtonAction>
-    <LoginForm v-else @login="loginTest" @cancel="display = false" />
+    <SignupForm v-else @signup="SignupTest" @cancel="display = false" />
   </div>
 </template>
 <script>
@@ -106,13 +114,13 @@ export default {
   data: function() {
     return {
       display: false,
-      username: null
+      email: null
     };
   },
   methods: {
-    loginTest(username, password) {
-      alert("login with username " + username + " and password " + password);
-      this.username = username;
+    SignupTest(email, password) {
+      alert("sign up with email " + email + " and password " + password);
+      this.email = email;
     }
   }
 };
