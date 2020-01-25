@@ -16,7 +16,7 @@
         >
           <SigninForm @cancel="closeSigninForm" :error="error" />
         </LayoutModal>
-        <ButtonCancel @click="showSignupForm = true">Sign up</ButtonCancel>
+        <ButtonAlt @click="showSignupForm = true">Sign up</ButtonAlt>
         <LayoutModal
           v-if="showSignupForm"
           title="Sign up"
@@ -38,7 +38,7 @@ import LayoutModal from "../elements/LayoutModal.vue";
 
 import { request } from "graphql-request";
 const endpoint = "/api/graphql";
-
+/** Element that is supposed to be put in menu holding all controls for user account */
 export default {
   data: function() {
     return {

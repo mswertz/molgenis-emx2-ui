@@ -1,6 +1,9 @@
 <template>
   <Spinner v-if="loading" />
-  <MessageSuccess v-else-if="success">{{ success }}</MessageSuccess>
+  <div v-else-if="success">
+    <MessageSuccess>{{ success }}</MessageSuccess>
+    <ButtonAlt @click="cancel">Close</ButtonAlt>
+  </div>
   <LayoutForm v-else>
     <MessageError v-if="error">{{ error }}</MessageError>
     <InputString
@@ -22,14 +25,14 @@
       v-model="password2"
       @keyup.enter="signup"
     />
-    <ButtonCancel @click="cancel">Cancel</ButtonCancel>
+    <ButtonAlt @click="cancel">Cancel</ButtonAlt>
     <ButtonAction @click="signup">Sign up</ButtonAction>
   </LayoutForm>
 </template>
 
 <script>
 import ButtonAction from "../elements/ButtonAction.vue";
-import ButtonCancel from "../elements/ButtonCancel.vue";
+import ButtonAlt from "../elements/ButtonAlt.vue";
 import InputString from "../elements/InputString.vue";
 import InputPassword from "../elements/InputPassword.vue";
 import MessageError from "../elements/MessageError.vue";
@@ -54,7 +57,7 @@ export default {
   },
   components: {
     ButtonAction,
-    ButtonCancel,
+    ButtonAlt,
     InputPassword,
     InputString,
     MessageError,
@@ -85,7 +88,9 @@ export default {
               this.success = "Success. Signed up with email: " + this.email;
             } else this.error = "Signup failed: " + data.signup.message;
           })
-          .catch(error => (this.error = "internal server error" + error));
+          .catch(
+            error => (this.error = "Sign up failed: " + error.response.message)
+          );
         this.loading = false;
       }
     },

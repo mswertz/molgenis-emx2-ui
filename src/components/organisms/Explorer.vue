@@ -1,7 +1,7 @@
 <template>
   <div>
     <MessageError v-if="error">{{ error }}</MessageError>
-    <div class="table-responsive" v-if="table">
+    <div class="table-responsive" v-else-if="table">
       <LayoutNavTabs
         v-if="tableNames"
         v-model="table"
@@ -10,27 +10,7 @@
         label="Choose table: "
       />
       <LayoutCard v-if="table && tableNames" :title="title">
-        <TableSearch :schema="schema" :table="table" :key="key">
-          <template v-slot:root>
-            <RowButtonAdd :schema="schema" :table="table" @close="refresh" />
-          </template>
-          <template v-slot:rowheader="slotProps">
-            <div style="display: flex">
-              <RowButtonEdit
-                :schema="schema"
-                :table="table"
-                :pkey="slotProps.row[slotProps.metadata.pkey]"
-                @close="refresh"
-              />
-              <RowButtonDelete
-                :schema="schema"
-                :table="table"
-                :pkey="slotProps.row[slotProps.metadata.pkey]"
-                @close="refresh"
-              />
-            </div>
-          </template>
-        </TableSearch>
+        <TableEdit :schema="schema" :table="table" />
       </LayoutCard>
       <br />
     </div>
@@ -40,11 +20,12 @@
 <script>
 import MessageError from "../elements/MessageError.vue";
 import LayoutNavTabs from "../elements/LayoutNavTabs.vue";
-import TableSearch from "../molecules/TableSearch.vue";
+import TableEdit from "../molecules/TableEdit.vue";
 import LayoutCard from "../elements/LayoutCard.vue";
 
 import { request } from "graphql-request";
 
+/** For viewing data in the tables of one schema  */
 export default {
   data: function() {
     return {
@@ -60,11 +41,12 @@ export default {
   components: {
     MessageError,
     LayoutNavTabs,
-    TableSearch,
+    TableEdit,
     LayoutCard
   },
   methods: {
     refresh() {
+      this.error = null;
       this.key = this.key + 1;
     },
     load() {
@@ -100,13 +82,17 @@ export default {
     title() {
       return "Table: " + this.table;
     },
-    username() {
-      return this.$store.state.login.username;
+    account() {
+      return this.$store.state.account.email;
     }
   },
   watch: {
     username() {
       this.load();
+    },
+    account() {
+      this.load();
+      this.refresh();
     }
   }
 };
@@ -115,6 +101,6 @@ export default {
 <docs>
 Example
 ```
-<MiniExplorer schema="pet%20store"/>
+<Explorer schema="pet%20store"/>
 ```
 </docs>

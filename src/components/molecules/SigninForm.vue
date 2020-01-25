@@ -1,6 +1,9 @@
 <template>
   <Spinner v-if="loading" />
-  <MessageSuccess v-else-if="success">{{ success }}</MessageSuccess>
+  <div v-else-if="success">
+    <MessageSuccess>{{ success }}</MessageSuccess>
+    <ButtonAlt @click="cancel">Close</ButtonAlt>
+  </div>
   <LayoutForm v-else>
     <MessageError v-if="error">{{ error }}</MessageError>
     <input-string
@@ -16,14 +19,14 @@
       v-model="password"
       @keyup.enter="signin"
     />
-    <ButtonCancel @click="cancel">Cancel</ButtonCancel>
+    <ButtonAlt @click="cancel">Cancel</ButtonAlt>
     <ButtonAction @click="signin">Sign in</ButtonAction>
   </LayoutForm>
 </template>
 
 <script>
 import ButtonAction from "../elements/ButtonAction.vue";
-import ButtonCancel from "../elements/ButtonCancel.vue";
+import ButtonAlt from "../elements/ButtonAlt.vue";
 import InputString from "../elements/InputString.vue";
 import InputPassword from "../elements/InputPassword.vue";
 import MessageError from "../elements/MessageError.vue";
@@ -46,7 +49,7 @@ export default {
   },
   components: {
     ButtonAction,
-    ButtonCancel,
+    ButtonAlt,
     InputPassword,
     InputString,
     MessageError,

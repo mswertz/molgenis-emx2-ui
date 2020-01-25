@@ -1,4 +1,5 @@
-/** abstract component that is used as superclass, will not be shown in style guide */
+/** abstract component that is used as superclass, will not be shown in style
+guide */
 
 <script>
 import _formGroup from "./_formGroup.vue";
@@ -35,7 +36,7 @@ export default {
     /** message when in error state */
     error: null,
     /** default value */
-    defaultValue: [String, Array]
+    defaultValue: null
   },
   watch: {
     value() {

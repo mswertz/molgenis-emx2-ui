@@ -1,14 +1,17 @@
 <template>
   <div>
-    <LayoutModal v-if="open" :title="title" @close="closeForm">
-      <RowForm :schema="schema" :table="table" @close="closeForm" />
-    </LayoutModal>
-    <IconAction icon="plus" @click="openForm" />
+    <RowEditModal
+      v-if="open"
+      :schema="schema"
+      :table="table"
+      @close="closeForm"
+    />
+    <IconAction v-else icon="plus" @click="openForm" />
   </div>
 </template>
 
 <script>
-import RowForm from "./RowForm.vue";
+import RowEditModal from "./RowEditModal.vue";
 import IconAction from "../elements/IconAction";
 
 export default {
@@ -18,7 +21,7 @@ export default {
     };
   },
   components: {
-    RowForm,
+    RowEditModal,
     IconAction
   },
   props: {

@@ -2,48 +2,58 @@
   <div v-if="loading" class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
   </div>
-  <form-group v-else v-bind="$props">
+  <FormGroup v-else v-bind="$props">
     <select class="custom-select" :id="id" @click="openSelect">
       <option v-if="value && !showSelect" :value="value" selected>{{value}}</option>
     </select>
     <LayoutModal :title="title" @close="closeSelect" :show="showSelect">
-      <MessageError v-if="error">{{error}}</MessageError>
-      <InputSearch v-if="table" v-model="searchTerms" />
-      <DataTable
-        :metadata="metadata"
-        :data="data"
-        :selectColumn="refColumn"
-        :selectedItems="value"
-        @select="select"
-        @deselect="deselect"
-      />
+      <template v-slot:body>
+        <MessageError v-if="error">{{error}}</MessageError>
+        <TableSearch
+          :schema="schema"
+          :table="refTable"
+          :selectColumn="refColumn"
+          :defaultValue="value"
+          @select="select"
+          @deselect="deselect"
+        />
+      </template>
+      <template v-slot:footer>
+        <ButtonAlt @click="closeSelect">Close</ButtonAlt>
+      </template>
     </LayoutModal>
-    {{selectedItems}}
-  </form-group>
+  </FormGroup>
 </template>
 
 <script>
-import _baseInput from "./_baseInput";
-import _graphqlTableMixin from "./_graphqlTableMixin";
+import _baseInput from "../elements/_baseInput";
+import TableSearch from './TableSearch';
+import LayoutModal from '../elements/LayoutModal';
+import MessageError from '../elements/MessageError';
+import FormGroup from '../elements/_formGroup';
+
+
 
 export default {
   extends: _baseInput,
-  mixins: [_graphqlTableMixin],
   data: function() {
     return {
       showSelect: false
     };
   },
+  components: {
+    TableSearch,
+    MessageError, 
+    LayoutModal,FormGroup
+  },
   props: {
+    schema: String,
     refTable: String,
     refColumn: String
   },
   computed: {
     title() {
-      return "Select " + this.table;
-    },
-    table() {
-      return this.refTable;
+      return "Select " + this.refTable;
     }
   },
   methods: {

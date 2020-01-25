@@ -3,59 +3,43 @@
     <MessageError v-if="error">{{ error }}</MessageError>
     <LoginForm @login="loginSuccess" @cancel="cancel" />
   </div>
-  <div v-else>
-    <LayoutForm v-if="metadata && (this.pkey == null || this.defaultValue)">
-      <span v-for="column in metadata.columns" :key="column.name">
-        <RowColumnInput
-          v-model="value[column.name]"
-          :schema="schema"
-          :label="column.name"
-          :columnType="column.columnType"
-          :refTable="column.refTable"
-          :refColumn="column.refColumn"
-          :nullable="column.nullable"
-          :defaultValue="defaultValue ? defaultValue[column.name] : undefined"
-          :error="errorPerColumn[column.name]"
-          :readonly="column.readonly || (pkey && column.pkey)"
-        />
-      </span>
-    </LayoutForm>
-    <MessageSuccess v-if="success">{{ success }}</MessageSuccess>
-    <MessageError v-if="error">{{ error }}</MessageError>
-    <ButtonCancel @click="$emit('close')">Close</ButtonCancel>
-    <ButtonAction @click="executeCommand">{{ title }}</ButtonAction>
-    <!--<br />graphql
-    <br />
-    {{graphql}}
-    <br />Schema:
-    <br />
-    {{JSON.stringify(schema,null,2)}}
-    <br />Metadata:
-    <br />
-    {{JSON.stringify(metadata,null,2)}}
-    <br />Value:
-    <br />
-    {{JSON.stringify(value,null,2)}}
-    <br />Error:
-    <br />
-    {{JSON.stringify(errorPerColumn,null,2)}}
-    <br />Data
-    <br />
-    {{JSON.stringify(data,null,2)}}
-    <br />DefaultValue
-    <br />
-    {{JSON.stringify(defaultValue,null,2)}}
-    <br />-->
-  </div>
+  <LayoutModal v-else :title="title" :show="true" @close="$emit('close')">
+    <template v-slot:body>
+      <LayoutForm v-if="metadata && (pkey == null || defaultValue)">
+        <span v-for="column in metadata.columns" :key="column.name">
+          <RowFormInput
+            v-model="value[column.name]"
+            :schema="schema"
+            :label="column.name"
+            :columnType="column.columnType"
+            :refTable="column.refTable"
+            :refColumn="column.refColumn"
+            :nullable="column.nullable"
+            :defaultValue="defaultValue ? defaultValue[column.name] : undefined"
+            :error="errorPerColumn[column.name]"
+            :readonly="column.readonly || (pkey && column.pkey)"
+          />
+        </span>
+      </LayoutForm>
+    </template>
+    <template v-slot:footer>
+      <MessageSuccess v-if="success">{{ success }}</MessageSuccess>
+      <MessageError v-if="error">{{ error }}</MessageError>
+      <ButtonAlt @click="$emit('close')">Close</ButtonAlt>
+      <ButtonAction @click="executeCommand">{{ title }}</ButtonAction>
+    </template>
+  </LayoutModal>
 </template>
 
 <script>
 import LayoutForm from "../elements/LayoutForm.vue";
-import ButtonAction from "../elements/ButtonAction.vue";
-import ButtonCancel from "../elements/ButtonCancel.vue";
-import _graphqlTableMixin from "../elements/_graphqlTableMixin";
+import LayoutModal from "../elements/LayoutModal.vue";
 
-import RowColumnInput from "./RowColumnInput.vue";
+import ButtonAction from "../elements/ButtonAction.vue";
+import ButtonAlt from "../elements/ButtonAlt.vue";
+import _graphqlTableMixin from "./_graphqlTableMixin";
+
+import RowFormInput from "./RowFormInput.vue";
 
 import { request } from "graphql-request";
 
@@ -76,9 +60,10 @@ export default {
   },
   components: {
     LayoutForm,
-    RowColumnInput,
+    RowFormInput,
     ButtonAction,
-    ButtonCancel
+    ButtonAlt,
+    LayoutModal
   },
   methods: {
     loginSuccess() {

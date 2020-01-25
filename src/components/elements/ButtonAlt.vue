@@ -20,7 +20,7 @@ export default {
 Example
 
 ```
-<ButtonCancel v-on:click="action('cancel')">Cancel</ButtonCancel>
+<ButtonAlt v-on:click="action('cancel')">Cancel</ButtonAlt>
 ```
 
 </docs>

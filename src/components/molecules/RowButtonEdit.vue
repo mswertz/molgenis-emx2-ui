@@ -1,25 +1,25 @@
 <template>
   <div>
-    <LayoutModal v-if="open" :title="title" @close="closeForm">
-      <RowForm :schema="schema" :table="table" :pkey="pkey" @close="closeForm" />
-    </LayoutModal>
-    <IconAction icon="edit" @click="openForm" />
+    <RowEditModal
+      v-if="open"
+      :schema="schema"
+      :table="table"
+      :pkey="pkey"
+      @close="closeForm"
+    />
+    <IconAction v-else icon="edit" @click="openForm" />
   </div>
 </template>
 
 <script>
-//extends
 import RowButtonAdd from "./RowButtonAdd";
-//uses
-import RowForm from "./RowForm.vue";
-import LayoutModal from "../elements/LayoutModal";
+import RowEditModal from "./RowEditModal.vue";
 import IconAction from "../elements/IconAction";
 
 export default {
   extends: RowButtonAdd,
   components: {
-    RowForm,
-    LayoutModal,
+    RowEditModal,
     IconAction
   },
   props: {

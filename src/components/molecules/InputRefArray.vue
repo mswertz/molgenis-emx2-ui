@@ -4,28 +4,36 @@
   </div>
   <form-group v-else v-bind="$props">
     <select class="custom-select" :id="id" @click="openSelect" multiple>
-      <option v-for="item in value" :key="item" :value="item" selected>{{item}}</option>
+      <option v-for="item in value" :key="item" :value="item" selected>{{
+        item
+      }}</option>
     </select>
     <LayoutModal :title="title" @close="closeSelect" :show="showSelect">
-      <div v-if="showSelect">
-        <MessageError v-if="error">{{error}}</MessageError>
-        <InputSearch v-if="table" v-model="searchTerms" />
-        <DataTable
-          :metadata="metadata"
-          :data="data"
+      <template v-slot:body>
+        <MessageError v-if="error">{{ error }}</MessageError>
+        <TableSearch
+          :schema="schema"
+          :table="refTable"
           :selectColumn="refColumn"
-          :selectedItems="value"
+          :defaultValue="value"
           @select="select"
           @deselect="deselect"
         />
-      </div>
+      </template>
+      <template v-slot:footer>
+        <ButtonAlt @click="closeSelect">Close</ButtonAlt>
+      </template>
     </LayoutModal>
   </form-group>
 </template>
 
 <script>
-import _baseInput from "./_baseInput";
+import _baseInput from "../elements/_baseInput";
 import _graphqlTableMixin from "./_graphqlTableMixin";
+import ButtonAlt from "../elements/ButtonAlt";
+import FormGroup from "../elements/_formGroup";
+import LayoutModal from "../elements/LayoutModal";
+import TableSearch from "./TableSearch";
 
 export default {
   extends: _baseInput,
@@ -34,6 +42,12 @@ export default {
     return {
       showSelect: false
     };
+  },
+  components: {
+    ButtonAlt,
+    FormGroup,
+    TableSearch,
+    LayoutModal
   },
   props: {
     refTable: String,

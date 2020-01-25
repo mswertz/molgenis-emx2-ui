@@ -1,46 +1,36 @@
 <template>
   <div>
-    <MessageError v-if="error">{{error}}</MessageError>
-    <MessageSuccess v-if="success">{{success}}</MessageSuccess>
-    <InputSelect
-      v-model="schema"
-      :items="schemaList"
-      :selected="schema"
-      placeholder="Choose schema"
-    />
+    <MessageError v-if="error">{{ error }}</MessageError>
+    <MessageSuccess v-if="success">{{ success }}</MessageSuccess>
     <InputFile v-model="file" :file="file" />
-    <ButtonCancel @click="cancel">Cancel</ButtonCancel>
+    <ButtonAlt @click="cancel">Cancel</ButtonAlt>
     <ButtonAction @click="upload">Import</ButtonAction>
   </div>
 </template>
 
 <script>
 import ButtonAction from "../elements/ButtonAction.vue";
-import ButtonCancel from "../elements/ButtonCancel.vue";
-import InputSelect from "../elements/InputSelect.vue";
+import ButtonAlt from "../elements/ButtonAlt.vue";
 import InputFile from "../elements/InputFile.vue";
 import MessageError from "../elements/MessageError.vue";
 import MessageSuccess from "../elements/MessageSuccess.vue";
 
-import { request } from "graphql-request";
-
-const endpoint = "/api/graphql";
-
+/** Data import tool */
 export default {
   data: function() {
     return {
-      schema: null,
       file: null,
-      schemaList: [],
       error: null,
       success: null
     };
   },
+  props: {
+    schema: String
+  },
   components: {
     ButtonAction,
-    ButtonCancel,
+    ButtonAlt,
     InputFile,
-    InputSelect,
     MessageError,
     MessageSuccess
   },
@@ -75,16 +65,6 @@ export default {
       this.schemaSelected = null;
       this.file = null;
     }
-  },
-  created: function() {
-    request(endpoint, `{Schemas{name}}`)
-      .then(data => {
-        this.schemaList = [];
-        data.Schemas.forEach(element => {
-          this.schemaList.push(element.name);
-        });
-      })
-      .catch(error => (this.error = "internal server error: " + error));
   }
 };
 </script>
@@ -94,7 +74,7 @@ WORK IN PROGRESS
 
 Example
 ```
-<Import/>
+<Import schema="pet store"/>
 
 ```
 </docs>

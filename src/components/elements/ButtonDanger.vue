@@ -21,7 +21,7 @@ export default {
 Example
 
 ```jsx
-<ButtonDanger v-on:click="alert('hello');">Dangerou actions</ButtonDanger>
+<ButtonDanger v-on:click="alert('hello');">Dangerous actions</ButtonDanger>
 ```
 
 </docs>
