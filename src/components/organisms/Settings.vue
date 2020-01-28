@@ -2,7 +2,7 @@
   <LayoutNavTabs v-model="view" :items="['Members', 'Roles']"> </LayoutNavTabs>
 </template>
 <script>
-/** manage members and roles of a group (aka schema). */
+/** manage settings of a schema */
 export default {
   data: function() {
     return {

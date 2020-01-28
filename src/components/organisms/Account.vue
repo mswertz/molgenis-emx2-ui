@@ -8,23 +8,17 @@
       </span>
       <span v-else>
         <ButtonAction @click="showSigninForm = true">Sign in</ButtonAction>
-        <LayoutModal
+        <SigninForm
           v-if="showSigninForm"
-          title="Sign in"
-          @close="closeSigninForm"
-          show="true"
-        >
-          <SigninForm @cancel="closeSigninForm" :error="error" />
-        </LayoutModal>
+          @cancel="closeSigninForm"
+          :error="error"
+        />
         <ButtonAlt @click="showSignupForm = true">Sign up</ButtonAlt>
-        <LayoutModal
+        <SignupForm
           v-if="showSignupForm"
-          title="Sign up"
-          @close="closeSignupForm"
-          show="true"
-        >
-          <SignupForm @cancel="closeSignupForm" :error="error" />
-        </LayoutModal>
+          @cancel="closeSignupForm"
+          :error="error"
+        />
       </span>
     </div>
   </div>
@@ -34,7 +28,6 @@
 import ButtonAction from "../elements/ButtonAction.vue";
 import SigninForm from "../molecules/SigninForm.vue";
 import SignupForm from "../molecules/SignupForm.vue";
-import LayoutModal from "../elements/LayoutModal.vue";
 
 import { request } from "graphql-request";
 const endpoint = "/api/graphql";
@@ -52,8 +45,7 @@ export default {
   components: {
     ButtonAction,
     SigninForm,
-    SignupForm,
-    LayoutModal
+    SignupForm
   },
   computed: {
     email() {

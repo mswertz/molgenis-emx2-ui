@@ -51,7 +51,7 @@ export default {
   },
   //initialise with default value if exists
   created() {
-    if (this.defaultValue) {
+    if (this.defaultValue != null) {
       this.value = this.defaultValue;
     }
   }

@@ -4,24 +4,30 @@
     <MessageSuccess>{{ success }}</MessageSuccess>
     <ButtonAlt @click="cancel">Close</ButtonAlt>
   </div>
-  <LayoutForm v-else>
-    <MessageError v-if="error">{{ error }}</MessageError>
-    <input-string
-      label="Email"
-      placeholder="Enter email adress"
-      help="Please enter the provided email address"
-      v-model="email"
-    />
-    <input-password
-      label="Password"
-      placeholder="Enter password"
-      help="Please enter the provided password"
-      v-model="password"
-      @keyup.enter="signin"
-    />
-    <ButtonAlt @click="cancel">Cancel</ButtonAlt>
-    <ButtonAction @click="signin">Sign in</ButtonAction>
-  </LayoutForm>
+  <LayoutModal v-else title="Sign in" :show="true">
+    <template v-slot:body>
+      <LayoutForm>
+        <MessageError v-if="error">{{ error }}</MessageError>
+        <input-string
+          label="Email"
+          placeholder="Enter email adress"
+          help="Please enter the provided email address"
+          v-model="email"
+        />
+        <input-password
+          label="Password"
+          placeholder="Enter password"
+          help="Please enter the provided password"
+          v-model="password"
+          @keyup.enter="signin"
+        />
+      </LayoutForm>
+    </template>
+    <template v-slot:footer>
+      <ButtonAlt @click="cancel">Cancel</ButtonAlt>
+      <ButtonAction @click="signin">Sign in</ButtonAction>
+    </template>
+  </LayoutModal>
 </template>
 
 <script>

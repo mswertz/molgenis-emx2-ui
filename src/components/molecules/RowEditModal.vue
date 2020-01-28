@@ -101,6 +101,37 @@ export default {
             this.error = error;
           }
         });
+    },
+    validate() {
+      this.metadata.columns.forEach(column => {
+        //make really empty if empty
+        if (/^\s*$/.test(this.value[column.name])) {
+          delete this.value[column.name];
+        }
+        delete this.errorPerColumn[column.name];
+        if (
+          //when empty
+          this.value[column.name] == null
+        ) {
+          if (
+            //when required
+            column.nullable != true
+          ) {
+            this.errorPerColumn[column.name] = column.name + " is required ";
+          }
+        } else {
+          //when not empty
+          if (
+            //when validation
+            typeof this.value[column.name] !== "undefined" &&
+            typeof column.validation !== "undefined"
+          ) {
+            let value = this.value[column.name];
+            this.errorPerColumn[column.name] = value;
+            this.errorPerColumn[column.name] = eval(column.validation);
+          }
+        }
+      });
     }
   },
   computed: {
@@ -143,38 +174,13 @@ export default {
     //validation happens here
     value: {
       handler() {
-        this.metadata.columns.forEach(column => {
-          //make really empty if empty
-          if (/^\s*$/.test(this.value[column.name])) {
-            delete this.value[column.name];
-          }
-          delete this.errorPerColumn[column.name];
-          if (
-            //when empty
-            this.value[column.name] == null
-          ) {
-            if (
-              //when required
-              column.nullable != true
-            ) {
-              this.errorPerColumn[column.name] = column.name + " is required ";
-            }
-          } else {
-            //when not empty
-            if (
-              //when validation
-              typeof this.value[column.name] !== "undefined" &&
-              typeof column.validation !== "undefined"
-            ) {
-              let value = this.value[column.name];
-              this.errorPerColumn[column.name] = value;
-              this.errorPerColumn[column.name] = eval(column.validation);
-            }
-          }
-        });
+        this.validate();
       },
       deep: true
     }
+  },
+  created() {
+    this.validate();
   }
 };
 </script>
