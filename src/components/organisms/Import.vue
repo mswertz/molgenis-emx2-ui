@@ -38,7 +38,7 @@ export default {
     upload() {
       let form = new FormData();
       form.append("file", this.file);
-      let url = "/api/zip/" + this.schema;
+      let url = "/api/excel/" + this.schema;
       fetch(url, {
         method: "POST",
         body: form
@@ -53,7 +53,7 @@ export default {
           } else {
             response.json().then(error => {
               this.success = null;
-              this.error = error.message;
+              this.error = error.errors;
             });
           }
         })

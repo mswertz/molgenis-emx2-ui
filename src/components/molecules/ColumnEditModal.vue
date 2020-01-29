@@ -17,7 +17,8 @@
   <!-- alter or add a column -->
   <LayoutModal v-else :title="title" :show="true" @close="$emit('close')">
     <template v-slot:body>
-      <LayoutForm>
+      <LayoutForm :key="key">
+        {{JSON.stringify(tableMetadata)}}
         <InputString
           v-model="column.name"
           label="Column name"
@@ -30,10 +31,29 @@
           :defaultValue="defaultValue ? defaultValue.columnType : undefined"
           :items="columnTypes"
         />
+        <InputSelect
+          v-if="column.columnType == 'REF'"
+          v-model="column.refTable"
+          label="Referenced table"
+          :defaultValue="defaultValue ? defaultValue.refTable : undefined"
+          :items="tables"
+        />
+        <!--InputSelect
+          v-if="column.columnType == 'REF'"
+          v-model="column.refColumn"
+          label="Referenced column"
+          :defaultValue="defaultValue ? defaultValue.refColumn : undefined"
+          :items="columns"
+        /-->
         <InputBoolean
           v-model="column.nullable"
           label="Nullable"
           :defaultValue="defaultValue && defaultValue.nullable ? true : false"
+        />
+        <InputText
+          v-model="column.description"
+          label="Description"
+          :defaultValue="defaultValue ? defaultValue.description : undefined"
         />
         {{endpoint}} {{table}}
       </LayoutForm>
@@ -76,10 +96,12 @@ export default {
   props: {
     schema: String,
     table: String,
+    metadata: [],
     defaultValue: Object
   },
   data: function() {
     return {
+      key: 0,
       column: {},
       loading: false,
       columnTypes,
@@ -100,6 +122,24 @@ export default {
     },
     endpoint() {
       return "/api/graphql/" + this.schema;
+    },
+    tables() {
+      return this.metadata.map(table => table.name);
+    },
+    columns() {
+      if (this.column.refTable) {
+        let columnList;
+        this.metadata.forEach(table => {
+          if (table.name == this.column.refTable) columnList = table.columns;
+        });
+        if (columnList) {
+          return columnList.map(column => column.name);
+        }
+      }
+      return [];
+    },
+    tableMetadata() {
+      return null;
     }
   },
   methods: {
@@ -150,38 +190,6 @@ Example:
   <div>
     <ButtonAction v-if="!show" @click="show = true">Show</ButtonAction>
     <ColumnEditModal v-else v-model="column" @close="close" />
-    <br />
-    Value: {{column}}
-  </div>
-</template>
-
-<script>
-export default {
-  data: function() {
-    return {
-      show: false,
-      column: {}
-    };
-  },
-  methods: {
-    close() {
-      this.show = false;
-    }
-  }
-};
-</script>
-```
-Example with defaultValue
-```
-<template>
-  <div>
-    <ButtonAction v-if="!show" @click="show = true">Show</ButtonAction>
-    <ColumnEditModal
-      v-else
-      @close="close"
-      v-model="column"
-      :defaultValue="{name:'test', columnType:'INT', nullable:true}"
-    />
     <br />
     Value: {{column}}
   </div>

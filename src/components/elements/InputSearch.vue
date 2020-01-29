@@ -1,8 +1,19 @@
 <template>
+  <form-group v-bind="$props">
+    <div class="input-group">
+      <span class="input-group-prepend">
+        <button class="btn border-right-0 border" type="button">
+          <i class="fa fa-search"></i>
+        </button>
+      </span>
+      <input class="form-control border-left-0 border" type="search" :value="placholder" :id="id" />
+    </div>
+  </form-group>
+  <!--
   <div class="form-group has-search">
     <span class="fa fa-search form-control-feedback"></span>
     <input type="text" class="form-control" placeholder="Search" v-model="value" />
-  </div>
+  </div>-->
 </template>
 
 <script>
@@ -22,7 +33,7 @@ export default {
 }
 
 .has-search .form-control-feedback {
-  position: absolute;
+  position: fixed;
   z-index: 2;
   display: block;
   width: 2.375rem;

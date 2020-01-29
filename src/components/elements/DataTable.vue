@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <table
-      class="table table-bordered"
-      :class="{ 'table-hover': selectColumn }"
-    >
+  <div class="table-responsive">
+    <table class="table table-bordered table-condensed" :class="{ 'table-hover': selectColumn }">
       <thead>
         <tr>
           <th scope="col" style="width: 1px;">
@@ -17,17 +14,11 @@
       <tr v-for="(row, index) in rows" :key="index">
         <td @click="onRowClick(row)">
           <slot name="rowheader" :row="row" />
-          <input
-            v-if="selectColumn"
-            type="checkbox"
-            :checked="isSelected(row)"
-          />
+          <input v-if="selectColumn" type="checkbox" :checked="isSelected(row)" />
         </td>
         <td v-for="col in columns" :key="col" @click="onRowClick(row)">
           <ul v-if="Array.isArray(row[col])" class="list-unstyled">
-            <li v-for="(item, index3) in row[col]" :key="index3">
-              {{ item }}
-            </li>
+            <li v-for="(item, index3) in row[col]" :key="index3">{{ item }}</li>
           </ul>
           <span v-else>{{ row[col] }}</span>
         </td>
@@ -35,6 +26,15 @@
     </table>
   </div>
 </template>
+
+<style scoped>
+th {
+  background: white;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+}
+</style>
 
 <script>
 /** Data table. Has also option to have row selection. Selection events must be handled outside this view. */
@@ -97,30 +97,34 @@ Example
 ```
 <template>
   <div>
-    <DataTable 
+    <DataTable
       v-model="selectedItems"
-      selectColumn="lastName" 
+      selectColumn="lastName"
       :defaultValue="['Duck']"
-      :columns="['firstName','lastName','tags']" 
+      :columns="['firstName','lastName','tags']"
       :rows="[{'firstName':'Donald','lastName':'Duck'},{'firstName':'Scrooge','lastName':'McDuck','tags':['blue','green']}]"
-      @select="select" @deselect="deselect"/>
-      SelectedItems: {{selectedItems}}
-</div>
+      @select="select"
+      @deselect="deselect"
+    />
+    SelectedItems: {{selectedItems}}
+  </div>
 </template>
 <script>
 export default {
   data: function() {
     return {
-      selectedItems:[]
+      selectedItems: []
     };
-  },methods: {
+  },
+  methods: {
     select(value) {
-      alert('select '+value);
-    }, deselect(value) {
-      alert('deselect '+value);
+      alert("select " + value);
+    },
+    deselect(value) {
+      alert("deselect " + value);
     }
   }
-}
+};
 </script>
 ```
 </docs>

@@ -1,12 +1,18 @@
 <template>
-  <div class="card">
-    <div v-if="title" class="card-header text-center">
+  <div class="card" :class="{'card-fullscreen': fullscreen}">
+    <div v-if="title" class="card-header text-center" ref="header">
       <h4>{{title}}</h4>
+      <IconAction
+        class="card-fullscreen-icon"
+        :icon="fullscreen? 'compress' : 'expand'"
+        @click="fullscreen = !fullscreen"
+      />
     </div>
-    <div class="card-body">
+    <div class="card-body" v-scroll-lock="fullscreen" :style="bodyheight">
       <!-- @slot Use this slot to place the card content -->
       <slot />
     </div>
+    <div class="card-footer" ref="footer">Created by MOLGENIS.</div>
   </div>
 </template>
 
@@ -15,9 +21,48 @@ export default {
   props: {
     /** Title that is shown on the card (optional) */
     title: String
+  },
+  data: function() {
+    return {
+      fullscreen: false
+    };
+  },
+  computed: {
+    bodyheight() {
+      if (this.fullscreen) {
+        let header = this.$refs.header.clientHeight;
+        let footer = this.$refs.footer.clientHeight;
+        return `height: calc(100vh - ${header + footer}px)`;
+      }
+      return "";
+    }
   }
 };
 </script>
+
+<style scoped>
+.card-fullscreen {
+  display: block;
+  z-index: 9999;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll;
+}
+.card-fullscreen-icon {
+  float: right;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.card-fullscreen .card-body {
+  overflow-x: scroll;
+}
+</style>
 
 <docs>
 

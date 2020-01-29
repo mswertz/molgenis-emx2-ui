@@ -1,27 +1,29 @@
 <template>
   <div>
     <MessageError v-if="error">{{ error }}</MessageError>
-    <InputSearch v-if="table" v-model="searchTerms" />
     <div v-if="loading" class="spinner-border" role="status">
       <span class="sr-only">Loading...</span>
     </div>
-    <DataTable
-      v-else
-      v-model="selectedItems"
-      :columns="columns"
-      :rows="rows"
-      :selectColumn="selectColumn"
-      :defaultValue="defaultValue"
-      @select="select"
-      @deselect="deselect"
-    >
-      <template v-slot:colheader="slotProps">
-        <slot name="colheader" />
-      </template>
-      <template v-slot:rowheader="slotProps">
-        <slot name="rowheader" :row="slotProps.row" :metadata="metadata" />
-      </template>
-    </DataTable>
+    <div v-else style="text-align: center">
+      <InputSearch v-if="table" v-model="searchTerms" />
+      <Pagination v-model="page" :limit="limit" :count="count" />
+      <DataTable
+        v-model="selectedItems"
+        :columns="columns"
+        :rows="rows"
+        :selectColumn="selectColumn"
+        :defaultValue="defaultValue"
+        @select="select"
+        @deselect="deselect"
+      >
+        <template v-slot:colheader="slotProps">
+          <slot name="colheader" />
+        </template>
+        <template v-slot:rowheader="slotProps">
+          <slot name="rowheader" :row="slotProps.row" :metadata="metadata" />
+        </template>
+      </DataTable>
+    </div>
     <!--
     Data:
     {{ data }}
@@ -49,7 +51,10 @@ export default {
     InputSearch
   },
   data: function() {
-    return { selectedItems: [] };
+    return {
+      selectedItems: [],
+      page: 1
+    };
   },
   methods: {
     select(value) {
@@ -62,6 +67,10 @@ export default {
   watch: {
     selectedItems() {
       this.$emit("input", this.selectedItems);
+    },
+    page() {
+      this.offset = this.limit * (this.page - 1);
+      this.reload();
     }
   },
   computed: {
@@ -107,23 +116,29 @@ Example:
 Example with select and default value
 ```
 <template>
-<div>
-<TableSearch v-model="selectedItems" schema="pet%20store" table="Pet" pkey="name" selectColumn="name" defaultValue="pooky">
-<template v-slot:rowheader="props">my row action {{props.row.name}}</template>
-</TableSearch>
-Selected: {{selectedItems}} 
-</div>
-
+  <div>
+    <TableSearch
+      v-model="selectedItems"
+      schema="pet%20store"
+      table="Pet"
+      pkey="name"
+      selectColumn="name"
+      defaultValue="pooky"
+    >
+      <template v-slot:rowheader="props">my row action {{props.row.name}}</template>
+    </TableSearch>
+    Selected: {{selectedItems}}
+  </div>
 </template>
 
 <script>
 export default {
   data: function() {
     return {
-      selectedItems:[]
+      selectedItems: []
     };
   }
-}
+};
 </script>
 ```
 </docs>

@@ -1,19 +1,27 @@
 <template>
   <Spinner v-if="loading" />
   <MessageError v-else-if="error">{{ error }}</MessageError>
-  <div v-else-if="tables">
-    <img :src="yuml" style="max-height: 50%" />
+  <LayoutCard v-else-if="tables" title="View and edit schema">
+    <InputBoolean v-model="showAttributes" label="show attributes" :defaultValue="showAttributes" />
+    <div style="overflow: auto; text-align:center" id="__top">
+      <img :src="yuml" :key="showAttributes" />
+    </div>|
+    <span v-for="table in tables" :key="table.name">
+      <a :href="'#'+table.name">{{table.name}}</a> |
+    </span>
     <table class="table table-hover">
       <tbody v-for="table in tables" :key="table.name">
         <tr>
           <td colspan="3">
-            <h1>
+            <h1 :id="table.name">
               {{table.name}}
               <IconBar class="hover">
                 <IconAction icon="edit" />
                 <IconDanger icon="trash" />
               </IconBar>
             </h1>
+            <br />
+            <a href="#__top">back to top</a>
           </td>
         </tr>
         <tr>
@@ -24,6 +32,7 @@
               v-if="columnAdd"
               :schema="schema"
               :table="currentTable.name"
+              :metadata="tables"
               @close="columnAdd = false; loadSchema();"
             />
           </th>
@@ -47,6 +56,7 @@
                 :defaultValue="currentColumn"
                 :schema="schema"
                 :table="currentTable.name"
+                :metadata="tables"
                 @close="columnAlter = false; loadSchema();"
               />
               <ColumnDropModal
@@ -63,11 +73,11 @@
             <span v-if="column.refTable">({{column.refTable}}.{{column.refColumn}})</span>&nbsp;
             <span v-if="column.nullable">NULLABLE</span>
           </td>
-          <td>TODO</td>
+          <td>{{column.description}}</td>
         </tr>
       </tbody>
     </table>
-  </div>
+  </LayoutCard>
 </template>
 
 <style scoped>
@@ -98,6 +108,7 @@ export default {
   },
   data: function() {
     return {
+      showAttributes: false,
       loading: false,
       tables: null,
       error: null,
@@ -115,7 +126,7 @@ export default {
       this.loading = true;
       request(
         this.endpoint,
-        "{_meta{tables{name,pkey,columns{name,columnType,pkey,refTable,refColumn,nullable}}}}"
+        "{_meta{tables{name,pkey,description,columns{name,columnType,pkey,refTable,refColumn,nullable,description}}}}"
       )
         .then(data => (this.tables = data._meta.tables))
         .catch(error => {
@@ -135,19 +146,22 @@ export default {
       let res = "http://yuml.me/diagram/scruffy;dir:lr/class/";
       //classes
       this.tables.forEach(table => {
-        res += `[${table.name}|`;
-        table.columns.forEach(column => {
-          res += `${column.name};`;
-        });
+        res += `[${table.name}`;
+        if (this.showAttributes) {
+          res += "|";
+          table.columns.forEach(column => {
+            res += `${column.name};`;
+          });
+        }
         res += `],`;
       });
       //relations
       this.tables.forEach(table => {
         table.columns.forEach(column => {
           if (column.columnType === "REF") {
-            res += `[${table.name}]${column.name}->[${column.refTable}],`;
+            res += `[${table.name}]->[${column.refTable}],`;
           } else if (column.columnType === "REF_ARRAY") {
-            res += `[${table.name}]${column.name}-*>[${column.refTable}],`;
+            res += `[${table.name}]-*>[${column.refTable}],`;
           }
         });
       });
@@ -163,6 +177,6 @@ export default {
 <docs>
 Example
 ```
-  <SchemaEdit schema="pet store" />
+  <Schema schema="pet store" />
 ```
 </docs>

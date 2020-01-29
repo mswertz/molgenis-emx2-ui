@@ -1,7 +1,7 @@
 <template>
   <div>
     <MessageError v-if="error">{{ error }}</MessageError>
-    <div class="table-responsive" v-else-if="table">
+    <div v-else-if="table">
       <LayoutNavTabs
         v-if="tableNames"
         v-model="table"
@@ -16,6 +16,15 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+th {
+  background: white;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+}
+</style>
 
 <script>
 import MessageError from "../elements/MessageError.vue";

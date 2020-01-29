@@ -4,7 +4,7 @@
     <MessageSuccess>{{ success }}</MessageSuccess>
     <ButtonAlt @click="cancel">Close</ButtonAlt>
   </div>
-  <LayoutModal v-else title="Sign in" :show="true">
+  <LayoutModal v-else title="Sign in" :show="true" @close="cancel">
     <template v-slot:body>
       <LayoutForm>
         <MessageError v-if="error">{{ error }}</MessageError>

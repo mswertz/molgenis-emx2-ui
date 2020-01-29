@@ -11,6 +11,9 @@ export default {
   data: function() {
     return {
       data: [],
+      count: 0,
+      offset: 0,
+      limit: 20,
       searchTerms: null
     };
   },
@@ -21,6 +24,7 @@ export default {
         .then(data => {
           this.error = null;
           this.data = data[this.table]["data"];
+          this.count = data[this.table]["data_agg"]["count"];
         })
         .catch(error => (this.error = "internal server error" + error));
       this.loading = false;
@@ -32,7 +36,8 @@ export default {
         this.searchTerms != null && this.searchTerms != ""
           ? '(search:"' + this.searchTerms + '")'
           : "";
-      return "{" + this.table + search + "{data{" + this.columnNames + "}}}";
+      return `{${this.table}${search}{data_agg{count},data(limit:${this.limit},offset:${this.offset}){${this.columnNames}
+        }}}`;
     },
     columnNames() {
       let result = "";
