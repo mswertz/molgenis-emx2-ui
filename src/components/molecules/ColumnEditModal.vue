@@ -18,12 +18,11 @@
   <LayoutModal v-else :title="title" :show="true" @close="$emit('close')">
     <template v-slot:body>
       <LayoutForm :key="key">
-        {{JSON.stringify(tableMetadata)}}
         <InputString
           v-model="column.name"
           label="Column name"
           :defaultValue="defaultValue ? defaultValue.name : undefined"
-          :readonly="defaultValue"
+          :readonly="defaultValue != undefined"
         />
         <InputSelect
           v-model="column.columnType"
@@ -55,7 +54,6 @@
           label="Description"
           :defaultValue="defaultValue ? defaultValue.description : undefined"
         />
-        {{endpoint}} {{table}}
       </LayoutForm>
     </template>
     <template v-slot:footer>
@@ -70,6 +68,17 @@
 
 <script>
 import { request } from "graphql-request";
+
+import MessageSuccess from "../elements/MessageSuccess";
+import MessageError from "../elements/MessageSuccess";
+import ButtonAction from "../elements/ButtonAction";
+import ButtonAlt from "../elements/ButtonAlt";
+import LayoutModal from "../elements/LayoutModal";
+import InputBoolean from "../elements/InputBoolean";
+import InputString from "../elements/InputString";
+import InputText from "../elements/InputText";
+import InputSelect from "../elements/InputSelect";
+import LayoutForm from "../elements/LayoutForm";
 
 const columnTypes = [
   "STRING",
@@ -96,7 +105,7 @@ export default {
   props: {
     schema: String,
     table: String,
-    metadata: [],
+    metadata: Array,
     defaultValue: Object
   },
   data: function() {
@@ -109,6 +118,18 @@ export default {
       success: null,
       showLogin: false
     };
+  },
+  components: {
+    MessageSuccess,
+    MessageError,
+    ButtonAction,
+    ButtonAlt,
+    LayoutModal,
+    InputBoolean,
+    InputString,
+    InputText,
+    InputSelect,
+    LayoutForm
   },
   computed: {
     title() {

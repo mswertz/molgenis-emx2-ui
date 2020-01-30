@@ -13,9 +13,7 @@
       </template>
       <template v-slot:footer>
         <ButtonAlt @click="closeForm">Close</ButtonAlt>
-        <ButtonAction v-if="!success && !success" @click="executeDelete">
-          Delete
-        </ButtonAction>
+        <ButtonAction v-if="!success && !success" @click="executeDelete">Delete</ButtonAction>
       </template>
     </LayoutModal>
     <IconDanger icon="trash" @click="openForm" />
@@ -23,11 +21,13 @@
 </template>
 
 <script>
-//extends
 import RowButtonAdd from "./RowButtonAdd";
-//uses
 import LayoutModal from "../elements/LayoutModal";
 import IconDanger from "../elements/IconDanger";
+import ButtonAlt from "../elements/ButtonAlt";
+import ButtonAction from "../elements/ButtonAction";
+import MessageError from "../elements/MessageError";
+import MessageSuccess from "../elements/MessageSuccess";
 
 import { request } from "graphql-request";
 
@@ -41,7 +41,11 @@ export default {
   },
   components: {
     LayoutModal,
-    IconDanger
+    IconDanger,
+    ButtonAction,
+    ButtonAlt,
+    MessageSuccess,
+    MessageError
   },
   props: {
     pkey: String

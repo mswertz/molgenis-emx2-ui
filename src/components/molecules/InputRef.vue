@@ -1,8 +1,5 @@
 <template>
-  <div v-if="loading" class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-  <FormGroup v-else v-bind="$props">
+  <FormGroup v-bind="$props">
     <select class="custom-select" :id="id" @click="openSelect">
       <option v-if="value && !showSelect" :value="value" selected>{{value}}</option>
     </select>
@@ -27,12 +24,10 @@
 
 <script>
 import _baseInput from "../elements/_baseInput";
-import TableSearch from './TableSearch';
-import LayoutModal from '../elements/LayoutModal';
-import MessageError from '../elements/MessageError';
-import FormGroup from '../elements/_formGroup';
-
-
+import TableSearch from "./TableSearch";
+import LayoutModal from "../elements/LayoutModal";
+import MessageError from "../elements/MessageError";
+import FormGroup from "../elements/_formGroup";
 
 export default {
   extends: _baseInput,
@@ -43,8 +38,9 @@ export default {
   },
   components: {
     TableSearch,
-    MessageError, 
-    LayoutModal,FormGroup
+    MessageError,
+    LayoutModal,
+    FormGroup
   },
   props: {
     schema: String,

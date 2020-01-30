@@ -34,9 +34,11 @@
 <script>
 import LayoutForm from "../elements/LayoutForm.vue";
 import LayoutModal from "../elements/LayoutModal.vue";
-
+import MessageError from "../elements/MessageError";
+import MessageSuccess from "../elements/MessageSuccess";
 import ButtonAction from "../elements/ButtonAction.vue";
 import ButtonAlt from "../elements/ButtonAlt.vue";
+
 import _graphqlTableMixin from "./_graphqlTableMixin";
 
 import RowFormInput from "./RowFormInput.vue";
@@ -63,7 +65,9 @@ export default {
     RowFormInput,
     ButtonAction,
     ButtonAlt,
-    LayoutModal
+    LayoutModal,
+    MessageError,
+    MessageSuccess
   },
   methods: {
     loginSuccess() {
@@ -103,42 +107,44 @@ export default {
         });
     },
     validate() {
-      this.metadata.columns.forEach(column => {
-        //make really empty if empty
-        if (/^\s*$/.test(this.value[column.name])) {
-          delete this.value[column.name];
-        }
-        delete this.errorPerColumn[column.name];
-        if (
-          //when empty
-          this.value[column.name] == null
-        ) {
-          if (
-            //when required
-            column.nullable != true
-          ) {
-            this.errorPerColumn[column.name] = column.name + " is required ";
+      if (this.metadata.columns) {
+        this.metadata.columns.forEach(column => {
+          //make really empty if empty
+          if (/^\s*$/.test(this.value[column.name])) {
+            delete this.value[column.name];
           }
-        } else {
-          //when not empty
+          delete this.errorPerColumn[column.name];
           if (
-            //when validation
-            typeof this.value[column.name] !== "undefined" &&
-            typeof column.validation !== "undefined"
+            //when empty
+            this.value[column.name] == null
           ) {
-            let value = this.value[column.name];
-            this.errorPerColumn[column.name] = value;
-            this.errorPerColumn[column.name] = eval(column.validation);
+            if (
+              //when required
+              column.nullable != true
+            ) {
+              this.errorPerColumn[column.name] = column.name + " is required ";
+            }
+          } else {
+            //when not empty
+            if (
+              //when validation
+              typeof this.value[column.name] !== "undefined" &&
+              typeof column.validation !== "undefined"
+            ) {
+              let value = this.value[column.name];
+              this.errorPerColumn[column.name] = value;
+              this.errorPerColumn[column.name] = eval(column.validation);
+            }
           }
-        }
-      });
+        });
+      }
     }
   },
   computed: {
     //override from tableMixin
     graphql() {
       //todo: must become a typed variable in the query?
-      return `{${this.table}(filter:{${this.metadata.pkey}:{equals:"${this.pkey}"}}){data{${this.columnNames}}}}`;
+      return `{${this.table}(filter:{${this.metadata.pkey}:{equals:"${this.pkey}"}}){data_agg{count}data{${this.columnNames}}}}`;
     },
     title() {
       if (this.pkey) {
@@ -150,26 +156,28 @@ export default {
   },
   watch: {
     data(val) {
-      let data = val[0];
-      let defaultValue = {};
-      this.metadata.columns.forEach(column => {
-        if (data[column.name]) {
-          if (column.columnType === "REF") {
-            defaultValue[column.name] = data[column.name][column.refColumn];
-          } else if (["REF_ARRAY", "REFBACK"].includes(column.columnType)) {
-            if (data[column.name]) {
-              defaultValue[column.name] = [];
-              data[column.name].forEach(value =>
-                defaultValue[column.name].push(value[column.refColumn])
-              );
+      if (val && val.length > 0) {
+        let data = val[0];
+        let defaultValue = {};
+        this.metadata.columns.forEach(column => {
+          if (data[column.name]) {
+            if (column.columnType === "REF") {
+              defaultValue[column.name] = data[column.name][column.refColumn];
+            } else if (["REF_ARRAY", "REFBACK"].includes(column.columnType)) {
+              if (data[column.name]) {
+                defaultValue[column.name] = [];
+                data[column.name].forEach(value =>
+                  defaultValue[column.name].push(value[column.refColumn])
+                );
+              }
+              //TODO array types
+            } else {
+              defaultValue[column.name] = data[column.name];
             }
-            //TODO array types
-          } else {
-            defaultValue[column.name] = data[column.name];
           }
-        }
-      });
-      this.defaultValue = defaultValue;
+        });
+        this.defaultValue = defaultValue;
+      }
     },
     //validation happens here
     value: {

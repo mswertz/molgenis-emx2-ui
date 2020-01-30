@@ -13,7 +13,7 @@ export default {
       data: [],
       count: 0,
       offset: 0,
-      limit: 20,
+      limit: 100,
       searchTerms: null
     };
   },

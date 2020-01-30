@@ -6,7 +6,13 @@
           <i class="fa fa-search"></i>
         </button>
       </span>
-      <input class="form-control border-left-0 border" type="search" :value="placholder" :id="id" />
+      <input
+        v-model="value"
+        class="form-control border-left-0 border"
+        type="search"
+        :placeholder="placeholder"
+        :id="id"
+      />
     </div>
   </form-group>
   <!--
@@ -34,7 +40,6 @@ export default {
 
 .has-search .form-control-feedback {
   position: fixed;
-  z-index: 2;
   display: block;
   width: 2.375rem;
   height: 2.375rem;

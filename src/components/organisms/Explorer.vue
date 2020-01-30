@@ -2,29 +2,22 @@
   <div>
     <MessageError v-if="error">{{ error }}</MessageError>
     <div v-else-if="table">
-      <LayoutNavTabs
-        v-if="tableNames"
-        v-model="table"
-        :items="tableNames"
-        :defaultValue="table"
-        label="Choose table: "
-      />
       <LayoutCard v-if="table && tableNames" :title="title">
+        <template v-slot:header>
+          <LayoutNavTabs
+            v-if="tableNames"
+            v-model="table"
+            :items="tableNames"
+            :defaultValue="table"
+            label="Choose table: "
+          />
+        </template>
         <TableEdit :schema="schema" :table="table" />
       </LayoutCard>
       <br />
     </div>
   </div>
 </template>
-
-<style scoped>
-th {
-  background: white;
-  position: sticky;
-  top: 0;
-  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
-}
-</style>
 
 <script>
 import MessageError from "../elements/MessageError.vue";

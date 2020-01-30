@@ -8,24 +8,18 @@
       </span>
       <span v-else>
         <ButtonAction @click="showSigninForm = true">Sign in</ButtonAction>
-        <SigninForm
-          v-if="showSigninForm"
-          @cancel="closeSigninForm"
-          :error="error"
-        />
+        <SigninForm v-if="showSigninForm" @cancel="closeSigninForm" :error="error" />
         <ButtonAlt @click="showSignupForm = true">Sign up</ButtonAlt>
-        <SignupForm
-          v-if="showSignupForm"
-          @cancel="closeSignupForm"
-          :error="error"
-        />
+        <SignupForm v-if="showSignupForm" @cancel="closeSignupForm" :error="error" />
       </span>
     </div>
   </div>
 </template>
 
 <script>
+import Spinner from "../elements/Spinner.vue";
 import ButtonAction from "../elements/ButtonAction.vue";
+import ButtonAlt from "../elements/ButtonAlt.vue";
 import SigninForm from "../molecules/SigninForm.vue";
 import SignupForm from "../molecules/SignupForm.vue";
 
@@ -45,7 +39,9 @@ export default {
   components: {
     ButtonAction,
     SigninForm,
-    SignupForm
+    SignupForm,
+    Spinner,
+    ButtonAlt
   },
   computed: {
     email() {

@@ -38,6 +38,7 @@ import InputPassword from "../elements/InputPassword.vue";
 import MessageError from "../elements/MessageError.vue";
 import MessageSuccess from "../elements/MessageSuccess.vue";
 import LayoutForm from "../elements/LayoutForm.vue";
+import LayoutModal from "../elements/LayoutModal";
 
 import { request } from "graphql-request";
 
@@ -60,7 +61,8 @@ export default {
     InputString,
     MessageError,
     MessageSuccess,
-    LayoutForm
+    LayoutForm,
+    LayoutModal
   },
   methods: {
     signin() {

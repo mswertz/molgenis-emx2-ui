@@ -1,7 +1,8 @@
 <template>
   <div class="card" :class="{'card-fullscreen': fullscreen}">
-    <div v-if="title" class="card-header text-center" ref="header">
-      <h4>{{title}}</h4>
+    <div class="card-header text-center" ref="header">
+      <h4 v-if="title">{{title}}</h4>
+      <slot name="header" />
       <IconAction
         class="card-fullscreen-icon"
         :icon="fullscreen? 'compress' : 'expand'"
@@ -17,6 +18,8 @@
 </template>
 
 <script>
+import IconAction from "./IconAction";
+
 export default {
   props: {
     /** Title that is shown on the card (optional) */
@@ -36,6 +39,9 @@ export default {
       }
       return "";
     }
+  },
+  components: {
+    IconAction
   }
 };
 </script>

@@ -20,6 +20,12 @@
 <script>
 import { request } from "graphql-request";
 
+import LayoutModal from "../elements/LayoutModal";
+import MessageSuccess from "../elements/MessageSuccess";
+import MessageError from "../elements/MessageError";
+import ButtonAlt from "../elements/ButtonAlt";
+import ButtonAction from "../elements/ButtonAction";
+
 export default {
   data: function() {
     return {
@@ -31,6 +37,13 @@ export default {
     schema: String,
     table: String,
     column: String
+  },
+  components: {
+    LayoutModal,
+    MessageSuccess,
+    MessageError,
+    ButtonAction,
+    ButtonAlt
   },
   computed: {
     endpoint() {

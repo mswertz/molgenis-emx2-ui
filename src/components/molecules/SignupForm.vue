@@ -27,11 +27,12 @@
           v-model="password2"
           @keyup.enter="signup"
         />
-      </LayoutForm> </template
-    ><template v-slot:footer>
+      </LayoutForm>
+    </template>
+    <template v-slot:footer>
       <ButtonAlt @click="cancel">Cancel</ButtonAlt>
-      <ButtonAction @click="signup">Sign up</ButtonAction></template
-    >
+      <ButtonAction @click="signup">Sign up</ButtonAction>
+    </template>
   </LayoutModal>
 </template>
 
@@ -44,6 +45,7 @@ import MessageError from "../elements/MessageError.vue";
 import MessageSuccess from "../elements/MessageSuccess.vue";
 import LayoutForm from "../elements/LayoutForm.vue";
 import Spinner from "../elements/Spinner.vue";
+import LayoutModal from "../elements/LayoutModal.vue";
 
 import { request } from "graphql-request";
 
@@ -68,7 +70,8 @@ export default {
     MessageError,
     MessageSuccess,
     LayoutForm,
-    Spinner
+    Spinner,
+    LayoutModal
   },
   methods: {
     signup() {

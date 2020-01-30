@@ -6,7 +6,7 @@ import VScrollLock from "v-scroll-lock";
 Vue.use(VScrollLock);
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
   state: {
     account: {
       email: null
@@ -21,14 +21,3 @@ const store = new Vuex.Store({
     }
   }
 });
-
-//for vue styleguidist
-export default previewComponent => {
-  // https://vuejs.org/v2/guide/render-function.html
-  return {
-    store,
-    render(createElement) {
-      return createElement(previewComponent);
-    }
-  };
-};

@@ -19,6 +19,14 @@
 
 <script>
 import _baseInput from "../elements/_baseInput";
+import InputString from "../elements/InputString";
+import InputInt from "../elements/InputInt";
+import InputDecimal from "../elements/InputDecimal";
+import InputBoolean from "../elements/InputBoolean";
+import InputRef from "./InputRef";
+import InputDate from "../elements/InputDate";
+import InputDateTime from "../elements/InputDateTime";
+import InputRefArray from "./InputRefArray";
 
 export default {
   extends: _baseInput,
@@ -28,6 +36,16 @@ export default {
     refTable: String,
     refColumn: String,
     defaultValue: String
+  },
+  components: {
+    InputString,
+    InputInt,
+    InputDecimal,
+    InputBoolean,
+    InputRef,
+    InputDate,
+    InputDateTime,
+    InputRefArray
   }
 };
 </script>

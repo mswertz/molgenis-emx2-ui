@@ -4,9 +4,10 @@
 
 <script>
 import _baseInput from "./_baseInput";
-
+import InputRadio from "./InputRadio";
 export default {
-  extends: _baseInput
+  extends: _baseInput,
+  components: { InputRadio }
 };
 </script>
 

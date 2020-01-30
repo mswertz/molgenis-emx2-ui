@@ -1,13 +1,12 @@
 <template>
   <div>
     <MessageError v-if="error">{{ error }}</MessageError>
-    <div v-if="loading" class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
     <div v-else style="text-align: center">
       <InputSearch v-if="table" v-model="searchTerms" />
       <Pagination v-model="page" :limit="limit" :count="count" />
+      <Spinner v-if="loading" />
       <DataTable
+        v-else
         v-model="selectedItems"
         :columns="columns"
         :rows="rows"
@@ -38,6 +37,8 @@ import _graphqlTableMixin from "./_graphqlTableMixin";
 import DataTable from "../elements/DataTable";
 import MessageError from "../elements/MessageError";
 import InputSearch from "../elements/InputSearch";
+import Pagination from "../elements/Pagination.vue";
+import Spinner from "../elements/Spinner.vue";
 
 export default {
   extends: _graphqlTableMixin,
@@ -48,12 +49,15 @@ export default {
   components: {
     DataTable,
     MessageError,
-    InputSearch
+    InputSearch,
+    Pagination,
+    Spinner
   },
   data: function() {
     return {
       selectedItems: [],
-      page: 1
+      page: 1,
+      loading: true
     };
   },
   methods: {
@@ -69,6 +73,7 @@ export default {
       this.$emit("input", this.selectedItems);
     },
     page() {
+      this.loading = true;
       this.offset = this.limit * (this.page - 1);
       this.reload();
     }

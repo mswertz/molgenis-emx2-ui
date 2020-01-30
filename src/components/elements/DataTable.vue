@@ -28,12 +28,12 @@
 </template>
 
 <style scoped>
-th {
+/* th {
   background: white;
   position: sticky;
   top: 0;
   box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
-}
+} */
 </style>
 
 <script>
@@ -91,6 +91,13 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+th,
+td {
+  text-align: left;
+}
+</style>
 
 <docs>
 Example
