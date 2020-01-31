@@ -26,7 +26,14 @@
             <a class="nav-link" href="#" @click.prevent="view = 'schema'">Schema</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" :href="'/api/playground.html?schema=/api/graphql/'+schema">GraphQL</a>
+            <a class="nav-link" href="#" @click.prevent="view = 'import'">Import</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              :href="'/api/playground.html?schema=/api/graphql/'+schema"
+              target="_blank"
+            >GraphQL</a>
           </li>
         </ul>
       </div>
@@ -45,6 +52,7 @@
       </div>
       <Explorer v-if="view === 'explorer'" :schema="schema" />
       <Schema v-if="view === 'schema'" :schema="schema" />
+      <Import v-if="view === 'import'" :schema="schema" />
     </div>
   </div>
 </template>
@@ -57,6 +65,7 @@ import InputSelect from "../elements/InputSelect.vue";
 import Explorer from "../organisms/Explorer.vue";
 import Schema from "../organisms/Schema.vue";
 import Account from "../organisms/Account.vue";
+import Import from "../organisms/Import.vue";
 
 export default {
   data: function() {
@@ -72,6 +81,7 @@ export default {
     Explorer,
     Schema,
     Account,
+    Import,
     InputSelect
   },
   computed: {

@@ -25,9 +25,12 @@ export default {
           this.error = null;
           this.data = data[this.table]["data"];
           this.count = data[this.table]["data_agg"]["count"];
+          this.loading = false;
         })
-        .catch(error => (this.error = "internal server error" + error));
-      this.loading = false;
+        .catch(error => {
+          this.error = "internal server error" + error;
+          this.loading = false;
+        });
     }
   },
   computed: {

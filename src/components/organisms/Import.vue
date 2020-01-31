@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <Spinner v-if="loading" />
+  <div v-else>
+    {{loading}}
     <MessageError v-if="error">{{ error }}</MessageError>
     <MessageSuccess v-if="success">{{ success }}</MessageSuccess>
     <InputFile v-model="file" :file="file" />
@@ -14,6 +16,7 @@ import ButtonAlt from "../elements/ButtonAlt.vue";
 import InputFile from "../elements/InputFile.vue";
 import MessageError from "../elements/MessageError.vue";
 import MessageSuccess from "../elements/MessageSuccess.vue";
+import Spinner from "../elements/Spinner.vue";
 
 /** Data import tool */
 export default {
@@ -21,7 +24,8 @@ export default {
     return {
       file: null,
       error: null,
-      success: null
+      success: null,
+      loading: false
     };
   },
   props: {
@@ -32,10 +36,14 @@ export default {
     ButtonAlt,
     InputFile,
     MessageError,
-    MessageSuccess
+    MessageSuccess,
+    Spinner
   },
   methods: {
     upload() {
+      this.error = null;
+      this.success = null;
+      this.loading = true;
       let form = new FormData();
       form.append("file", this.file);
       let url = "/api/excel/" + this.schema;
@@ -56,9 +64,11 @@ export default {
               this.error = error.errors;
             });
           }
+          this.loading = false;
         })
         .catch(error => {
           this.error = error;
+          this.loading = false;
         });
     },
     cancel() {
@@ -70,8 +80,6 @@ export default {
 </script>
 
 <docs>
-WORK IN PROGRESS
-
 Example
 ```
 <Import schema="pet store"/>
