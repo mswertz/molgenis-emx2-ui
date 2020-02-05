@@ -1,7 +1,6 @@
 {
-  "name": "molgenis-emx2-design-system",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@mswertz/molgenis-emx2-ui",
+  "main": "dist/index.html",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -51,5 +50,9 @@
       "master",
       "dev"
     ]
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
 }
