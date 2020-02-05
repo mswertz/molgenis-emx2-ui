@@ -45,5 +45,11 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "release": {
+    "branches": [
+      "master",
+      "dev"
+    ]
+  }
 }
