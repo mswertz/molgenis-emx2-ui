@@ -4,6 +4,8 @@ This is a preview version of how a MOLGENIS EMX2 design system could look like, 
 
 See result at https://mswertz.github.io/molgenis-emx2-ui/ (include trailing '/')
 
+In order to see the result you must configure a backend.
+
 ## Project setup
 
 ```
