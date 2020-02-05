@@ -5,6 +5,8 @@ node_js:
 
 jobs:
   include:
+    - stage: test
+      script: npm run build
     # Define the release stage that runs semantic-release
     - stage: release
       node_js: lts/*
