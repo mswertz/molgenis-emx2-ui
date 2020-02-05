@@ -31,6 +31,10 @@ module.exports = {
       links: [
         {
           rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css?family=Oswald:500|Roboto|Roboto+Mono&display=swap'
+        },
+        {
+          rel: 'stylesheet',
           href:
             // 'https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'
             'css/bootstrap-molgenis-blue.css'
