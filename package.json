@@ -1,5 +1,8 @@
 {
   "name": "@mswertz/molgenis-emx2-ui",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.html",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -51,5 +54,5 @@
       "dev"
     ]
   }
-  
+
 }
