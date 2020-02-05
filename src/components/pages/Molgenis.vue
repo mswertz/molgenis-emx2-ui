@@ -61,6 +61,7 @@
 import { request } from "graphql-request";
 
 import InputSelect from "../elements/InputSelect.vue";
+import MessageError from "../elements/MessageError";
 
 import Explorer from "../organisms/Explorer.vue";
 import Schema from "../organisms/Schema.vue";
