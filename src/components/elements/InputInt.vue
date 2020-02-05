@@ -1,28 +1,28 @@
 <script>
-import InputString from "./InputString";
+import InputString from './InputString'
 
 /** Input for decimal values */
 export default {
   extends: InputString,
   props: {
     placeholder: {
-      default: "Please enter non-decimal number (does not accept A-Za-z)"
+      default: 'Please enter non-decimal number (does not accept A-Za-z)'
     }
   },
   methods: {
-    keyhandler(event) {
-      if (!this.isInt(event)) event.preventDefault();
+    keyhandler (event) {
+      if (!this.isInt(event)) event.preventDefault()
     },
-    isInt(e) {
-      var specialKeys = new Array();
-      specialKeys.push(8); //Backspace
-      var keyCode = e.which ? e.which : e.keyCode;
+    isInt (e) {
+      var specialKeys = []
+      specialKeys.push(8) // Backspace
+      var keyCode = e.which ? e.which : e.keyCode
       var ret =
-        (keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1;
-      return ret;
+        (keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) !== -1
+      return ret
     }
   }
-};
+}
 </script>
 
 <docs>

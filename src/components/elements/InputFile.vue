@@ -45,27 +45,27 @@
 </style>
 
 <script>
-import _baseInput from "./_baseInput.vue";
+import _baseInput from './_baseInput.vue'
 
 export default {
   extends: _baseInput,
   computed: {
-    filename() {
-      if (this.value) return this.value.name;
-      return null;
+    filename () {
+      if (this.value) return this.value.name
+      return null
     }
   },
   methods: {
-    handleFileUpload() {
-      this.value = this.$refs.file.files[0];
+    handleFileUpload () {
+      this.value = this.$refs.file.files[0]
     },
-    clearInput() {
-      alert("clear");
-      this.$refs.file.value = "";
-      this.value = null;
+    clearInput () {
+      alert('clear')
+      this.$refs.file.value = ''
+      this.value = null
     }
   }
-};
+}
 </script>
 
 <docs>

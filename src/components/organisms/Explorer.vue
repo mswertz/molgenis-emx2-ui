@@ -20,22 +20,22 @@
 </template>
 
 <script>
-import MessageError from "../elements/MessageError.vue";
-import LayoutNavTabs from "../elements/LayoutNavTabs.vue";
-import TableEdit from "../molecules/TableEdit.vue";
-import LayoutCard from "../elements/LayoutCard.vue";
+import MessageError from '../elements/MessageError.vue'
+import LayoutNavTabs from '../elements/LayoutNavTabs.vue'
+import TableEdit from '../molecules/TableEdit.vue'
+import LayoutCard from '../elements/LayoutCard.vue'
 
-import { request } from "graphql-request";
+import { request } from 'graphql-request'
 
 /** For viewing data in the tables of one schema  */
 export default {
-  data: function() {
+  data: function () {
     return {
       table: null,
       tableNames: null,
       error: null,
       key: 0
-    };
+    }
   },
   props: {
     schema: String
@@ -47,57 +47,57 @@ export default {
     LayoutCard
   },
   methods: {
-    refresh() {
-      this.error = null;
-      this.key = this.key + 1;
+    refresh () {
+      this.error = null
+      this.key = this.key + 1
     },
-    load() {
-      this.tableNames = null;
-      this.error = null;
-      request(this.endpoint, "{_meta{tables{name}}}")
+    load () {
+      this.tableNames = null
+      this.error = null
+      request(this.endpoint, '{_meta{tables{name}}}')
         .then(data => {
-          this.tableNames = [];
+          this.tableNames = []
           data._meta.tables.forEach(element => {
-            this.tableNames.push(element.name);
+            this.tableNames.push(element.name)
             if (this.table === null) {
-              this.table = this.tableNames[0]; //default
+              this.table = this.tableNames[0] // default
             }
-          });
+          })
         })
         .catch(error => {
           if (error.response.status === 403) {
             this.error =
-              "Schema doesn't exist or permission denied. Do you need to Sign In?";
+              "Schema doesn't exist or permission denied. Do you need to Sign In?"
           } else {
-            this.error = error;
+            this.error = error
           }
-        });
+        })
     }
   },
-  created() {
-    this.load();
+  created () {
+    this.load()
   },
   computed: {
-    endpoint() {
-      return "/api/graphql/" + this.schema;
+    endpoint () {
+      return '/api/graphql/' + this.schema
     },
-    title() {
-      return "Table: " + this.table;
+    title () {
+      return 'Table: ' + this.table
     },
-    account() {
-      return this.$store.state.account.email;
+    account () {
+      return this.$store.state.account.email
     }
   },
   watch: {
-    username() {
-      this.load();
+    username () {
+      this.load()
     },
-    account() {
-      this.load();
-      this.refresh();
+    account () {
+      this.load()
+      this.refresh()
     }
   }
-};
+}
 </script>
 
 <docs>

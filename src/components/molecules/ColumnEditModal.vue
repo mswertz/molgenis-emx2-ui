@@ -6,7 +6,12 @@
     <LoginForm @login="loginSuccess" @cancel="cancel" />
   </div>
   <!-- when update succesfull show result before close -->
-  <LayoutModal v-else-if="success" :title="title" :show="true" @close="$emit('close')">
+  <LayoutModal
+    v-else-if="success"
+    :title="title"
+    :show="true"
+    @close="$emit('close')"
+  >
     <template v-slot:body>
       <MessageSuccess>{{ success }}</MessageSuccess>
     </template>
@@ -60,46 +65,50 @@
       <MessageSuccess v-if="success">{{ success }}</MessageSuccess>
       <MessageError v-if="error">{{ error }}</MessageError>
       <ButtonAlt @click="$emit('close')">Close</ButtonAlt>
-      <ButtonAction v-if="defaultValue" @click="executeCommand">{{ action }}</ButtonAction>
+      <ButtonAction v-if="defaultValue" @click="executeCommand">{{
+        action
+      }}</ButtonAction>
       <ButtonAction v-else @click="executeCommand">{{ action }}</ButtonAction>
     </template>
   </LayoutModal>
 </template>
 
 <script>
-import { request } from "graphql-request";
+import { request } from 'graphql-request'
 
-import MessageSuccess from "../elements/MessageSuccess";
-import MessageError from "../elements/MessageSuccess";
-import ButtonAction from "../elements/ButtonAction";
-import ButtonAlt from "../elements/ButtonAlt";
-import LayoutModal from "../elements/LayoutModal";
-import InputBoolean from "../elements/InputBoolean";
-import InputString from "../elements/InputString";
-import InputText from "../elements/InputText";
-import InputSelect from "../elements/InputSelect";
-import LayoutForm from "../elements/LayoutForm";
+import MessageSuccess from '../elements/MessageSuccess'
+import MessageError from '../elements/MessageError'
+import ButtonAction from '../elements/ButtonAction'
+import ButtonAlt from '../elements/ButtonAlt'
+import LayoutModal from '../elements/LayoutModal'
+import InputBoolean from '../elements/InputBoolean'
+import InputString from '../elements/InputString'
+import InputText from '../elements/InputText'
+import LoginForm from '../elements/LoginForm'
+import InputSelect from '../elements/InputSelect'
+import LayoutForm from '../elements/LayoutForm'
+import Spinner from '../elements/Spinner'
 
 const columnTypes = [
-  "STRING",
-  "INT",
-  "BOOL",
-  "DECIMAL",
-  "DATE",
-  "DATETIME",
-  "REF",
-  "REF_ARRAY",
-  "UUID",
-  "TEXT",
-  "STRING_ARRAY",
-  "INT_ARRAY",
-  "BOOL_ARRAY",
-  "DECIMAL_ARRAY",
-  "DATE_ARRAY",
-  "DATETIME_ARRAY",
-  "UUID_ARRAY",
-  "TEXT_ARRAY"
-];
+  'STRING',
+  'INT',
+  'BOOL',
+  'DECIMAL',
+  'DATE',
+  'DATETIME',
+  'REF',
+  'REF_ARRAY',
+  'UUID',
+  'TEXT',
+  'STRING_ARRAY',
+  'INT_ARRAY',
+  'BOOL_ARRAY',
+  'DECIMAL_ARRAY',
+  'DATE_ARRAY',
+  'DATETIME_ARRAY',
+  'UUID_ARRAY',
+  'TEXT_ARRAY'
+]
 
 export default {
   props: {
@@ -108,7 +117,7 @@ export default {
     metadata: Array,
     defaultValue: Object
   },
-  data: function() {
+  data: function () {
     return {
       key: 0,
       column: {},
@@ -117,7 +126,7 @@ export default {
       error: null,
       success: null,
       showLogin: false
-    };
+    }
   },
   components: {
     MessageSuccess,
@@ -129,46 +138,48 @@ export default {
     InputString,
     InputText,
     InputSelect,
-    LayoutForm
+    LayoutForm,
+    Spinner,
+    LoginForm
   },
   computed: {
-    title() {
-      if (this.defaultValue)
-        return `Alter column(${this.defaultValue.name}) in table '${this.table}'`;
-      else return `Add column to table '${this.table}'`;
+    title () {
+      if (this.defaultValue) {
+        return `Alter column(${this.defaultValue.name}) in table '${this.table}'`
+      } else return `Add column to table '${this.table}'`
     },
-    action() {
-      if (this.defaultValue) return `Alter column`;
-      else return `Add column`;
+    action () {
+      if (this.defaultValue) return `Alter column`
+      else return `Add column`
     },
-    endpoint() {
-      return "/api/graphql/" + this.schema;
+    endpoint () {
+      return '/api/graphql/' + this.schema
     },
-    tables() {
-      return this.metadata.map(table => table.name);
+    tables () {
+      return this.metadata.map(table => table.name)
     },
-    columns() {
+    columns () {
       if (this.column.refTable) {
-        let columnList;
+        let columnList
         this.metadata.forEach(table => {
-          if (table.name == this.column.refTable) columnList = table.columns;
-        });
+          if (table.name === this.column.refTable) columnList = table.columns
+        })
         if (columnList) {
-          return columnList.map(column => column.name);
+          return columnList.map(column => column.name)
         }
       }
-      return [];
+      return []
     },
-    tableMetadata() {
-      return null;
+    tableMetadata () {
+      return null
     }
   },
   methods: {
-    executeCommand() {
-      this.loading = true;
-      this.error = null;
-      this.success = null;
-      let command = this.defaultValue ? "alter" : "add";
+    executeCommand () {
+      this.loading = true
+      this.error = null
+      this.success = null
+      let command = this.defaultValue ? 'alter' : 'add'
       request(
         this.endpoint,
         `mutation ${command}Column($table:String,$column:MolgenisColumnInput){${command}Column(table:$table,column:$column){message}}`,
@@ -179,29 +190,29 @@ export default {
       )
         .then(data => {
           if (this.defaultValue) {
-            this.tables = data.alterColumn.message;
-            this.success = `Column ${this.column.name} altered`;
+            this.tables = data.alterColumn.message
+            this.success = `Column ${this.column.name} altered`
           } else {
-            this.tables = data.addColumn.message;
-            this.success = `Column ${this.column.name} created`;
+            this.tables = data.addColumn.message
+            this.success = `Column ${this.column.name} created`
           }
-          this.$emit("close");
+          this.$emit('close')
         })
         .catch(error => {
           if (error.response.status === 403) {
-            this.error = "Forbidden. Do you need to login?";
-            this.showLogin = true;
-          } else this.error = error;
-        });
-      this.loading = false;
+            this.error = 'Forbidden. Do you need to login?'
+            this.showLogin = true
+          } else this.error = error
+        })
+      this.loading = false
     }
   },
   watch: {
-    column() {
-      this.$emit("input", this.column);
+    column () {
+      this.$emit('input', this.column)
     }
   }
-};
+}
 </script>
 
 <docs>

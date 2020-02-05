@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import RowButtonAdd from "./RowButtonAdd";
-import RowButtonEdit from "./RowButtonEdit";
-import RowButtonDelete from "./RowButtonDelete";
-import TableSearch from "./TableSearch";
-import IconBar from "../elements/IconBar";
+import RowButtonAdd from './RowButtonAdd'
+import RowButtonEdit from './RowButtonEdit'
+import RowButtonDelete from './RowButtonDelete'
+import TableSearch from './TableSearch'
+import IconBar from '../elements/IconBar'
 
 export default {
   props: {
@@ -41,17 +41,17 @@ export default {
     TableSearch,
     IconBar
   },
-  data: function() {
+  data: function () {
     return {
       key: 0
-    };
+    }
   },
   methods: {
-    refresh() {
-      this.key = this.key + 1;
+    refresh () {
+      this.key = this.key + 1
     }
   }
-};
+}
 </script>
 
 <docs>

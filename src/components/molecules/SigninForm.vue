@@ -8,13 +8,13 @@
     <template v-slot:body>
       <LayoutForm>
         <MessageError v-if="error">{{ error }}</MessageError>
-        <input-string
+        <InputString
           label="Email"
           placeholder="Enter email adress"
           help="Please enter the provided email address"
           v-model="email"
         />
-        <input-password
+        <InputPassword
           label="Password"
           placeholder="Enter password"
           help="Please enter the provided password"
@@ -31,28 +31,29 @@
 </template>
 
 <script>
-import ButtonAction from "../elements/ButtonAction.vue";
-import ButtonAlt from "../elements/ButtonAlt.vue";
-import InputString from "../elements/InputString.vue";
-import InputPassword from "../elements/InputPassword.vue";
-import MessageError from "../elements/MessageError.vue";
-import MessageSuccess from "../elements/MessageSuccess.vue";
-import LayoutForm from "../elements/LayoutForm.vue";
-import LayoutModal from "../elements/LayoutModal";
+import ButtonAction from '../elements/ButtonAction.vue'
+import ButtonAlt from '../elements/ButtonAlt.vue'
+import InputString from '../elements/InputString.vue'
+import InputPassword from '../elements/InputPassword.vue'
+import MessageError from '../elements/MessageError.vue'
+import MessageSuccess from '../elements/MessageSuccess.vue'
+import LayoutForm from '../elements/LayoutForm.vue'
+import LayoutModal from '../elements/LayoutModal'
+import Spinner from '../elements/Spinner'
 
-import { request } from "graphql-request";
+import { request } from 'graphql-request'
 
-const endpoint = "/api/graphql";
+const endpoint = '/api/graphql'
 
 export default {
-  data: function() {
+  data: function () {
     return {
       email: null,
       password: null,
       loading: false,
       error: null,
       success: null
-    };
+    }
   },
   components: {
     ButtonAction,
@@ -62,39 +63,40 @@ export default {
     MessageError,
     MessageSuccess,
     LayoutForm,
-    LayoutModal
+    LayoutModal,
+    Spinner
   },
   methods: {
-    signin() {
+    signin () {
       if (this.email == null || this.password == null) {
-        this.error = "Email and password should be filled in";
+        this.error = 'Email and password should be filled in'
       } else {
-        this.error = null;
-        this.loading = true;
+        this.error = null
+        this.loading = true
         request(
           endpoint,
           `mutation{signin(email: "${this.email}", password: "${this.password}"){status,message}}`
         )
           .then(data => {
-            if (data.signin.status == "SUCCESS") {
-              this.$store.commit("signin", this.email);
-              this.success = "Signed in with " + this.email;
-              this.$emit("signin");
-            } else this.error = data.signin.message;
+            if (data.signin.status === 'SUCCESS') {
+              this.$store.commit('signin', this.email)
+              this.success = 'Signed in with ' + this.email
+              this.$emit('signin')
+            } else this.error = data.signin.message
           })
-          .catch(error => (this.error = "internal server error" + error));
-        this.loading = false;
+          .catch(error => (this.error = 'internal server error' + error))
+        this.loading = false
       }
     },
-    cancel() {
+    cancel () {
       /**
        * when cancel is pushed
        */
-      this.error = null;
-      this.$emit("cancel");
+      this.error = null
+      this.$emit('cancel')
     }
   }
-};
+}
 </script>
 
 <docs>

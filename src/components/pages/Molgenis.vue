@@ -68,25 +68,25 @@
 </template>
 
 <script>
-import { request } from "graphql-request";
+import { request } from 'graphql-request'
 
-import InputSelect from "../elements/InputSelect.vue";
-import MessageError from "../elements/MessageError";
+import InputSelect from '../elements/InputSelect.vue'
+import MessageError from '../elements/MessageError'
 
-import Explorer from "../organisms/Explorer.vue";
-import Schema from "../organisms/Schema.vue";
-import Account from "../organisms/Account.vue";
-import Import from "../organisms/Import.vue";
+import Explorer from '../organisms/Explorer.vue'
+import Schema from '../organisms/Schema.vue'
+import Account from '../organisms/Account.vue'
+import Import from '../organisms/Import.vue'
 
 export default {
-  data: function() {
+  data: function () {
     return {
-      view: "home",
+      view: 'home',
       schema: null,
       schemaList: [],
       error: null,
       loading: false
-    };
+    }
   },
   components: {
     Explorer,
@@ -97,30 +97,30 @@ export default {
     MessageError
   },
   computed: {
-    account() {
-      return this.$store.state.account.email;
+    account () {
+      return this.$store.state.account.email
     }
   },
   methods: {
-    getSchemaList() {
-      this.loading = true;
-      request("/api/graphql", "{Schemas{name}}")
+    getSchemaList () {
+      this.loading = true
+      request('/api/graphql', '{Schemas{name}}')
         .then(data => {
-          this.schemaList = data.Schemas.map(schema => schema.name);
+          this.schemaList = data.Schemas.map(schema => schema.name)
         })
-        .catch(error => (this.error = "internal server error" + error));
-      this.loading = false;
+        .catch(error => (this.error = 'internal server error' + error))
+      this.loading = false
     }
   },
   watch: {
-    account() {
-      this.getSchemaList();
+    account () {
+      this.getSchemaList()
     }
   },
-  created() {
-    this.getSchemaList();
+  created () {
+    this.getSchemaList()
   }
-};
+}
 </script>
 
 <docs>

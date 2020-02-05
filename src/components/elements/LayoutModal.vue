@@ -60,17 +60,17 @@ export default {
     }
   },
   methods: {
-    close() {
+    close () {
       /** when the close x button is clicked */
-      this.$emit("close");
+      this.$emit('close')
     },
-    closeUnlessInDialog() {
-      if (event.target == event.currentTarget) {
-        this.$emit("close");
+    closeUnlessInDialog () {
+      if (event.target === event.currentTarget) {
+        this.$emit('close')
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -91,7 +91,7 @@ Example
       <template v-slot:body>
       Here is the contents
       </template>
-      <template v-slot:footer>      
+      <template v-slot:footer>
         <ButtonAction @click="toggle">Done</ButtonAction>
       </template>
     </LayoutModal>

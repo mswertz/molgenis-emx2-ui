@@ -18,32 +18,32 @@
 </template>
 
 <script>
-import IconAction from "./IconAction";
+import IconAction from './IconAction'
 
 export default {
   props: {
     /** Title that is shown on the card (optional) */
     title: String
   },
-  data: function() {
+  data: function () {
     return {
       fullscreen: false
-    };
+    }
   },
   computed: {
-    bodyheight() {
+    bodyheight () {
       if (this.fullscreen) {
-        let header = this.$refs.header.clientHeight;
-        let footer = this.$refs.footer.clientHeight;
-        return `height: calc(100vh - ${header + footer}px)`;
+        let header = this.$refs.header.clientHeight
+        let footer = this.$refs.footer.clientHeight
+        return `height: calc(100vh - ${header + footer}px)`
       }
-      return "";
+      return ''
     }
   },
   components: {
     IconAction
   }
-};
+}
 </script>
 
 <style scoped>
@@ -72,7 +72,7 @@ export default {
 
 <docs>
 
-Example 
+Example
 
 ```jsx
 <LayoutCard title="My first card">

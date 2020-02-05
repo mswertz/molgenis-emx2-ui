@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import RowButtonAdd from "./RowButtonAdd";
-import RowEditModal from "./RowEditModal.vue";
-import IconAction from "../elements/IconAction";
+import RowButtonAdd from './RowButtonAdd'
+import RowEditModal from './RowEditModal.vue'
+import IconAction from '../elements/IconAction'
 
 export default {
   extends: RowButtonAdd,
@@ -26,11 +26,11 @@ export default {
     pkey: String
   },
   computed: {
-    title() {
-      return `Update ${this.table}`;
+    title () {
+      return `Update ${this.table}`
     }
   }
-};
+}
 </script>
 
 <docs>Example

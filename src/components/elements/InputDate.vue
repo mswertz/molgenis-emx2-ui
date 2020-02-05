@@ -38,26 +38,26 @@
 </template>
 
 <script>
-import _baseInput from "./_baseInput.vue";
-import flatPickr from "vue-flatpickr-component";
-import "flatpickr/dist/flatpickr.css";
-import "../../../public/css/bootstrap-molgenis-blue.css";
+import _baseInput from './_baseInput.vue'
+import flatPickr from 'vue-flatpickr-component'
+import 'flatpickr/dist/flatpickr.css'
+import '../../../public/css/bootstrap-molgenis-blue.css'
 
 export default {
   extends: _baseInput,
-  data: function() {
+  data: function () {
     return {
       config: {
         wrap: true, // set wrap to true only when using 'input-group'
-        dateFormat: "Y-m-d",
+        dateFormat: 'Y-m-d',
         allowInput: false
       }
-    };
+    }
   },
   components: {
     flatPickr
   }
-};
+}
 </script>
 
 <docs>

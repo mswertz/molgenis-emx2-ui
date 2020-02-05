@@ -49,47 +49,47 @@ export default {
     /** default value */
     defaultValue: []
   },
-  data: function() {
+  data: function () {
     return {
       selectedItems: []
-    };
+    }
   },
   watch: {
-    selectedItems() {
-      this.$emit("input", this.selectedItems);
+    selectedItems () {
+      this.$emit('input', this.selectedItems)
     }
   },
   methods: {
-    isSelected(row) {
+    isSelected (row) {
       return (
         this.selectedItems != null &&
         this.selectedItems.includes(row[this.selectColumn])
-      );
+      )
     },
-    onRowClick(row) {
+    onRowClick (row) {
       if (this.selectColumn) {
         if (this.isSelected(row)) {
           /** when a row is deselected */
           this.selectedItems = this.selectedItems.filter(
-            item => item != row[this.selectColumn]
-          );
-          this.$emit("deselect", row[this.selectColumn]);
+            item => item !== row[this.selectColumn]
+          )
+          this.$emit('deselect', row[this.selectColumn])
         } else {
-          /** when a row is selected*/
-          this.selectedItems.push(row[this.selectColumn]);
-          this.$emit("select", row[this.selectColumn]);
+          /** when a row is selected */
+          this.selectedItems.push(row[this.selectColumn])
+          this.$emit('select', row[this.selectColumn])
         }
       }
     }
   },
-  created() {
+  created () {
     if (this.defaultValue instanceof Array) {
-      this.selectedItems = this.defaultValue;
+      this.selectedItems = this.defaultValue
     } else {
-      this.selectedItems.push(this.defaultValue);
+      this.selectedItems.push(this.defaultValue)
     }
   }
-};
+}
 </script>
 
 <style scoped>

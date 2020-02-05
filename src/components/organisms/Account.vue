@@ -17,24 +17,24 @@
 </template>
 
 <script>
-import Spinner from "../elements/Spinner.vue";
-import ButtonAction from "../elements/ButtonAction.vue";
-import ButtonAlt from "../elements/ButtonAlt.vue";
-import SigninForm from "../molecules/SigninForm.vue";
-import SignupForm from "../molecules/SignupForm.vue";
+import Spinner from '../elements/Spinner.vue'
+import ButtonAction from '../elements/ButtonAction.vue'
+import ButtonAlt from '../elements/ButtonAlt.vue'
+import SigninForm from '../molecules/SigninForm.vue'
+import SignupForm from '../molecules/SignupForm.vue'
 
-import { request } from "graphql-request";
-const endpoint = "/api/graphql";
+import { request } from 'graphql-request'
+const endpoint = '/api/graphql'
 /** Element that is supposed to be put in menu holding all controls for user account */
 export default {
-  data: function() {
+  data: function () {
     return {
       /** @ignore */
       showSigninForm: false,
       showSignupForm: false,
       error: null,
       loading: false
-    };
+    }
   },
   components: {
     ButtonAction,
@@ -44,55 +44,55 @@ export default {
     ButtonAlt
   },
   computed: {
-    email() {
-      return this.$store.state.account.email;
+    email () {
+      return this.$store.state.account.email
     }
   },
   methods: {
-    closeSigninForm() {
-      this.showSigninForm = false;
-      this.error = null;
+    closeSigninForm () {
+      this.showSigninForm = false
+      this.error = null
     },
-    closeSignupForm() {
-      this.showSignupForm = false;
-      this.error = null;
+    closeSignupForm () {
+      this.showSignupForm = false
+      this.error = null
     },
-    signout() {
-      this.loading = true;
+    signout () {
+      this.loading = true
       request(endpoint, `mutation{signout{status}}`)
         .then(data => {
-          if (data.signout.status == "SUCCESS") {
-            this.$store.commit("signout");
-          } else this.error = "sign out failed";
+          if (data.signout.status === 'SUCCESS') {
+            this.$store.commit('signout')
+          } else this.error = 'sign out failed'
         })
-        .catch(error => (this.error = "internal server error" + error));
-      this.loading = false;
+        .catch(error => (this.error = 'internal server error' + error))
+      this.loading = false
     }
   },
   watch: {
-    email() {
-      this.showSigninForm = false;
-      this.showSignupForm = false;
+    email () {
+      this.showSigninForm = false
+      this.showSignupForm = false
     }
   },
-  created: function() {
+  created: function () {
     request(endpoint, `{_user{email}}`)
       .then(data => {
-        if (data._user.email != "anonymous") {
-          this.$store.commit("signin", data._user.email);
+        if (data._user.email !== 'anonymous') {
+          this.$store.commit('signin', data._user.email)
         } else {
-          this.$store.commit("signout");
+          this.$store.commit('signout')
         }
       })
       .catch(error => {
         if (error.response.status === 504) {
-          this.error = "Error. Server cannot be reached.";
+          this.error = 'Error. Server cannot be reached.'
         } else {
-          this.error = "internal server error " + error;
+          this.error = 'internal server error ' + error
         }
-      });
+      })
   }
-};
+}
 </script>
 
 <docs>

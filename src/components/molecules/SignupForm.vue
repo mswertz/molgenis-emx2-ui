@@ -37,22 +37,22 @@
 </template>
 
 <script>
-import ButtonAction from "../elements/ButtonAction.vue";
-import ButtonAlt from "../elements/ButtonAlt.vue";
-import InputString from "../elements/InputString.vue";
-import InputPassword from "../elements/InputPassword.vue";
-import MessageError from "../elements/MessageError.vue";
-import MessageSuccess from "../elements/MessageSuccess.vue";
-import LayoutForm from "../elements/LayoutForm.vue";
-import Spinner from "../elements/Spinner.vue";
-import LayoutModal from "../elements/LayoutModal.vue";
+import ButtonAction from '../elements/ButtonAction.vue'
+import ButtonAlt from '../elements/ButtonAlt.vue'
+import InputString from '../elements/InputString.vue'
+import InputPassword from '../elements/InputPassword.vue'
+import MessageError from '../elements/MessageError.vue'
+import MessageSuccess from '../elements/MessageSuccess.vue'
+import LayoutForm from '../elements/LayoutForm.vue'
+import Spinner from '../elements/Spinner.vue'
+import LayoutModal from '../elements/LayoutModal.vue'
 
-import { request } from "graphql-request";
+import { request } from 'graphql-request'
 
-const endpoint = "/api/graphql";
+const endpoint = '/api/graphql'
 
 export default {
-  data: function() {
+  data: function () {
     return {
       email: null,
       password: null,
@@ -60,7 +60,7 @@ export default {
       loading: false,
       error: null,
       success: null
-    };
+    }
   },
   components: {
     ButtonAction,
@@ -74,43 +74,43 @@ export default {
     LayoutModal
   },
   methods: {
-    signup() {
+    signup () {
       if (
         this.email == null ||
         this.password == null ||
         this.password2 == null
       ) {
         this.error =
-          "Error: valid email address and password should be filled in";
+          'Error: valid email address and password should be filled in'
       } else if (this.password !== this.password2) {
-        this.error = "Error: Passwords entered must be the same";
+        this.error = 'Error: Passwords entered must be the same'
       } else {
-        this.error = null;
-        this.loading = true;
+        this.error = null
+        this.loading = true
         request(
           endpoint,
           `mutation{signup(email: "${this.email}", password: "${this.password}"){status}}`
         )
           .then(data => {
-            if (data.signup.status == "SUCCESS") {
-              this.success = "Success. Signed up with email: " + this.email;
-            } else this.error = "Signup failed: " + data.signup.message;
+            if (data.signup.status === 'SUCCESS') {
+              this.success = 'Success. Signed up with email: ' + this.email
+            } else this.error = 'Signup failed: ' + data.signup.message
           })
           .catch(
-            error => (this.error = "Sign up failed: " + error.response.message)
-          );
-        this.loading = false;
+            error => (this.error = 'Sign up failed: ' + error.response.message)
+          )
+        this.loading = false
       }
     },
-    cancel() {
+    cancel () {
       /**
        * when cancel is pushed
        */
-      this.error = null;
-      this.$emit("cancel");
+      this.error = null
+      this.$emit('cancel')
     }
   }
-};
+}
 </script>
 
 <docs>

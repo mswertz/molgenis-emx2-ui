@@ -8,12 +8,12 @@
 /** Cancel button */
 export default {
   methods: {
-    onClick() {
+    onClick () {
       /** emitted on click */
-      this.$emit("click");
+      this.$emit('click')
     }
   }
-};
+}
 </script>
 
 <docs>

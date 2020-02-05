@@ -1,19 +1,19 @@
 <script>
-import InputDate from "./InputDate";
+import InputDate from './InputDate'
 
 export default {
   extends: InputDate,
-  data: function() {
+  data: function () {
     return {
       config: {
         wrap: true, // set wrap to true only when using 'input-group'
-        dateFormat: "Y-m-dTH:i:S",
+        dateFormat: 'Y-m-dTH:i:S',
         allowInput: false,
         enableTime: true
       }
-    };
+    }
   }
-};
+}
 </script>
 
 <docs>

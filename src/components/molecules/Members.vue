@@ -54,25 +54,28 @@
 </template>
 
 <script>
-import { request } from "graphql-request";
+import { request } from 'graphql-request'
 
-import MessageError from "../elements/MessageError";
-import IconAction from "../elements/IconAction";
-import DataTable from "../elements/DataTable";
-import IconBar from "../elements/IconBar";
-import ButtonAction from "../elements/ButtonAction";
-import ButtonAlt from "../elements/ButtonAlt";
-import ButtonDanger from "../elements/ButtonDanger";
+import MessageError from '../elements/MessageError'
+import IconAction from '../elements/IconAction'
+import DataTable from '../elements/DataTable'
+import IconBar from '../elements/IconBar'
+import ButtonAction from '../elements/ButtonAction'
+import ButtonAlt from '../elements/ButtonAlt'
+import ButtonDanger from '../elements/ButtonDanger'
+import LayoutModal from '../elements/LayoutModal'
+import InputString from '../elements/InputString'
+import InputSelect from '../elements/InputSelect'
 
 export default {
-  data: function() {
+  data: function () {
     return {
-      view: "list",
+      view: 'list',
       currentMember: {},
-      roles: ["Owner", "Manager", "Editor", "Viewer"],
+      roles: ['Owner', 'Manager', 'Editor', 'Viewer'],
       members: null,
       error: null
-    };
+    }
   },
   components: {
     MessageError,
@@ -81,46 +84,49 @@ export default {
     ButtonAlt,
     ButtonDanger,
     DataTable,
-    IconBar
+    IconBar,
+    LayoutModal,
+    InputSelect,
+    InputString
   },
   props: {
     schema: String
   },
   methods: {
-    showAdd() {
-      this.view = "add";
+    showAdd () {
+      this.view = 'add'
     },
-    showEdit(row) {
-      this.currentMember = row;
-      this.view = "edit";
+    showEdit (row) {
+      this.currentMember = row
+      this.view = 'edit'
     },
-    loadMembers() {
-      this.error = false;
-      this.members = [];
+    loadMembers () {
+      this.error = false
+      this.members = []
       request(this.endpoint, `{_meta{members{user,role}}}`)
         .then(data => {
-          this.members = data._meta.members;
+          this.members = data._meta.members
         })
-        .catch(error => (this.error = error.response.error));
+        .catch(error => (this.error = error.response.error))
     }
   },
   computed: {
-    endpoint() {
-      return "/api/graphql/" + this.schema;
+    endpoint () {
+      return '/api/graphql/' + this.schema
     },
-    account() {
-      return this.$store.state.account.email;
+    account () {
+      return this.$store.state.account.email
     }
   },
-  created() {
-    this.loadMembers();
+  created () {
+    this.loadMembers()
   },
   watch: {
-    account() {
-      this.loadMembers();
+    account () {
+      this.loadMembers()
     }
   }
-};
+}
 </script>
 
 <docs>

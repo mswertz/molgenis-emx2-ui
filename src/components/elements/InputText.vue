@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import _baseInput from "./_baseInput.vue";
+import _baseInput from './_baseInput.vue'
 
 /** Input for text */
 export default {
   extends: _baseInput
-};
+}
 </script>
 
 <docs>

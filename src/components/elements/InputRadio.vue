@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import InputSelect from "./InputSelect";
+import InputSelect from './InputSelect'
 
 export default {
   extends: InputSelect
-};
+}
 </script>
 
 <docs>

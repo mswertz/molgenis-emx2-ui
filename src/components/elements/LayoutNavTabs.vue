@@ -15,17 +15,17 @@
 </template>
 
 <script>
-import InputSelect from "./InputSelect";
+import InputSelect from './InputSelect'
 
 export default {
   extends: InputSelect,
   methods: {
-    select(item) {
-      this.value = item;
-      this.$emit("input", this.value);
+    select (item) {
+      this.value = item
+      this.$emit('input', this.value)
     }
   }
-};
+}
 </script>
 
 <docs>

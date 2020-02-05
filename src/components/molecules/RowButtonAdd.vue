@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import RowEditModal from "./RowEditModal.vue";
-import IconAction from "../elements/IconAction";
+import RowEditModal from './RowEditModal.vue'
+import IconAction from '../elements/IconAction'
 
 export default {
-  data: function() {
+  data: function () {
     return {
       open: false
-    };
+    }
   },
   components: {
     RowEditModal,
@@ -29,20 +29,20 @@ export default {
     table: String
   },
   computed: {
-    title() {
-      return "Add new row to table " + this.table;
+    title () {
+      return 'Add new row to table ' + this.table
     }
   },
   methods: {
-    openForm() {
-      this.open = true;
+    openForm () {
+      this.open = true
     },
-    closeForm() {
-      this.open = false;
-      this.$emit("close");
+    closeForm () {
+      this.open = false
+      this.$emit('close')
     }
   }
-};
+}
 </script>
 
 <docs>Example

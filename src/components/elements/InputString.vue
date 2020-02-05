@@ -14,16 +14,16 @@
 </template>
 
 <script>
-import _baseInput from "./_baseInput.vue";
+import _baseInput from './_baseInput.vue'
 
 export default {
   extends: _baseInput,
   methods: {
-    keyhandler(event) {
-      return event;
+    keyhandler (event) {
+      return event
     }
   }
-};
+}
 </script>
 
 <docs>

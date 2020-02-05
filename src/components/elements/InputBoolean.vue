@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import _baseInput from "./_baseInput";
-import InputRadio from "./InputRadio";
+import _baseInput from './_baseInput'
+import InputRadio from './InputRadio'
 export default {
   extends: _baseInput,
   components: { InputRadio }
-};
+}
 </script>
 
 <docs>

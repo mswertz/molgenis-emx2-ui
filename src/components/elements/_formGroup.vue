@@ -11,7 +11,7 @@
     <div v-else-if="help" :id="id + 'Help'" class="form-text text-muted">{{help}}</div>
   </div>
 </template>
-  
+
 <script>
 export default {
   props: {
@@ -28,7 +28,7 @@ export default {
     /** String with error state */
     error: String
   }
-};
+}
 </script>
 
 <style scoped>

@@ -1,10 +1,10 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-import VScrollLock from "v-scroll-lock";
+import VScrollLock from 'v-scroll-lock'
 
-Vue.use(VScrollLock);
-Vue.use(Vuex);
+Vue.use(VScrollLock)
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
@@ -13,11 +13,11 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    signin(state, email) {
-      state.account.email = email;
+    signin (state, email) {
+      state.account.email = email
     },
-    signout(state) {
-      state.account.email = null;
+    signout (state) {
+      state.account.email = null
     }
   }
-});
+})

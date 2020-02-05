@@ -8,14 +8,14 @@
 </template>
 
 <script>
-import _baseInput from "./_baseInput.vue";
+import _baseInput from './_baseInput.vue'
 
 export default {
   extends: _baseInput,
   props: {
     items: Array
   }
-};
+}
 </script>
 
 <docs>

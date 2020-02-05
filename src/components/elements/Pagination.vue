@@ -29,25 +29,25 @@ export default {
     count: Number,
     limit: { type: Number, default: 10 }
   },
-  data: function() {
+  data: function () {
     return {
       page: 1
-    };
+    }
   },
   computed: {
-    offset() {
-      return this.limit * (this.page - 1);
+    offset () {
+      return this.limit * (this.page - 1)
     },
-    totalPages() {
-      return Math.ceil(this.count / this.limit);
+    totalPages () {
+      return Math.ceil(this.count / this.limit)
     }
   },
   watch: {
-    page() {
-      this.$emit("input", this.page);
+    page () {
+      this.$emit('input', this.page)
     }
   }
-};
+}
 </script>
 
 <docs>

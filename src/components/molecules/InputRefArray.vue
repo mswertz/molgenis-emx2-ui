@@ -28,60 +28,62 @@
 </template>
 
 <script>
-import _baseInput from "../elements/_baseInput";
-import _graphqlTableMixin from "./_graphqlTableMixin";
-import ButtonAlt from "../elements/ButtonAlt";
-import FormGroup from "../elements/_formGroup";
-import LayoutModal from "../elements/LayoutModal";
-import TableSearch from "./TableSearch";
+import _baseInput from '../elements/_baseInput'
+import _graphqlTableMixin from './_graphqlTableMixin'
+import ButtonAlt from '../elements/ButtonAlt'
+import FormGroup from '../elements/_formGroup'
+import LayoutModal from '../elements/LayoutModal'
+import TableSearch from './TableSearch'
+import MessageError from '../elements/MessageError'
 
 export default {
   extends: _baseInput,
   mixins: [_graphqlTableMixin],
-  data: function() {
+  data: function () {
     return {
       showSelect: false
-    };
+    }
   },
   components: {
     ButtonAlt,
     FormGroup,
     TableSearch,
-    LayoutModal
+    LayoutModal,
+    MessageError
   },
   props: {
     refTable: String,
     refColumn: String
   },
   computed: {
-    title() {
-      return "Select " + this.table;
+    title () {
+      return 'Select ' + this.table
     },
-    table() {
-      return this.refTable;
+    table () {
+      return this.refTable
     }
   },
   methods: {
-    select(value) {
-      if (this.value == null) this.value = [];
-      this.value.push(value);
+    select (value) {
+      if (this.value == null) this.value = []
+      this.value.push(value)
     },
-    deselect(value) {
-      this.value = this.value.filter(item => item !== value);
+    deselect (value) {
+      this.value = this.value.filter(item => item !== value)
     },
-    closeSelect() {
-      this.showSelect = false;
+    closeSelect () {
+      this.showSelect = false
     },
-    openSelect() {
-      this.showSelect = true;
+    openSelect () {
+      this.showSelect = true
     }
   },
   watch: {
-    refTable() {
-      this.table = this.refTable;
+    refTable () {
+      this.table = this.refTable
     }
   }
-};
+}
 </script>
 
 <docs>

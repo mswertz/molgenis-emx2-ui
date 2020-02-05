@@ -23,24 +23,26 @@
 </template>
 
 <script>
-import _baseInput from "../elements/_baseInput";
-import TableSearch from "./TableSearch";
-import LayoutModal from "../elements/LayoutModal";
-import MessageError from "../elements/MessageError";
-import FormGroup from "../elements/_formGroup";
+import _baseInput from '../elements/_baseInput'
+import TableSearch from './TableSearch'
+import LayoutModal from '../elements/LayoutModal'
+import MessageError from '../elements/MessageError'
+import FormGroup from '../elements/_formGroup'
+import ButtonAlt from '../elements/ButtonAlt'
 
 export default {
   extends: _baseInput,
-  data: function() {
+  data: function () {
     return {
       showSelect: false
-    };
+    }
   },
   components: {
     TableSearch,
     MessageError,
     LayoutModal,
-    FormGroup
+    FormGroup,
+    ButtonAlt
   },
   props: {
     schema: String,
@@ -48,23 +50,23 @@ export default {
     refColumn: String
   },
   computed: {
-    title() {
-      return "Select " + this.refTable;
+    title () {
+      return 'Select ' + this.refTable
     }
   },
   methods: {
-    select(value) {
-      this.showSelect = false;
-      this.value = value;
+    select (value) {
+      this.showSelect = false
+      this.value = value
     },
-    closeSelect() {
-      this.showSelect = false;
+    closeSelect () {
+      this.showSelect = false
     },
-    openSelect() {
-      this.showSelect = true;
+    openSelect () {
+      this.showSelect = true
     }
   }
-};
+}
 </script>
 
 <docs>

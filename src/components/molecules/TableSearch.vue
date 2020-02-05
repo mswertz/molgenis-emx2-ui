@@ -32,13 +32,13 @@
 </template>
 
 <script>
-import _graphqlTableMixin from "./_graphqlTableMixin";
+import _graphqlTableMixin from './_graphqlTableMixin'
 
-import DataTable from "../elements/DataTable";
-import MessageError from "../elements/MessageError";
-import InputSearch from "../elements/InputSearch";
-import Pagination from "../elements/Pagination.vue";
-import Spinner from "../elements/Spinner.vue";
+import DataTable from '../elements/DataTable'
+import MessageError from '../elements/MessageError'
+import InputSearch from '../elements/InputSearch'
+import Pagination from '../elements/Pagination.vue'
+import Spinner from '../elements/Spinner.vue'
 
 export default {
   extends: _graphqlTableMixin,
@@ -53,61 +53,61 @@ export default {
     Pagination,
     Spinner
   },
-  data: function() {
+  data: function () {
     return {
       selectedItems: [],
       page: 1,
       loading: true
-    };
+    }
   },
   methods: {
-    select(value) {
-      this.$emit("select", value);
+    select (value) {
+      this.$emit('select', value)
     },
-    deselect(value) {
-      this.$emit("deselect", value);
+    deselect (value) {
+      this.$emit('deselect', value)
     }
   },
   watch: {
-    selectedItems() {
-      this.$emit("input", this.selectedItems);
+    selectedItems () {
+      this.$emit('input', this.selectedItems)
     },
-    page() {
-      this.loading = true;
-      this.offset = this.limit * (this.page - 1);
-      this.reload();
+    page () {
+      this.loading = true
+      this.offset = this.limit * (this.page - 1)
+      this.reload()
     }
   },
   computed: {
-    columns() {
+    columns () {
       if (this.metadata && this.metadata.columns) {
-        return this.metadata.columns.map(col => col.name);
+        return this.metadata.columns.map(col => col.name)
       }
-      return null;
+      return null
     },
-    rows() {
+    rows () {
       if (this.data != null) {
         return this.data.map(row => {
-          let result = { ...row };
+          let result = { ...row }
           this.metadata.columns.forEach(col => {
             if (row[col.name]) {
-              if ("REF" === col.columnType) {
-                result[col.name] = row[col.name][col.refColumn];
+              if (col.columnType === 'REF') {
+                result[col.name] = row[col.name][col.refColumn]
               } else if (
-                "REF_ARRAY" === col.columnType ||
-                "REFBACK" === col.columnType
+                col.columnType === 'REF_ARRAY' ||
+                col.columnType === 'REFBACK'
               ) {
-                result[col.name] = row[col.name].map(val => val[col.refColumn]);
+                result[col.name] = row[col.name].map(val => val[col.refColumn])
               }
             }
-          });
-          return result;
-        });
+          })
+          return result
+        })
       }
-      return this.data;
+      return this.data
     }
   }
-};
+}
 </script>
 
 <docs>

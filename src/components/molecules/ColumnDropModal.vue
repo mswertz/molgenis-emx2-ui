@@ -18,20 +18,20 @@
 </template>
 
 <script>
-import { request } from "graphql-request";
+import { request } from 'graphql-request'
 
-import LayoutModal from "../elements/LayoutModal";
-import MessageSuccess from "../elements/MessageSuccess";
-import MessageError from "../elements/MessageError";
-import ButtonAlt from "../elements/ButtonAlt";
-import ButtonAction from "../elements/ButtonAction";
+import LayoutModal from '../elements/LayoutModal'
+import MessageSuccess from '../elements/MessageSuccess'
+import MessageError from '../elements/MessageError'
+import ButtonAlt from '../elements/ButtonAlt'
+import ButtonAction from '../elements/ButtonAction'
 
 export default {
-  data: function() {
+  data: function () {
     return {
       success: null,
       error: null
-    };
+    }
   },
   props: {
     schema: String,
@@ -46,15 +46,15 @@ export default {
     ButtonAlt
   },
   computed: {
-    endpoint() {
-      return "/api/graphql/" + this.schema;
+    endpoint () {
+      return '/api/graphql/' + this.schema
     }
   },
   methods: {
-    dropColumn() {
-      this.loading = true;
-      this.success = null;
-      this.error = null;
+    dropColumn () {
+      this.loading = true
+      this.success = null
+      this.error = null
       request(
         this.endpoint,
         `mutation dropColumn($table:String,$column:String){dropColumn(table:$table,column:$column){message}}`,
@@ -64,20 +64,20 @@ export default {
         }
       )
         .then(data => {
-          this.success = data.dropColumn.message;
-          this.$emit("close");
+          this.success = data.dropColumn.message
+          this.$emit('close')
         })
         .catch(error => {
           if (error.response && error.response.status === 403) {
-            this.error = "Forbidden. Do you need to login?";
-            this.showLogin = true;
-          } else this.error = error;
-        });
+            this.error = 'Forbidden. Do you need to login?'
+            this.showLogin = true
+          } else this.error = error
+        })
 
-      this.loading = false;
+      this.loading = false
     }
   }
-};
+}
 </script>
 
 <docs>

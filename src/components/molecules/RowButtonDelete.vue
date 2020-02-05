@@ -21,23 +21,23 @@
 </template>
 
 <script>
-import RowButtonAdd from "./RowButtonAdd";
-import LayoutModal from "../elements/LayoutModal";
-import IconDanger from "../elements/IconDanger";
-import ButtonAlt from "../elements/ButtonAlt";
-import ButtonAction from "../elements/ButtonAction";
-import MessageError from "../elements/MessageError";
-import MessageSuccess from "../elements/MessageSuccess";
+import RowButtonAdd from './RowButtonAdd'
+import LayoutModal from '../elements/LayoutModal'
+import IconDanger from '../elements/IconDanger'
+import ButtonAlt from '../elements/ButtonAlt'
+import ButtonAction from '../elements/ButtonAction'
+import MessageError from '../elements/MessageError'
+import MessageSuccess from '../elements/MessageSuccess'
 
-import { request } from "graphql-request";
+import { request } from 'graphql-request'
 
 export default {
   extends: RowButtonAdd,
-  data: function() {
+  data: function () {
     return {
       success: null,
       error: null
-    };
+    }
   },
   components: {
     LayoutModal,
@@ -51,27 +51,27 @@ export default {
     pkey: String
   },
   computed: {
-    title() {
-      return `Delete from ${this.table}`;
+    title () {
+      return `Delete from ${this.table}`
     },
-    endpoint() {
-      return "/api/graphql/" + this.schema;
+    endpoint () {
+      return '/api/graphql/' + this.schema
     }
   },
   methods: {
-    executeDelete() {
-      let query = `mutation delete($pkey:[String]){delete(${this.table}:$pkey){message}}`;
-      let variables = { pkey: [this.pkey] };
+    executeDelete () {
+      let query = `mutation delete($pkey:[String]){delete(${this.table}:$pkey){message}}`
+      let variables = { pkey: [this.pkey] }
       request(this.endpoint, query, variables)
         .then(data => {
-          this.success = data.delete.message;
+          this.success = data.delete.message
         })
         .catch(error => {
-          this.error = error.response.errors[0].message;
-        });
+          this.error = error.response.errors[0].message
+        })
     }
   }
-};
+}
 </script>
 
 <docs>Example

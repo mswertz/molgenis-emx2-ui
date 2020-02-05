@@ -1,15 +1,6 @@
 {
   "name": "@mswertz/molgenis-emx2-ui",
   "description": "General user interface for MOLGENIS EMX2",
-  "publishConfig": {
-    "access": "public"
-  },
-  "homepage": "https://github.com/mswertz/molgenis-emx2-ui",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mswertz/molgenis-emx2-ui.git"
-  },
-  "main": "dist/index.html",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -17,6 +8,10 @@
     "styleguide": "vue-cli-service styleguidist",
     "styleguide:build": "vue-cli-service styleguidist:build"
   },
+  "main": "dist/index.html",
+  "files": [
+    "dist/*"
+  ],
   "dependencies": {
     "core-js": "^3.6.2",
     "graphql-request": "^1.8.2",
@@ -26,8 +21,9 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
-    "@vue/cli-plugin-eslint": "^4.1.0",
+    "@vue/cli-plugin-eslint": "^4.1.2",
     "@vue/cli-service": "^4.1.0",
+    "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
@@ -43,7 +39,8 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended"
+      "eslint:recommended",
+      "@vue/standard"
     ],
     "rules": {},
     "parserOptions": {
@@ -54,13 +51,18 @@
     "> 1%",
     "last 2 versions"
   ],
+  "homepage": "https://github.com/mswertz/molgenis-emx2-ui",
+  "publishConfig": {
+    "access": "public"
+  },
   "release": {
     "branches": [
       "master",
       "dev"
     ]
   },
-  "files": [
-    "dist/*"
-  ]
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mswertz/molgenis-emx2-ui.git"
+  }
 }

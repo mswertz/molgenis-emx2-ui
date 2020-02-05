@@ -3,13 +3,13 @@
 </template>
 
 <script>
-import Molgenis from "./components/pages/Molgenis";
+import Molgenis from './components/pages/Molgenis'
 export default {
-  name: "app",
+  name: 'app',
   components: {
     Molgenis
   }
-};
+}
 </script>
 
 <style>
