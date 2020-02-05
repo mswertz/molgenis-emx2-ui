@@ -3,7 +3,7 @@
   <Spinner v-if="loading" />
   <div v-else-if="showLogin">
     <MessageError v-if="error">{{ error }}</MessageError>
-    <LoginForm @login="loginSuccess" @cancel="cancel" />
+    <SigninForm @login="loginSuccess" @cancel="cancel" />
   </div>
   <!-- when update succesfull show result before close -->
   <LayoutModal
@@ -84,7 +84,7 @@ import LayoutModal from '../elements/LayoutModal'
 import InputBoolean from '../elements/InputBoolean'
 import InputString from '../elements/InputString'
 import InputText from '../elements/InputText'
-import LoginForm from '../elements/LoginForm'
+import SigninForm from './SigninForm'
 import InputSelect from '../elements/InputSelect'
 import LayoutForm from '../elements/LayoutForm'
 import Spinner from '../elements/Spinner'
@@ -140,7 +140,7 @@ export default {
     InputSelect,
     LayoutForm,
     Spinner,
-    LoginForm
+    SigninForm
   },
   computed: {
     title () {
