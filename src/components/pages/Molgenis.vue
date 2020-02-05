@@ -15,25 +15,35 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="#" @click.prevent="view = 'home'">
-        <img src="https://master.dev.molgenis.org/img/Logo_Blue_Small.png" alt />
+        <img
+          src="https://master.dev.molgenis.org/img/Logo_Blue_Small.png"
+          alt
+        />
       </a>
       <div class="collapse navbar-collapse" id="navbarText">
         <ul v-if="schema" class="navbar-nav mr-auto">
-          <li class="nav-item" :class="{'active': view === 'explorer'}">
-            <a class="nav-link" href="#" @click.prevent="view = 'explorer'">Tables</a>
+          <li class="nav-item" :class="{ active: view === 'explorer' }">
+            <a class="nav-link" href="#" @click.prevent="view = 'explorer'"
+              >Tables</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" @click.prevent="view = 'schema'">Schema</a>
+            <a class="nav-link" href="#" @click.prevent="view = 'schema'"
+              >Schema</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" @click.prevent="view = 'import'">Import</a>
+            <a class="nav-link" href="#" @click.prevent="view = 'import'"
+              >Import</a
+            >
           </li>
           <li class="nav-item">
             <a
               class="nav-link"
-              :href="'/api/playground.html?schema=/api/graphql/'+schema"
+              :href="'/api/playground.html?schema=/api/graphql/' + schema"
               target="_blank"
-            >GraphQL</a>
+              >GraphQL</a
+            >
           </li>
         </ul>
       </div>
@@ -83,7 +93,8 @@ export default {
     Schema,
     Account,
     Import,
-    InputSelect
+    InputSelect,
+    MessageError
   },
   computed: {
     account() {
