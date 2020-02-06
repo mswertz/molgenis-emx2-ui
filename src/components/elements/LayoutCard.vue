@@ -13,7 +13,7 @@
       <!-- @slot Use this slot to place the card content -->
       <slot />
     </div>
-    <div class="card-footer" ref="footer">Created by MOLGENIS.</div>
+    <div class="card-footer" ref="footer">Created by MOLGENIS. {{version}}</div>
   </div>
 </template>
 
@@ -38,6 +38,9 @@ export default {
         return `height: calc(100vh - ${header + footer}px)`
       }
       return ''
+    },
+    version () {
+      return this.$store.state.version
     }
   },
   components: {

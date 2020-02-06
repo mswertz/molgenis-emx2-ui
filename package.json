@@ -1,6 +1,7 @@
 {
   "name": "@mswertz/molgenis-emx2-ui",
   "description": "General user interface for MOLGENIS EMX2",
+  "version":"0.0.0-development",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

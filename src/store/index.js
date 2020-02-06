@@ -10,7 +10,8 @@ export default new Vuex.Store({
   state: {
     account: {
       email: null
-    }
+    },
+    version: process.env.PACKAGE_VERSION
   },
   mutations: {
     signin (state, email) {
@@ -18,6 +19,11 @@ export default new Vuex.Store({
     },
     signout (state) {
       state.account.email = null
+    }
+  },
+  getters: {
+    appVersion: (state) => {
+      return state.packageVersion
     }
   }
 })
